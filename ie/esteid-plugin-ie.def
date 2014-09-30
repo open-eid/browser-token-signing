@@ -1,0 +1,10 @@
+; esteid-plugin-ie.def : Declares the module parameters.
+
+LIBRARY      "esteid-plugin-ie.DLL"
+
+EXPORTS
+	DllCanUnloadNow		PRIVATE
+	DllGetClassObject	PRIVATE
+	DllRegisterServer	PRIVATE
+	DllUnregisterServer	PRIVATE
+	DllInstall		PRIVATE

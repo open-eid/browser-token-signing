@@ -1,0 +1,9 @@
+certificate_selection_dialog_title:
+  est:  "Sertifikaadi valik"
+  eng:  "Select certificate"
+  rus:  "Выбор сертификата"
+
+cancel_button_label:
+  est:  "Katkesta"
+  eng:  "Cancel"
+  rus:  "Отменить"

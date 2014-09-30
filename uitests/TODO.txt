@@ -1,0 +1,6 @@
+1. lahtiplokeermised ja plokeerimised eraldi OS spetsiifilistesse helperitesse meetoditeks
+
+nt. Win
+def unblok_pin1
+	system "unblockPIN1.cmd #{@reader_id}"
+end

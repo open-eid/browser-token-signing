@@ -1,0 +1,96 @@
+<html>
+<head>
+  <title>test page for plugin</title>
+<script type="text/javascript">
+  function plugin() {
+    return document.getElementById('plugin');
+  }
+
+  function sign() {
+    document.getElementById('errorMessage').innerHTML = '';
+    document.getElementById('errorCode').innerHTML = '0';
+    document.getElementById('signature').innerHTML = '';
+    var hash = document.getElementById('hash').value;
+    try {
+      var id = plugin().getCertificate().id;
+      document.getElementById('id').innerHTML = id;
+      var signature = plugin().sign(id, hash, { language: 'et' }); // , { language: 'et' }
+      var s = "";
+      for (var i = 0; i < signature.length; i += 64) {
+        s += signature.substr(i, 64) + "\n";
+      }
+      document.getElementById('signature').innerHTML = s;
+    }
+    catch (e) {
+      document.getElementById('errorMessage').innerHTML = plugin().errorMessage;      
+      document.getElementById('errorCode').innerHTML = plugin().errorCode;
+    }
+  }
+
+  function showVersion() {
+    document.getElementById('version').innerHTML = plugin().version;
+  }
+
+  var names = ['id', 'CN', 'issuerCN', 'validFrom', 'validTo'];
+
+  function showData() {
+    document.getElementById('errorMessage').innerHTML = '';
+    document.getElementById('errorCode').innerHTML = '0';
+    try {
+        var cert = plugin().getCertificate();
+        for (var i = 0; i < names.length; i++) {
+          name = names[i];
+          document.getElementById(name).innerHTML = cert[name];
+        }
+        document.getElementById('PEM').innerHTML = cert.certificateAsPEM;
+        var hex = cert.certificateAsHex; 
+        var s = "";
+        if (hex) for (var i = 0; i < hex.length; i += 64) s += hex.substr(i, 64) + "\n";
+        document.getElementById('hex').innerHTML = s;
+    }
+    catch (e) {
+        document.getElementById('errorMessage').innerHTML = plugin().errorMessage;
+        document.getElementById('errorCode').innerHTML = plugin().errorCode;
+    }
+  }
+
+  function prepareDataHtml() {
+    for (var i = 0; i < names.length; i++) {
+      name = names[i];
+      data.innerHTML += "<tr><td>" + name + ": </td><td id='" + name + "'></td>";
+    }
+  }
+</script>
+</head>
+<body onload="showVersion(); prepareDataHtml();">
+
+<object id="plugin" type="application/x-digidoc" width="1" height="1"></object>
+<br/>
+
+Plug-in version: <span id="version"></span>
+
+<br/>
+<br/>
+
+hash: <input type="text" size="80" maxlength="128" id="hash" value="26fd6dbee37c55c14af480f00daff8817b61967e">
+<input type="button" onclick="javascript:sign()" value="sign"/>
+<br/>
+<pre id="signature"></pre>
+
+<br/>
+<br/>
+
+<a href="#" onclick="javascript:showData()">show data</a> <br/>
+
+<table id="data"></table>
+<div>errorMessage: <span id="errorMessage"></span></div>
+<div>errorCode: <span id="errorCode"></span></div>
+
+<div>PEM:</div>
+<pre id="PEM"></pre>
+
+<div>DER in hex:</div>
+<pre id="hex"></pre>
+
+</body>
+</html>

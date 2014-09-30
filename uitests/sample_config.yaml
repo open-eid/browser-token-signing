@@ -1,0 +1,6 @@
+
+reader_id: 0
+use: igor4
+test_page_url: "https://www.openxades.org/web_sign_demo/sign.html"
+#test_page_url:  "file:///Users/xp/work/sk/esteid-plugin/uitests/sign.htm"
+#test_page_url:  "file://C:\\work\\sk\\esteid-plugin\\trunk\\uitests\\sign.htm"

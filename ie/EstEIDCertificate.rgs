@@ -1,0 +1,26 @@
+HKCR
+{
+	esteidpluginie.EstEIDCertificate.1 = s 'EstEIDCertificate Class'
+	{
+		CLSID = s '{2615B13B-A08B-442C-8032-4D9981060190}'
+	}
+	esteidpluginie.EstEIDCertificate = s 'EstEIDCertificate Class'
+	{
+		CLSID = s '{2615B13B-A08B-442C-8032-4D9981060190}'
+		CurVer = s 'esteidpluginie.EstEIDCertificate.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {2615B13B-A08B-442C-8032-4D9981060190} = s 'EstEIDCertificate Class'
+		{
+			ProgID = s 'esteidpluginie.EstEIDCertificate.1'
+			VersionIndependentProgID = s 'esteidpluginie.EstEIDCertificate'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{23EF5046-6402-4C39-B34B-3C47826805D1}'
+		}
+	}
+}

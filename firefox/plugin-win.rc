@@ -1,0 +1,191 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include <winres.h>
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+1 VERSIONINFO
+ FILEVERSION 0,49,0,0
+ PRODUCTVERSION 0,49,0,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904e4"
+        BEGIN
+            VALUE "CompanyName", "RIA"
+            VALUE "FileDescription", "Allows digital signing with Estonian ID cards"
+            VALUE "FileVersion", "0.49"
+            VALUE "InternalName", "EstEID Firefox plug-in"
+            VALUE "MIMEType", "application/x-digidoc|application/x-idcard-plugin"
+            VALUE "OriginalFilename", "npesteid-firefox-plugin.dll"
+            VALUE "ProductName", "EstEID Firefox plug-in"
+            VALUE "ProductVersion", "0.49"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include <winres.h>\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_PIN_DIALOG DIALOGEX 0, 0, 193, 79
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTION
+CAPTION "EstEID PIN2"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    EDITTEXT        IDC_PIN2,136,34,50,14,ES_PASSWORD | ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,81,58,50,14,WS_DISABLED
+    PUSHBUTTON      "Katkesta",IDCANCEL,136,58,50,14
+    LTEXT           "LabelPIN2",IDC_PIN2_LABEL,7,37,124,8
+    LTEXT           "Name",IDC_NAME,7,21,179,8
+    LTEXT           "Message",IDC_ERROR,7,7,179,8
+END
+
+IDD_CERTIFICATESELECTIONDLG DIALOGEX 0, 0, 322, 146
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTION
+EXSTYLE WS_EX_TOPMOST
+CAPTION "Sertifikaadi valik"
+FONT 8, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+    CONTROL         "",IDC_CERTIFICATESLIST,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,30,306,86
+    DEFPUSHBUTTON   "Vali",IDOK,210,126,50,14,WS_DISABLED
+    PUSHBUTTON      "Katkesta",IDCANCEL,265,126,50,14
+    LTEXT           "WARNING!!!",IDC_WARNING,8,6,304,20
+END
+
+IDD_PINPAD_DIALOG DIALOGEX 0, 0, 290, 76
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTION
+EXSTYLE WS_EX_TOPMOST
+CAPTION "EstEID PIN2"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "Sisesta PIN2 kaardilugeja sõrmistikult",IDC_PINPAD_PIN2_LABEL,6,36,276,8
+    LTEXT           "Name",IDC_NAME,7,21,276,8
+    LTEXT           "",IDC_ERROR,7,7,271,8
+    CONTROL         "",IDC_PROGRESSBAR,"msctls_progress32",WS_BORDER,6,54,276,14
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_PIN_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 186
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 72
+    END
+
+    IDD_CERTIFICATESELECTIONDLG, DIALOG
+    BEGIN
+        RIGHTMARGIN, 321
+        BOTTOMMARGIN, 145
+    END
+
+    IDD_PINPAD_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 283
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 69
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_CERTIFICATEHEADER   "Sertifikaat"
+    IDS_TYPEHEADER          "Tüüp"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_VALIDUNTILHEADER    "Kehtiv kuni"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

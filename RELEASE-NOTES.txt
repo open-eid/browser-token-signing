@@ -1,0 +1,12 @@
+Esteid-plugin version 3.9.1 release notes
+--------------------------------------
+Changes compared to ver 3.8
+
+- Added 64-bit version of browser signing plug-in for 64-bit Chrome browser in Windows environment.
+
+
+
+Esteid-plugin version 3.8 release notes
+--------------------------------------
+
+- Started using esteid-pkcs11 and esteid-tokend drivers in OSX (instead of opensc).

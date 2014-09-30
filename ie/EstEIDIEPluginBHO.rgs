@@ -1,0 +1,35 @@
+HKCR
+{
+	esteidpluginie.EstEIDIEPluginBHO.1 = s 'EstEIDIEPluginBHO Class'
+	{
+		CLSID = s '{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}'
+	}
+	esteidpluginie.EstEIDIEPluginBHO = s 'EstEIDIEPluginBHO Class'
+	{
+		CLSID = s '{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}'
+		CurVer = s 'esteidpluginie.EstEIDIEPluginBHO.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {2A4E94A4-B275-491A-9E32-CD7A26FC7C3B} = s 'EstEIDIEPluginBHO Class'
+		{
+			ProgID = s 'esteidpluginie.EstEIDIEPluginBHO.1'
+			VersionIndependentProgID = s 'esteidpluginie.EstEIDIEPluginBHO'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{23EF5046-6402-4C39-B34B-3C47826805D1}'
+		}
+	}
+	NoRemove MIME {
+		NoRemove Database {
+			NoRemove 'Content Type'{
+				'application/x-digidoc'{ 
+					val CLSID = s '{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}'
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,78 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    activesupport (3.0.0)
+    addressable (2.3.2)
+    builder (2.1.2)
+    childprocess (0.3.5)
+      ffi (~> 1.0, >= 1.0.6)
+    commonwatir (1.6.5)
+      user-choices
+    ffi (1.1.5)
+    firewatir (1.6.5)
+      activesupport
+      commonwatir (= 1.6.5)
+    hoe (2.6.2)
+      rake (>= 0.8.7)
+      rubyforge (>= 2.0.4)
+    json_pure (1.4.6)
+    libwebsocket (0.1.5)
+      addressable
+    multi_json (1.3.6)
+    rake (0.8.7)
+    rautomation (0.5.1)
+    rspec (1.3.0)
+    rubyforge (2.0.4)
+      json_pure (>= 1.1.7)
+    rubyzip (0.9.4)
+    s4t-utils (1.0.4)
+      hoe (>= 1.3.0)
+    safariwatir (0.3.8)
+    selenium-webdriver (2.25.0)
+      childprocess (>= 0.2.5)
+      libwebsocket (~> 0.1.3)
+      multi_json (~> 1.0)
+      rubyzip
+    user-choices (1.1.6.1)
+      builder (>= 2.1.2)
+      s4t-utils (>= 1.0.3)
+      xml-simple (>= 1.0.11)
+    watir-webdriver (0.6.1)
+      selenium-webdriver (>= 2.18.0)
+    win32-api (1.4.8)
+    win32-api (1.4.8-x86-mingw32)
+    win32-process (0.6.6)
+      windows-pr (>= 1.2.2)
+    win32console (1.3.2-x86-mingw32)
+    windows-api (0.4.2)
+      win32-api (>= 1.4.5)
+    windows-pr (1.2.2)
+      win32-api (>= 1.4.5)
+      windows-api (>= 0.3.0)
+    xml-simple (1.0.12)
+
+PLATFORMS
+  ruby
+  x86-mingw32
+
+DEPENDENCIES
+  activesupport (= 3.0.0)
+  builder (= 2.1.2)
+  commonwatir (= 1.6.5)
+  ffi
+  firewatir (= 1.6.5)
+  hoe (= 2.6.2)
+  json_pure (= 1.4.6)
+  rake (= 0.8.7)
+  rautomation (= 0.5.1)
+  rspec (= 1.3.0)
+  rubyforge (= 2.0.4)
+  rubyzip (= 0.9.4)
+  s4t-utils (= 1.0.4)
+  safariwatir (= 0.3.8)
+  selenium-webdriver
+  user-choices (= 1.1.6.1)
+  watir-webdriver
+  win32-process
+  win32console
+  xml-simple (= 1.0.12)

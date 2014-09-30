@@ -1,0 +1,34 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		'%APPID%' = s 'esteidpluginie'
+		'esteid-plugin-ie.DLL'
+		{
+			val AppID = s '%APPID%'
+		}
+	}
+}
+HKLM {
+  NoRemove SOFTWARE {
+    NoRemove Microsoft {   
+      NoRemove Windows {
+        NoRemove CurrentVersion {
+          NoRemove Explorer {
+            NoRemove 'Browser Helper Objects' {
+              ForceRemove '{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}' = s 'EstEIDIEPluginBHO' {
+                val 'NoExplorer' = d '1'
+              }
+            }
+          }
+          NoRemove Ext {
+			NoRemove PreApproved {
+			  ForceRemove '{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}' = s 'EstEIDIEPluginBHO' {
+			  }
+			}
+		  }
+        }
+      }
+    }
+  }
+}
