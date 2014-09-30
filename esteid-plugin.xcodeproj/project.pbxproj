@@ -6,21 +6,6 @@
 	objectVersion = 46;
 	objects = {
 
-/* Begin PBXAggregateTarget section */
-		124E7EE511F6DE4500AED77F /* all */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 124E7EEC11F6DE7200AED77F /* Build configuration list for PBXAggregateTarget "all" */;
-			buildPhases = (
-			);
-			dependencies = (
-				124E7EE911F6DE5300AED77F /* PBXTargetDependency */,
-				124E7EEB11F6DE5300AED77F /* PBXTargetDependency */,
-			);
-			name = all;
-			productName = all;
-		};
-/* End PBXAggregateTarget section */
-
 /* Begin PBXBuildFile section */
 		12037281122B847C00F7063E /* esteid_map_test.c in Sources */ = {isa = PBXBuildFile; fileRef = 1203727E122B847C00F7063E /* esteid_map_test.c */; };
 		12037282122B847D00F7063E /* esteid_map.c in Sources */ = {isa = PBXBuildFile; fileRef = 1203727F122B847C00F7063E /* esteid_map.c */; };
@@ -71,23 +56,6 @@
 		F6F4A5FD121A8CCC00933C3D /* l10n-mac.m in Sources */ = {isa = PBXBuildFile; fileRef = F6F4A5FC121A8CCC00933C3D /* l10n-mac.m */; };
 		F6F4A5FE121A8CCC00933C3D /* l10n-mac.m in Sources */ = {isa = PBXBuildFile; fileRef = F6F4A5FC121A8CCC00933C3D /* l10n-mac.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		124E7EE811F6DE5300AED77F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0259C573FE90428111CA0C5A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D1AC9600486D14A00FE50C9;
-			remoteInfo = "esteid-webkit-plugin";
-		};
-		124E7EEA11F6DE5300AED77F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0259C573FE90428111CA0C5A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 124E7EDF11F6DE0200AED77F;
-			remoteInfo = "esteid-firefox-plugin";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		1203727D122B847C00F7063E /* dialogs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dialogs.h; sourceTree = "<group>"; };
@@ -386,7 +354,7 @@
 		0259C573FE90428111CA0C5A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0600;
 			};
 			buildConfigurationList = C027D11D08A954E7001699E2 /* Build configuration list for PBXProject "esteid-plugin" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -404,7 +372,6 @@
 			targets = (
 				8D1AC9600486D14A00FE50C9 /* esteidsafariplugin */,
 				124E7EDF11F6DE0200AED77F /* esteidfirefoxplugin */,
-				124E7EE511F6DE4500AED77F /* all */,
 				F642D7411238C7D200CBFD02 /* keychain-tool */,
 			);
 		};
@@ -495,19 +462,6 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		124E7EE911F6DE5300AED77F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8D1AC9600486D14A00FE50C9 /* esteidsafariplugin */;
-			targetProxy = 124E7EE811F6DE5300AED77F /* PBXContainerItemProxy */;
-		};
-		124E7EEB11F6DE5300AED77F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 124E7EDF11F6DE0200AED77F /* esteidfirefoxplugin */;
-			targetProxy = 124E7EEA11F6DE5300AED77F /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin PBXVariantGroup section */
 		124E7EF611F6E03C00AED77F /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
@@ -532,7 +486,7 @@
 				);
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/include";
 				INFOPLIST_FILE = firefox/Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				INSTALL_PATH = "$(HOME)/Library/Internet Plug-Ins/";
 				OTHER_LDFLAGS = "-lcrypto";
 				PRODUCT_NAME = esteidfirefoxplugin;
 				WRAPPER_EXTENSION = bundle;
@@ -542,31 +496,13 @@
 		124E7EE311F6DE0200AED77F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/include";
 				INFOPLIST_FILE = firefox/Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				INSTALL_PATH = "$(HOME)/Library/Internet Plug-Ins/";
 				OTHER_LDFLAGS = "-lcrypto";
 				PRODUCT_NAME = esteidfirefoxplugin;
 				WRAPPER_EXTENSION = bundle;
-			};
-			name = Release;
-		};
-		124E7EE611F6DE4500AED77F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				PRODUCT_NAME = all;
-			};
-			name = Debug;
-		};
-		124E7EE711F6DE4500AED77F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				PRODUCT_NAME = all;
 			};
 			name = Release;
 		};
@@ -583,7 +519,6 @@
 				INSTALL_PATH = "$(HOME)/Library/Internet Plug-Ins";
 				OTHER_LDFLAGS = "-lcrypto";
 				PRODUCT_NAME = esteidsafariplugin;
-				WARNING_CFLAGS = "-Wall";
 				WRAPPER_EXTENSION = webplugin;
 			};
 			name = Debug;
@@ -591,7 +526,6 @@
 		C027D11B08A954E7001699E2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "safari/esteid-webkit-plugin_Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/include";
@@ -599,7 +533,6 @@
 				INSTALL_PATH = "$(HOME)/Library/Internet Plug-Ins";
 				OTHER_LDFLAGS = "-lcrypto";
 				PRODUCT_NAME = esteidsafariplugin;
-				WARNING_CFLAGS = "-Wall";
 				WRAPPER_EXTENSION = webplugin;
 			};
 			name = Release;
@@ -613,7 +546,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PKCS11_DRIVER = "/Library/EstonianIDCard/lib/esteid-pkcs11.so";
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx10.9;
 			};
 			name = Debug;
 		};
@@ -626,14 +559,13 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PKCS11_DRIVER = "/Library/EstonianIDCard/lib/esteid-pkcs11.so";
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx10.9;
 			};
 			name = Release;
 		};
 		F642D7441238C7D300CBFD02 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				PRODUCT_NAME = "keychain-tool";
@@ -643,7 +575,6 @@
 		F642D7451238C7D300CBFD02 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				PRODUCT_NAME = "keychain-tool";
 			};
@@ -657,15 +588,6 @@
 			buildConfigurations = (
 				124E7EE211F6DE0200AED77F /* Debug */,
 				124E7EE311F6DE0200AED77F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		124E7EEC11F6DE7200AED77F /* Build configuration list for PBXAggregateTarget "all" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				124E7EE611F6DE4500AED77F /* Debug */,
-				124E7EE711F6DE4500AED77F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
