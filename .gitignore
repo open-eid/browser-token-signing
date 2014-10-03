@@ -1,0 +1,6 @@
+*Release*
+*Debug*
+*.sdf
+*.opensdf
+ie/dlldata.c
+ie/esteidpluginie_i.h
