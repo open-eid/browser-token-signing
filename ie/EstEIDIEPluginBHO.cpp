@@ -247,7 +247,7 @@ void CEstEIDIEPluginBHO::signWithCSP(BSTR id, BSTR hash, BSTR *signature) {
 		while(certContext = CertFindCertificateInStore(cert_store, X509_ASN_ENCODING, 0, CERT_FIND_ANY, NULL, certContext)) {
 			if(certificateMatchesId(certContext, id)) {
 				DWORD key_type = 0;
-				if (CryptAcquireCertificatePrivateKey(certContext, CRYPT_ACQUIRE_CACHE_FLAG, 
+				if (CryptAcquireCertificatePrivateKey(certContext, CRYPT_ACQUIRE_CACHE_FLAG,
 					NULL, &cryptoProvider, &key_type, &must_release_provider)) {
 						BYTE hashBytes[21];
 						DWORD hashBytesLength = 20;
@@ -409,20 +409,34 @@ STDMETHODIMP CEstEIDIEPluginBHO::sign(BSTR id, BSTR hash, BSTR language, BSTR *s
 
 	FAIL_IF_SITE_IS_NOT_ALLOWED;
 
-	try {
+	try
+	{
 		EstEID_setLocale(CW2A(this->language));
-#ifndef INTERNATIONAL
-		if(isCNGInstalled() && isWinVistaOrLater()) {
+
+		if (canUseCNG(id))
+		{
+			EstEID_log("CNG can be used with selected certificate");
 			signWithCNG(id, hash, signature);
-		}
-		else if(isWinVistaOrLater()){
-			signWithCSP(id, hash, signature);
+			EstEID_log("CNG sign OK");
 		}
 		else
-#endif
-			signWithPKCS11(NULL, id, hash, signature);
+		{
+			try
+			{
+				EstEID_log("CNG cannot be used with selected certificate. Using CAPI.");
+				signWithCSP(id, hash, signature);
+				EstEID_log("CAPI sign OK");
+			}
+			catch (CryptoException e)
+			{
+				EstEID_log("CAPI signing failed. Trying signing over PKCS11 interface.");
+				signWithPKCS11(NULL, id, hash, signature);
+				EstEID_log("PKCS11 sign OK");
+			}
+		}
 	}
-	catch (CryptoException e) {
+	catch (CryptoException e)
+	{
 		EstEID_log("CryptoException caught during signing!");
 		if(e._reason.compare("User cancel")){
 			setError(ESTEID_USER_CANCEL);
@@ -460,6 +474,47 @@ BOOL CEstEIDIEPluginBHO::isWinVistaOrLater() {
     DWORD minor = (DWORD) (HIBYTE(LOWORD(version)));
 
     return (major > 6) || ((major == 6) && (minor >= 0));
+}
+
+BOOL CEstEIDIEPluginBHO::canUseCNG(BSTR id)
+{
+	HCERTSTORE cert_store;
+	PCCERT_CONTEXT certContext = NULL;
+	NCRYPT_KEY_HANDLE hKey = NULL;
+	BOOL must_release_provider;
+
+	if (isCNGInstalled())
+	{
+		if (!id || !strlen(CW2A(id)))
+		{
+			throw CryptoException(ESTEID_CERT_NOT_FOUND_ERROR);
+		}
+
+		cert_store = CertOpenStore(CERT_STORE_PROV_SYSTEM, 0, NULL, CERT_SYSTEM_STORE_CURRENT_USER | CERT_STORE_READONLY_FLAG, L"MY");
+		if (!cert_store) throw CryptoException();
+
+		while (certContext = CertFindCertificateInStore(cert_store, X509_ASN_ENCODING, 0, CERT_FIND_ANY, NULL, certContext))
+		{
+			if (certificateMatchesId(certContext, id))
+			{
+				if (!CryptAcquireCertificatePrivateKey(certContext, CRYPT_ACQUIRE_ONLY_NCRYPT_KEY_FLAG | CRYPT_ACQUIRE_COMPARE_KEY_FLAG | CRYPT_ACQUIRE_SILENT_FLAG, NULL, &hKey, NULL, &must_release_provider))
+				{
+					CertFreeCertificateContext(certContext);
+					if (must_release_provider) CertCloseStore(cert_store, 0);
+					return false;
+				}
+				else
+				{
+					CertFreeCertificateContext(certContext);
+					if (must_release_provider) CertCloseStore(cert_store, 0);
+					return true;
+				}
+			}
+		}
+	}
+	CertFreeCertificateContext(certContext);
+	if (must_release_provider) CertCloseStore(cert_store, 0);
+	return false;
 }
 
 BOOL CEstEIDIEPluginBHO::isCNGInstalled() {

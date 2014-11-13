@@ -100,6 +100,7 @@ private:
 	void CEstEIDIEPluginBHO::signWithCNG(BSTR id, BSTR hash, BSTR *signature);
 	BOOL CEstEIDIEPluginBHO::isCNGInstalled();
 	BOOL CEstEIDIEPluginBHO::isWinVistaOrLater() ;
+	BOOL CEstEIDIEPluginBHO::canUseCNG(BSTR id);
 	void CEstEIDIEPluginBHO::showAlert(void *nativeWindowHandle, const char *message);
 	void signWithPKCS11(HINSTANCE hInst, BSTR id, BSTR hash, BSTR *signature);
 
