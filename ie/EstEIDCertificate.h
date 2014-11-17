@@ -89,8 +89,8 @@ private:
 	HCRYPTPROV cryptoProvider;
 	DWORD length;
 	std::string id;
-	TCHAR CN[2048];
-	TCHAR issuerCN[2048];
+	TCHAR CN[64];
+	TCHAR issuerCN[64];
 	std::string validFrom;
 	std::string validTo;
 	std::string certificateAsHex;

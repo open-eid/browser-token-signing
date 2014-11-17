@@ -1,0 +1,12 @@
+#!/usr/bin/make -f
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
+
+%:
+	dh $@
+
+.PHONY: override_dh_strip
+override_dh_strip:
+	dh_strip --dbg-package=esteidfirefoxplugin-dbg
