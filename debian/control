@@ -1,0 +1,37 @@
+Source: esteidfirefoxplugin
+Section: web
+Priority: extra
+Maintainer: RIA <info@ria.ee>
+Build-Depends:
+ debhelper (>= 7),
+ libgtk2.0-dev,
+ libssl-dev
+Standards-Version: 3.9.5
+Homepage: https://github.com/open-eid/browser-token-signing
+
+Package: esteidfirefoxplugin
+Architecture: any
+Conflicts:
+ esteid-browser-plugin,
+ mozilla-esteid,
+ thunderbird-esteid
+Depends:
+ opensc,
+ pcscd,
+ ${misc:Depends},
+ ${shlibs:Depends}
+Description: Firefox Estonian ID card digital signature plugin
+ This package provides a Firefox plugin that allows giving digital signatures
+ on web sites using the Estonian ID card. This allows giving legally binding
+ signatures to documents and agreements on government, bank and other service
+ provider web sites that support the Estonian ID card.
+
+Package: esteidfirefoxplugin-dbg
+Architecture: any
+Section: debug
+Depends:
+ esteidfirefoxplugin (= ${binary:Version}),
+ ${misc:Depends}
+Description: Debugging symbols for esteidfirefoxplugin
+ This package contains the debugging symbols for the Firefox Estonian ID card
+ digital signature plugin.
