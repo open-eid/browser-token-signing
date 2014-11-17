@@ -39,7 +39,7 @@ std::string CEstEIDCertificate::dateToString(FILETIME *filetime) {
 	EstEID_log("");
 	SYSTEMTIME systemtime;
 	FileTimeToSystemTime(filetime, &systemtime);
-	char buf[40] = {0};
+	char buf[160] = {0};
 	sprintf_s(buf, "%02d.%02d.%04d %02d:%02d:%02d", systemtime.wDay, systemtime.wMonth, systemtime.wYear, systemtime.wHour, systemtime.wMinute, systemtime.wSecond);
 	std::string result = buf;
 	return result;
@@ -97,11 +97,11 @@ void CEstEIDCertificate::readFromCertContext() {
 void CEstEIDCertificate::loadCertContexts(PCCERT_CONTEXT certContext) {
 	USES_CONVERSION;
 	EstEID_log("");
-	CryptoErrorHandler(CertGetNameString(certContext, CERT_NAME_ATTR_TYPE, 0, szOID_COMMON_NAME, this->CN, 64));
+	CryptoErrorHandler(CertGetNameString(certContext, CERT_NAME_ATTR_TYPE, 0, szOID_COMMON_NAME, this->CN, 2048));
 	std::string s = W2A(this->CN);
 	EstEID_log("Certificate = %s", s.c_str());
 		
-	CryptoErrorHandler(CertGetNameString(certContext, CERT_NAME_ATTR_TYPE, CERT_NAME_ISSUER_FLAG, szOID_COMMON_NAME, this->issuerCN, 64));
+	CryptoErrorHandler(CertGetNameString(certContext, CERT_NAME_ATTR_TYPE, CERT_NAME_ISSUER_FLAG, szOID_COMMON_NAME, this->issuerCN, 2048));
 
 	std::stringstream buf;
 	for(size_t i = certContext->pCertInfo->SerialNumber.cbData ; i > 0  ;i--) 
