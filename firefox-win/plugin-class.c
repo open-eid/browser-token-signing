@@ -32,6 +32,9 @@
 #include "esteid_sign.h"
 #include <ncrypt.h>
 #include "cert_dialog_win.h"
+#include "atlsafe.h"
+
+#define VALID_HASH_LENGTH 40
 
 extern HINSTANCE pluginInstance;
 
@@ -103,6 +106,29 @@ void *getNativeWindowHandle(PluginInstance *obj) {
 	return nativeWindowHandle;
 }
 
+int getHashAlgorithm(int hashHexLength) {
+	int hashAlgorithm = -1;
+
+	switch (hashHexLength) {
+	case BINARY_SHA1_LENGTH * 2:
+		hashAlgorithm = CALG_SHA1;
+		break;
+	case BINARY_SHA256_LENGTH * 2:
+		hashAlgorithm = CALG_SHA_256;
+		break;
+	case BINARY_SHA512_LENGTH * 2:
+		hashAlgorithm = CALG_SHA_512;
+		break;
+	}
+	if (hashAlgorithm == -1) {
+		sprintf(EstEID_error, "invalid incoming hash length: %i", hashHexLength);
+		EstEID_log(EstEID_error);
+		EstEID_errorCode = ESTEID_INVALID_HASH_ERROR;
+		return -1;
+	}
+	return hashAlgorithm;
+}
+
 char *getLanguageFromOptions(PluginInstance *obj, NPVariant options) {
 	LOG_LOCATION;
 	NPObject *object = NPVARIANT_TO_OBJECT(options);
@@ -117,21 +143,256 @@ char *getLanguageFromOptions(PluginInstance *obj, NPVariant options) {
 	return "";
 }
 
-bool doSign(PluginInstance *obj, NPVariant *args, unsigned argCount, NPVariant *result) {
+BOOL isCNGInstalled() {
+	HKEY hKey;
+	long result = 0;
+	result = RegOpenKeyEx(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Cryptography\\Calais\\SmartCards", 0, KEY_READ, &hKey);
+	if (result != ERROR_SUCCESS) {
+		return true;
+	}
+
+	DWORD subkeyIndex = 0;
+	WCHAR subkeyValue[512];
+	DWORD subkeySize = sizeof(subkeyValue);
+
+	result = ERROR_SUCCESS;
+	WCHAR driverName[64];
+	DWORD driverNameSize = sizeof(driverName);
+	while (result != ERROR_NO_MORE_ITEMS) {
+		result = RegEnumKey(hKey, subkeyIndex++, subkeyValue, subkeySize);
+		if (wcsncmp(subkeyValue, L"EstEID National ID Card", wcslen(L"EstEID National ID Card")) == 0) {
+
+			HKEY driverSubkey;
+
+			long errorCode = RegOpenKeyEx(hKey, subkeyValue, 0, KEY_READ, &driverSubkey);
+			if (errorCode != ERROR_SUCCESS) {
+				return true;
+			}
+			errorCode = RegQueryValueEx(driverSubkey, L"Crypto Provider", NULL, NULL, (LPBYTE)driverName, &driverNameSize);
+			if (errorCode != ERROR_SUCCESS){
+				driverName[0] = '\0';
+			}
+
+			RegCloseKey(driverSubkey);
+			EstEID_log("driverName = %s", CW2A(driverName));
+			return wcscmp(driverName, L"EstEID Card CSP") != 0;
+		}
+	}
+
+	RegCloseKey(hKey);
+	return true;
+}
+
+BOOL canUseCNG(char* id)
+{
+	HCERTSTORE cert_store;
+	PCCERT_CONTEXT certContext = NULL;
+	NCRYPT_KEY_HANDLE hKey = NULL;
+	BOOL must_release_provider;
+
+	if (isCNGInstalled())
+	{
+		if (!id || !strlen(id))
+		{
+			return false;
+		}
+
+		cert_store = CertOpenStore(CERT_STORE_PROV_SYSTEM, 0, NULL, CERT_SYSTEM_STORE_CURRENT_USER | CERT_STORE_READONLY_FLAG, L"MY");
+		if (!cert_store) return false;;
+
+		while (certContext = CertFindCertificateInStore(cert_store, X509_ASN_ENCODING, 0, CERT_FIND_ANY, NULL, certContext))
+		{
+			if (certificateMatchesId(certContext, id))
+			{
+				if (!CryptAcquireCertificatePrivateKey(certContext, CRYPT_ACQUIRE_ONLY_NCRYPT_KEY_FLAG | CRYPT_ACQUIRE_COMPARE_KEY_FLAG, NULL, &hKey, NULL, &must_release_provider))
+				{
+					CertFreeCertificateContext(certContext);
+					if (must_release_provider) CertCloseStore(cert_store, 0);
+					return false;
+				}
+				else
+				{
+					CertFreeCertificateContext(certContext);
+					if (must_release_provider) CertCloseStore(cert_store, 0);
+					return true;
+				}
+			}
+		}
+	}
+	CertFreeCertificateContext(certContext);
+	if (must_release_provider) CertCloseStore(cert_store, 0);
+	return false;
+}
+
+bool doSignCNG(PluginInstance *obj, BCRYPT_PKCS1_PADDING_INFO padInfo, char *hash, int hashHexLength, char **signature)
+{
+	NCRYPT_KEY_HANDLE hKey = NULL;
+	SECURITY_STATUS secStatus = ERROR_SUCCESS;
+	DWORD cbSignature = 0;
+	PBYTE pbSignature = NULL;
+
+	LOG_LOCATION;
+	if (!CryptAcquireCertificatePrivateKey(obj->certContext, CRYPT_ACQUIRE_ONLY_NCRYPT_KEY_FLAG | CRYPT_ACQUIRE_COMPARE_KEY_FLAG, NULL, &hKey, NULL, NULL)) {
+		LOG_LOCATION;
+		EstEID_log("**** Error 0x%x returned by CryptAcquireCertificatePrivateKey\n", GetLastError());
+		handleError("CryptAcquireCertificatePrivateKey", obj);
+		return false;
+	}
+
+	LOG_LOCATION;
+	HWND window = (HWND)getNativeWindowHandle(obj);
+	NCryptSetProperty(hKey, NCRYPT_WINDOW_HANDLE_PROPERTY, (PBYTE)window, NULL, NULL);
+	LOG_LOCATION;
+
+	if (FAILED(secStatus = NCryptSignHash(hKey, &padInfo, (PBYTE)hash, hashHexLength, NULL, 0, &cbSignature, 0))) {
+		LOG_LOCATION;
+		handleErrorWithCode(secStatus, "NCryptSignHash", obj);
+		return false;
+	}
+
+	LOG_LOCATION;
+	//allocate the signature buffer
+	pbSignature = (PBYTE)HeapAlloc(GetProcessHeap(), 0, cbSignature);
+	if (NULL == pbSignature){
+		handleErrorWithCode(ESTEID_CRYPTO_API_ERROR, "HeapAlloc", obj);
+		return false;
+	}
+	LOG_LOCATION;
+	if (FAILED(secStatus = NCryptSignHash(hKey, &padInfo, (PBYTE)hash, hashHexLength, pbSignature, cbSignature, &cbSignature, BCRYPT_PAD_PKCS1))) {
+		LOG_LOCATION;
+		EstEID_log("**** Error 0x%x returned by NCryptSignHash\n", secStatus);
+		handleErrorWithCode(secStatus, "NCryptSignHash", obj);
+		return false;
+	}
+
+	LOG_LOCATION;
+	*signature = byteToChar(pbSignature, cbSignature);
+
+	EstEID_log("Signature: %s", *signature);
+	
+	LOG_LOCATION;
+	if (pbSignature) HeapFree(GetProcessHeap(), 0, pbSignature);
+	if (hKey) NCryptFreeObject(hKey);
+	return true;
+}
+
+bool doSignCSP(PluginInstance *obj, BCRYPT_PKCS1_PADDING_INFO padInfo, char *inHash, int hashHexLength, char **signature)
+{
+	WCHAR* hash = NULL;
+	int wHashLen = 0;
+	BOOL must_release_provider;
+	HCRYPTPROV cryptoProvider = NULL;
+	DWORD key_type = 0;
+	HCRYPTHASH _hash = NULL;
+
+	int hashHexLenth = strlen(inHash);
+	wHashLen = MultiByteToWideChar(CP_ACP, 0, inHash, -1, NULL, 0);
+	hash = new WCHAR[hashHexLength];
+	MultiByteToWideChar(CP_ACP, 0, inHash, -1, (LPWSTR)hash, hashHexLength);
+
+	int hashAlgorithm = getHashAlgorithm(hashHexLenth*2);
+	if (hashAlgorithm == -1) {
+		browserFunctions->setexception(&obj->header, EstEID_error);
+		return false;
+	}
+
+	if (CryptAcquireCertificatePrivateKey(obj->certContext, 0, NULL, &cryptoProvider, &key_type, &must_release_provider))
+	{
+		EstEID_log("must_release_provider = %i", must_release_provider);
+
+		BYTE hashBytes[21];
+		DWORD hashBytesLength = 20;
+		CryptStringToBinary(hash, hashHexLenth, CRYPT_STRING_HEX, hashBytes, &hashBytesLength, 0, 0);
+		EstEID_log("Number of bytes stored in hashBytes buffer = %u", hashBytesLength);
+
+		hashBytes[hashBytesLength] = '\0';
+
+		for (int i = 0; i < sizeof(hashBytes); i++)
+			EstEID_log("hashBytes: %02X", hashBytes[i]);
+
+		EstEID_log("_hash = %p, cryptoProvider = %p", _hash, cryptoProvider);
+		if (!CryptCreateHash(cryptoProvider, hashAlgorithm, 0, 0, &_hash)){
+			handleError("CryptCreateHash", obj);
+			return false;
+		}
+		EstEID_log("CryptCreateHash() set hash object pointer to %p", _hash);
+
+		if (!CryptSetHashParam(_hash, HP_HASHVAL, hashBytes, 0)){
+			handleError("CryptSetHashParam", obj);
+			return false;
+		}
+
+		BYTE         *pbHash;
+		DWORD        dwHashLen;
+		DWORD        dwHashLenSize = sizeof(DWORD);
+		CryptGetHashParam(_hash, HP_HASHSIZE, (BYTE *)&dwHashLen, &dwHashLenSize, 0);
+		pbHash = (BYTE*)malloc(dwHashLen);
+		CryptGetHashParam(_hash, HP_HASHVAL, pbHash, &dwHashLen, 0);
+		EstEID_log("Hash len in bytes: %i", dwHashLen);
+		for (int i = 0; i < dwHashLen; i++)
+			EstEID_log("hashBytes: %02X", pbHash[i]);
+
+#define SIGNATURE_LENGTH 1024
+
+		BYTE _signature[SIGNATURE_LENGTH];
+		DWORD signatureLength = SIGNATURE_LENGTH;
+		if (!CryptSignHash(_hash, AT_SIGNATURE, NULL, 0, _signature, &signatureLength))
+		{
+			DWORD err = GetLastError();
+			EstEID_log("CryptSignHash() AT_SIGNATURE ended with ERROR 0x%08X", err);
+
+			if (err == NTE_NO_KEY)
+			{
+				if (!CryptSignHash(_hash, AT_KEYEXCHANGE, NULL, 0, _signature, &signatureLength))
+				{
+					EstEID_log("CryptSignHash() AT_KEYEXCHANGE ended with ERROR 0x%08X", GetLastError());
+					handleError("CryptSignHash AT_KEYEXCHANGE", obj);
+					return false;
+				}
+				else
+					EstEID_log("CryptSignHash() AT_KEYEXCHANGE ended with OK");
+			}
+			else
+			{
+				handleError("CryptSignHash AT_SIGNATURE", obj);
+				return false;
+			}
+		}
+		else
+			EstEID_log("CryptSignHash() AT_SIGNATURE ended with SUCCESS");
+
+		CryptDestroyHash(_hash);
+		if (must_release_provider) {
+			CryptReleaseContext(cryptoProvider, 0);
+		}
+
+		*signature = byteToChar(_signature, signatureLength);
+	}
+	else
+	{
+		if (hash) free(hash);
+		handleError("CryptAcquireCertificatePrivateKey", obj);
+		return false;
+	}
+
+	return true;
+}
+
+bool doSign(PluginInstance *obj, NPVariant *args, unsigned argCount, NPVariant *result)
+{
 	EstEID_log("obj=%p, obj->certContex=%p, name=sign argCount=%u", obj, obj->certContext, argCount);
 	int methodResult = true;
 	
 	#define NT_SUCCESS(Status)          (((NTSTATUS)(Status)) >= 0)
-	SECURITY_STATUS secStatus = ERROR_SUCCESS;
-	NCRYPT_KEY_HANDLE hKey = NULL;
-	DWORD cbSignature = 0;
+	
+	
+	
 	NTSTATUS status = ((NTSTATUS)0xC0000001L);
-	PBYTE pbSignature = NULL;
+	
 	char *hash = NULL;
 	char *certId = NULL;
 	HCERTSTORE cert_store = NULL;
 	PCCERT_CONTEXT certContext = NULL;
-
 
 	FAIL_IF_NOT_ALLOWED_SITE;
 	
@@ -200,45 +461,70 @@ bool doSign(PluginInstance *obj, NPVariant *args, unsigned argCount, NPVariant *
 		browserFunctions->setexception(&obj->header, EstEID_error);
 		return false;
 	}
-	
-	if (!CryptAcquireCertificatePrivateKey(obj->certContext, CRYPT_ACQUIRE_ONLY_NCRYPT_KEY_FLAG|CRYPT_ACQUIRE_COMPARE_KEY_FLAG, NULL, &hKey, NULL, NULL)) {
-		EstEID_log("**** Error 0x%x returned by CryptAcquireCertificatePrivateKey\n", GetLastError());
-	    handleError("CryptAcquireCertificatePrivateKey", obj);
-		methodResult = false;
-		goto Cleanup;
-    }
 
-	HWND window = (HWND)getNativeWindowHandle(obj);
-	NCryptSetProperty(hKey, NCRYPT_WINDOW_HANDLE_PROPERTY, (PBYTE)window, NULL, NULL);
-    
 	hash = EstEID_hex2bin(createStringFromNPVariant(&args[1]));
-	if(FAILED(secStatus = NCryptSignHash(hKey, &padInfo, (PBYTE)hash, hashHexLength, NULL, 0, &cbSignature, 0))) {
-		handleErrorWithCode(secStatus, "NCryptSignHash", obj);
-		methodResult = false;
-		goto Cleanup;
-    }
+	
+	//Convert certId from char * to BSTR
+	/*WCHAR* wCertID = NULL;
+	int wHashLen = 0;
 
-    //allocate the signature buffer
-    pbSignature = (PBYTE)HeapAlloc (GetProcessHeap (), 0, cbSignature);
-    if(NULL == pbSignature){
-        handleErrorWithCode(ESTEID_CRYPTO_API_ERROR, "HeapAlloc", obj);
-		methodResult = false;
-        goto Cleanup;
-    }
-	if(FAILED(secStatus = NCryptSignHash(hKey, &padInfo, (PBYTE)hash, hashHexLength, pbSignature, cbSignature, &cbSignature, BCRYPT_PAD_PKCS1))) {
-        EstEID_log("**** Error 0x%x returned by NCryptSignHash\n", secStatus);
-        handleErrorWithCode(secStatus, "NCryptSignHash", obj);
-		methodResult = false;
-		goto Cleanup;
-    }
+	int certIDHexLength = strlen(certID);
+	wHashLen = MultiByteToWideChar(CP_ACP, 0, certId, -1, NULL, 0);
+	hash = new WCHAR[hashHexLength];
+	MultiByteToWideChar(CP_ACP, 0, certId, -1, (LPWSTR)wCertID, certIDHexLength);*/
 
-	char* signature = byteToChar(pbSignature, cbSignature);
+
+	LOG_LOCATION;
+	char *signature = "";
+
+	if (canUseCNG(certId))
+	{
+		EstEID_log("CNG can be used with selected certificate");
+		if (!doSignCNG(obj, padInfo, hash, hashHexLength, &signature))
+		{
+			EstEID_log("CNG signing. Using CAPI.");
+			methodResult = false;
+			goto Cleanup;
+		}
+		else
+		{
+			EstEID_log("CNG sign OK");
+			methodResult = true;
+			EstEID_log("Returned signature: %s", signature);
+		}
+	}
+	else
+	{
+		EstEID_log("CNG cannot be used with selected certificate. Using CAPI.");
+		if (!doSignCSP(obj, padInfo, hash, hashHexLength, &signature))
+		{
+			EstEID_log("CAPI signing failed.");
+			methodResult = false;
+			goto Cleanup;
+		}
+		else
+		{
+			EstEID_log("CAPI sign OK");
+			methodResult = true;
+			EstEID_log("Returned signature: %s", signature);
+		}
+	}
+	
+
+	LOG_LOCATION;
 	copyStringToNPVariant(signature, result);
-	if(signature) free(signature);
+	LOG_LOCATION;
+	if (signature)
+	{
+		LOG_LOCATION;
+		free(signature);
+		LOG_LOCATION;
+	}
+	LOG_LOCATION;
 
 Cleanup:
-	if(pbSignature) HeapFree(GetProcessHeap(), 0, pbSignature);
-    if(hKey) NCryptFreeObject(hKey);
+	
+	LOG_LOCATION;
 	if(hash) free(hash);
 	if(certId) free(certId);
 	EstEID_log("Signing ended");
@@ -463,7 +749,7 @@ void handleError(char* methodName, PluginInstance *obj) {
 }
 
 void handleErrorWithCode(int errorCode, char* methodName, PluginInstance *obj) {
-	sprintf(EstEID_error, "ERROR: %s failed, error code = %lXh", methodName, errorCode);
+	sprintf(EstEID_error, "ERROR: %s failed, error code = 0x%02X", methodName, errorCode);
 	EstEID_log(EstEID_error);
 	if(errorCode == SCARD_W_CANCELLED_BY_USER) {
 		sprintf(EstEID_error, "User cancel");
