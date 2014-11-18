@@ -56,6 +56,9 @@ void CEstEIDCertificate::readFromCertContext() {
 	if(!hCertStore){
 		throw CryptoException();
 	}
+
+	EstEID_log("Pointer to CERT_STORE 0x%08X", hCertStore);
+
 	sel.pvCallbackData = &counter;
 	sel.pFilterCallback = filter_proc;
 	sel.rghDisplayStores = &hCertStore;
@@ -63,45 +66,78 @@ void CEstEIDCertificate::readFromCertContext() {
 	
 #ifdef _SEB_BUILD	
 	EstEID_log("SEB build");
+	EstEID_log("Pointer to CERT_STORE 0x%08X", hCertStore);
 	PCCERT_CONTEXT pCertContextForEnumeration = NULL;
 	int certificatesCount = 0;
-	while(pCertContextForEnumeration = CertEnumCertificatesInStore(hCertStore, pCertContextForEnumeration)) {
-		if(isValidForSigning(pCertContextForEnumeration)) {
+	EstEID_log("Pointer to CERT_STORE 0x%08X", hCertStore);
+	while(pCertContextForEnumeration = CertEnumCertificatesInStore(hCertStore, pCertContextForEnumeration))
+	{
+		if(isValidForSigning(pCertContextForEnumeration))
+		{
 			certificatesCount++;	
 			pCertContext = pCertContextForEnumeration;
+			loadCertContexts(pCertContext);
 		}
 	}
 
+	EstEID_log("Pointer to CERT_STORE 0x%08X", hCertStore);
+
 	EstEID_log("Certificates count %i", certificatesCount);
 
-	if(certificatesCount != 1) {
+	if(certificatesCount != 1)
+	{
 		pCertContext = CryptUIDlgSelectCertificate(&sel);
+	}
+
+	EstEID_log("Pointer to CERT_STORE 0x%08X", hCertStore);
+
+	if (pCertContextForEnumeration){
+		CertFreeCertificateContext(pCertContextForEnumeration);
 	}
 #else
 	pCertContext = CryptUIDlgSelectCertificate(&sel);
+	loadCertContexts(pCertContext);
+
+	if (pCertContext){
+		CertFreeCertificateContext(pCertContext);
+	}
 #endif
 	if(!pCertContext) {
 		EstEID_log("User didn't select sertificate");
 		throw CryptoException(ESTEID_USER_CANCEL);
 	}
 
-	loadCertContexts(pCertContext);
-	if(pCertContext){
-		CertFreeCertificateContext(pCertContext);
-	}
-	if(hCertStore) {
+	
+
+	EstEID_log("Pointer to CERT_STORE 0x%08X", hCertStore);
+
+	if (hCertStore) {
 		CertCloseStore(hCertStore, CERT_CLOSE_STORE_FORCE_FLAG);
 	}
+	
 }
 
 void CEstEIDCertificate::loadCertContexts(PCCERT_CONTEXT certContext) {
 	USES_CONVERSION;
 	EstEID_log("");
-	CryptoErrorHandler(CertGetNameString(certContext, CERT_NAME_ATTR_TYPE, 0, szOID_COMMON_NAME, this->CN, 2048));
+	DWORD certNameSize = 0;
+
+	certNameSize = CertGetNameString(certContext, CERT_NAME_ATTR_TYPE, 0, szOID_COMMON_NAME, NULL, 0);
+	if (_tcslen(this->CN) > certNameSize) 
+	{
+		EstEID_log("Allocated buffer is to small %i to hold certificate CN %i", _tcslen(this->CN), certNameSize);
+	}
+	CryptoErrorHandler(CertGetNameString(certContext, CERT_NAME_ATTR_TYPE, 0, szOID_COMMON_NAME, this->CN, certNameSize));
+	
 	std::string s = W2A(this->CN);
 	EstEID_log("Certificate = %s", s.c_str());
-		
-	CryptoErrorHandler(CertGetNameString(certContext, CERT_NAME_ATTR_TYPE, CERT_NAME_ISSUER_FLAG, szOID_COMMON_NAME, this->issuerCN, 2048));
+	
+	certNameSize = CertGetNameString(certContext, CERT_NAME_ATTR_TYPE, CERT_NAME_ISSUER_FLAG, szOID_COMMON_NAME, this->issuerCN, certNameSize);
+	if (_tcslen(this->issuerCN) > certNameSize)
+	{
+		EstEID_log("Allocated buffer is to small %i to hold certificate issuer CN %i", _tcslen(this->CN), certNameSize);
+	}
+	CryptoErrorHandler(CertGetNameString(certContext, CERT_NAME_ATTR_TYPE, CERT_NAME_ISSUER_FLAG, szOID_COMMON_NAME, this->issuerCN, certNameSize));
 
 	std::stringstream buf;
 	for(size_t i = certContext->pCertInfo->SerialNumber.cbData ; i > 0  ;i--) 
