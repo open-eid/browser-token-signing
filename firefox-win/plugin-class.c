@@ -280,7 +280,7 @@ bool doSignCSP(PluginInstance *obj, BCRYPT_PKCS1_PADDING_INFO padInfo, char *inH
 {
 	WCHAR* hash = NULL;
 	int wHashLen = 0;
-	BOOL must_release_provider;
+	BOOL must_release_provider = false;
 	HCRYPTPROV cryptoProvider = NULL;
 	DWORD key_type = 0;
 	HCRYPTHASH _hash = NULL;

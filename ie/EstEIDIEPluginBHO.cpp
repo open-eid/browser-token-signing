@@ -228,7 +228,7 @@ void CEstEIDIEPluginBHO::signWithCSP(BSTR id, BSTR hash, BSTR *signature) {
 	HCRYPTHASH _hash = NULL ;
 	PCCERT_CONTEXT certContext = NULL;
 	HCERTSTORE cert_store;
-	BOOL must_release_provider;		
+	BOOL must_release_provider = false;		
 
 	try{
 		if(!id || !strlen(CW2A(id))) {
