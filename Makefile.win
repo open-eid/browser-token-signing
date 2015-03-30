@@ -2,9 +2,9 @@
 OPENSSL_ROOT_DIR = C:\OpenSSL-Win32
 OUT = npesteid-firefox-plugin
 CC = cl
-C_FLAGS = /TP /nologo /EHsc /MT
+C_FLAGS = /TP /nologo /EHsc /MD
 I_FLAGS = /Iinclude /Icommon /I$(OPENSSL_ROOT_DIR)\include
-L_FLAGS = /LD /link user32.lib gdi32.lib $(OPENSSL_ROOT_DIR)\lib\VC\static\libeay32MT.lib plugin-win.res /OUT:$(OUT).dll /IMPLIB:$(OUT).lib /DEF:firefox\plugin-win.def
+L_FLAGS = /LD /link user32.lib gdi32.lib $(OPENSSL_ROOT_DIR)\lib\VC\libeay32MD.lib plugin-win.res /OUT:$(OUT).dll /IMPLIB:$(OUT).lib /DEF:firefox\plugin-win.def
 D_FLAGS = /DWIN32 /D_UNICODE /DUNICODE
 !IF "$(PKCS11_DRIVER)" != ""
 D_FLAGS = $(D_FLAGS) "/DINTERNATIONAL=\"$(PKCS11_DRIVER)\""
