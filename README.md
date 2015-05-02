@@ -24,7 +24,7 @@
 
 4. Install
 
-        sudo make install
+        make install
 
 5. Execute
 

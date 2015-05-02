@@ -28,8 +28,8 @@ plugin-development:
 	MODE_FLAG=-DDEVELOPMENT_MODE make plugin 
 
 install: plugin
-#	install -d $(HOME)/.mozilla/plugins
-#	install $(OUT) $(HOME)/.mozilla/plugins
+	install -d $(HOME)/.mozilla/plugins
+	install $(OUT) $(HOME)/.mozilla/plugins
 
 installall: plugin pluginlt pluginlv
 
