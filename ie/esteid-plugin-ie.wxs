@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Chrome Token Signing Native Host
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+-->
+
+<!--
+"%WIX%\bin\candle.exe" chrome-token-signing.wxs -dVERSION=1.0.0
+"%WIX%\bin\light.exe" -out chrome-token-signing.msi chrome-token-signing.wixobj -v -ext WixUIExtension
+    -dWixUILicenseRtf=LICENSE.LGPL.rtf
+    -dWixUIDialogBmp=dlgbmp.bmp
+-->
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Name="IE Token Signing BHO" UpgradeCode="713f9d27-5016-4c6a-bee1-94403255fbd4"
+      Id="*" Language="1033" Version="$(var.VERSION)" Codepage="1251" Manufacturer="RIA">
+    <Package Keywords="Installer" InstallerVersion="405" Compressed="yes"/>
+    <MediaTemplate EmbedCab="yes" CompressionLevel="high"/>
+    <Icon Id="Icon.ico" SourceFile="ID.ico"/>
+    <Property Id="ARPPRODUCTICON" Value="Icon.ico"/>
+    <MajorUpgrade AllowSameVersionUpgrades="yes" DowngradeErrorMessage=
+      "A newer version of [ProductName] is already installed. If you are trying to downgrade, please uninstall the newer version first."/>
+    <Condition Message="[ProductName] requires Windows 7 or higher.">
+      <![CDATA[Installed OR (VersionNT >= 601)]]>
+    </Condition>
+    <UIRef Id="WixUI_Minimal" />
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id='ProgramFilesFolder'>
+        <Directory Id="APPLICATIONFOLDER" Name="IE Token Signing BHO">
+		
+          <Component Id="Application" Guid="{B5C61F10-1F23-497a-91A5-9348BA3DB6E6}">
+			<AppId Description="IE plugin for Estonian ID Card" Id="545B4ED6-A2FE-49F1-AF8E-FA18B6261E48"/>
+			<File Id="EE_IE_PLUGIN_DLL_X86" Source="Release/esteid-plugin-ie.dll">
+			  <TypeLib Id="{23EF5046-6402-4C39-B34B-3C47826805D1}" Description="esteidpluginie 1.0 Type Library" Language="0" MajorVersion="1" MinorVersion="0">
+				<Class Id="{2615B13B-A08B-442C-8032-4D9981060190}" Context="InprocServer32" Description="EstEIDCertificate Class" ThreadingModel="apartment" Programmable="yes">
+				  <ProgId Id="esteidpluginie.EstEIDCertificate.1" Description="EstEIDCertificate Class">
+					<ProgId Id="esteidpluginie.EstEIDCertificate" Description="EstEIDCertificate Class"/>
+				  </ProgId>
+				</Class>
+				<Class Id="{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}" Context="InprocServer32" Description="EstEIDIEPluginBHO Class" ThreadingModel="apartment" Programmable="yes">
+				  <ProgId Id="esteidpluginie.EstEIDIEPluginBHO.1" Description="EstEIDIEPluginBHO Class">
+					<ProgId Id="esteidpluginie.EstEIDIEPluginBHO" Description="EstEIDIEPluginBHO Class"/>
+				  </ProgId>
+				</Class>
+				<Interface Id="{4E59E13F-7CEE-4013-9275-685FAFCD560B}" Name="IEstEIDIEPluginBHO" ProxyStubClassId32="{00020424-0000-0000-C000-000000000046}"/>
+				<Interface Id="{E23AF8B5-2D34-45EC-95E6-24791F84486E}" Name="IEstEIDCertificate" ProxyStubClassId32="{00020424-0000-0000-C000-000000000046}"/>
+			  </TypeLib>
+			</File>
+			<ProgId Id="MIME"/>
+			<RegistryValue Root="HKCR" Key="AppID\esteid-plugin-ie.DLL" Name="AppID" Value="{545B4ED6-A2FE-49F1-AF8E-FA18B6261E48}" Type="string" Action="write"/>
+			<RegistryValue Root="HKCR" Key="MIME\Database\Content Type\application/x-digidoc" Name="CLSID" Value="{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}" Type="string" Action="write"/>
+			<RegistryValue Root="HKLM" Key="Software\Microsoft\Windows\CurrentVersion\Explorer\Browser Helper Objects\{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}" Value="EstEIDIEPluginBHO" Type="string" Action="write"/>
+			<RegistryValue Root="HKLM" Key="Software\Microsoft\Windows\CurrentVersion\Explorer\Browser Helper Objects\{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}" Name="NoExplorer" Value="1" Type="integer" Action="write"/>
+			<RegistryValue Root="HKLM" Key="Software\Microsoft\Windows\CurrentVersion\Ext\PreApproved\{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}" Value="EstEIDIEPluginBHO" Type="string" Action="write"/>
+			<RegistryValue Root="HKLM" Key="Software\Microsoft\Windows\CurrentVersion\Ext\PreApproved\{FC5B7BD2-584A-4153-92D7-4C5840E4BC28}" Value="EstEIDIEPluginBHO" Type="string" Action="write"/>
+
+			<RegistryKey Root="HKLM" Key="SOFTWARE\Classes\CLSID\{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}\Implemented Categories\{7DD95801-9882-11CF-9FA9-00AA006C42C4}" Action="createAndRemoveOnUninstall"/>
+			<RegistryKey Root="HKLM" Key="SOFTWARE\Classes\CLSID\{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}\Implemented Categories\{59fb2056-d625-48d0-a944-1a85b5ab2640}" Action="createAndRemoveOnUninstall"/>
+			<RegistryKey Root="HKCR" Key="CLSID\{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}\Implemented Categories\{59fb2056-d625-48d0-a944-1a85b5ab2640}" Action="createAndRemoveOnUninstall"/>
+			<RegistryKey Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Ext\CLSID" Action="create"/>
+			<RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Ext\CLSID" Name="{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}" Value="1" Action="write" Type="string"/>
+		  
+		  
+			<!--
+            <File Source="$(env.VCINSTALLDIR)\redist\x86\Microsoft.VC120.CRT\msvcp120.dll"/>
+            <File Source="$(env.VCINSTALLDIR)\redist\x86\Microsoft.VC120.CRT\msvcr120.dll"/>
+            <File Source="$(env.VCINSTALLDIR)\redist\x86\Microsoft.VC120.CRT\vccorlib120.dll"/>
+            <File Source="$(env.VCINSTALLDIR)\redist\x86\Microsoft.VC120.MFC\mfc120u.dll"/>
+            <File Source="Release/esteid-plugin-ie.dll"/>
+            <RegistryValue Root='HKLM' Type='string' Value='[APPLICATIONFOLDER]ee.ria.esteid.json'
+                Key='SOFTWARE\Google\Chrome\NativeMessagingHosts\ee.ria.esteid'/>
+            <RegistryValue Root='HKLM' Type='string' Name="update_url"
+                Key='SOFTWARE\Google\Chrome\Extensions\ckjefchnfjhjfedoccjbhjpbncimppeg'
+                Value='https://clients2.google.com/service/update2/crx'/>
+			-->
+          </Component>
+		  
+		  <Component Id="approve" Guid="5C5728FC-2664-4A52-9A84-562C077BA8DD" Win64="no">
+			<RegistryValue Root="HKCU" Key="Software\Microsoft\Internet Explorer\Approved Extensions" Name="{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}" Value="51667a6c4c1d3b1bb4895b3145e674018a3f8b3a27bb3b2e" Type="binary" Action="write"/>
+		  </Component>
+		  
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <Feature Id="Install" Level="1" Title="IE Token Signing BHO" Display="expand" ConfigurableDirectory="APPLICATIONFOLDER">
+      <ComponentRef Id="Application"/>
+	  <ComponentRef Id="approve"/>
+    </Feature>
+  </Product>
+</Wix>
