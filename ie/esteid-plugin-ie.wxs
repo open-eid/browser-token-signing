@@ -29,8 +29,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
       Id="*" Language="1033" Version="$(var.VERSION)" Codepage="1251" Manufacturer="RIA">
     <Package Keywords="Installer" InstallerVersion="405" Compressed="yes"/>
     <MediaTemplate EmbedCab="yes" CompressionLevel="high"/>
-    <Icon Id="Icon.ico" SourceFile="ID.ico"/>
-    <Property Id="ARPPRODUCTICON" Value="Icon.ico"/>
     <MajorUpgrade AllowSameVersionUpgrades="yes" DowngradeErrorMessage=
       "A newer version of [ProductName] is already installed. If you are trying to downgrade, please uninstall the newer version first."/>
     <Condition Message="[ProductName] requires Windows 7 or higher.">
@@ -44,7 +42,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 		
           <Component Id="Application" Guid="{B5C61F10-1F23-497a-91A5-9348BA3DB6E6}">
 			<AppId Description="IE plugin for Estonian ID Card" Id="545B4ED6-A2FE-49F1-AF8E-FA18B6261E48"/>
-			<File Id="EE_IE_PLUGIN_DLL_X86" Source="Release/esteid-plugin-ie.dll">
+			<File Id="EE_IE_PLUGIN_DLL_X86" Source="ie/Release/esteid-plugin-ie.dll">
 			  <TypeLib Id="{23EF5046-6402-4C39-B34B-3C47826805D1}" Description="esteidpluginie 1.0 Type Library" Language="0" MajorVersion="1" MinorVersion="0">
 				<Class Id="{2615B13B-A08B-442C-8032-4D9981060190}" Context="InprocServer32" Description="EstEIDCertificate Class" ThreadingModel="apartment" Programmable="yes">
 				  <ProgId Id="esteidpluginie.EstEIDCertificate.1" Description="EstEIDCertificate Class">
@@ -81,11 +79,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
             <File Source="$(env.VCINSTALLDIR)\redist\x86\Microsoft.VC120.CRT\vccorlib120.dll"/>
             <File Source="$(env.VCINSTALLDIR)\redist\x86\Microsoft.VC120.MFC\mfc120u.dll"/>
             <File Source="Release/esteid-plugin-ie.dll"/>
-            <RegistryValue Root='HKLM' Type='string' Value='[APPLICATIONFOLDER]ee.ria.esteid.json'
-                Key='SOFTWARE\Google\Chrome\NativeMessagingHosts\ee.ria.esteid'/>
-            <RegistryValue Root='HKLM' Type='string' Name="update_url"
-                Key='SOFTWARE\Google\Chrome\Extensions\ckjefchnfjhjfedoccjbhjpbncimppeg'
-                Value='https://clients2.google.com/service/update2/crx'/>
 			-->
           </Component>
 		  
