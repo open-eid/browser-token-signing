@@ -35,6 +35,7 @@
 #include "../firefox/dialogs-win.h"
 #include "EstEIDPin2Dlg.h"
 #include "EstEIDPinPadDlg.h"
+#include "CngCapiSigner.h"
 extern "C" {
 #include "l10n.h"
 #include "../firefox/certselection-win.h"
@@ -409,6 +410,16 @@ STDMETHODIMP CEstEIDIEPluginBHO::sign(BSTR id, BSTR hash, BSTR language, BSTR *s
 
 	FAIL_IF_SITE_IS_NOT_ALLOWED;
 
+	USES_CONVERSION;
+	wstring hashToSign(hash, SysStringLen(hash));
+	wstring cert(id, SysStringLen(id));
+	std::string hashString(hashToSign.begin(), hashToSign.end());
+	std::string certString(cert.begin(), cert.end());
+	char * certId = W2A(id);
+	CngCapiSigner *signer = new CngCapiSigner(hashString, certId);
+	string result = signer->sign();
+	*signature = _bstr_t(result.c_str()).Detach();
+	/*
 	try
 	{
 		EstEID_setLocale(CW2A(this->language));
@@ -445,6 +456,7 @@ STDMETHODIMP CEstEIDIEPluginBHO::sign(BSTR id, BSTR hash, BSTR language, BSTR *s
 		mapInternalErrorCodes(e.windowsErrorCode);
 		return Error((this->errorMessage).c_str());
 	}
+	*/
 	setError(ESTEID_NO_ERROR);
 	EstEID_log("Signing ended");
 	return S_OK;

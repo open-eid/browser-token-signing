@@ -4,3 +4,4 @@
 *.opensdf
 ie/dlldata.c
 ie/esteidpluginie_i.h
+*.ipch
