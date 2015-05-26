@@ -36,6 +36,7 @@
 #include "EstEIDPin2Dlg.h"
 #include "EstEIDPinPadDlg.h"
 #include "CngCapiSigner.h"
+#include "HostExceptions.h"
 extern "C" {
 #include "l10n.h"
 #include "../firefox/certselection-win.h"
@@ -407,59 +408,24 @@ void CEstEIDIEPluginBHO::signWithCNG(BSTR id, BSTR hash, BSTR *signature) {
 
 STDMETHODIMP CEstEIDIEPluginBHO::sign(BSTR id, BSTR hash, BSTR language, BSTR *signature){
 	LOG_LOCATION;
-
 	FAIL_IF_SITE_IS_NOT_ALLOWED;
-
 	USES_CONVERSION;
-	wstring hashToSign(hash, SysStringLen(hash));
-	wstring cert(id, SysStringLen(id));
-	std::string hashString(hashToSign.begin(), hashToSign.end());
-	std::string certString(cert.begin(), cert.end());
-	char * certId = W2A(id);
-	CngCapiSigner *signer = new CngCapiSigner(hashString, certId);
-	string result = signer->sign();
-	*signature = _bstr_t(result.c_str()).Detach();
-	/*
-	try
-	{
-		EstEID_setLocale(CW2A(this->language));
-
-		if (canUseCNG(id))
-		{
-			EstEID_log("CNG can be used with selected certificate");
-			signWithCNG(id, hash, signature);
-			EstEID_log("CNG sign OK");
-		}
-		else
-		{
-			try
-			{
-				EstEID_log("CNG cannot be used with selected certificate. Using CAPI.");
-				signWithCSP(id, hash, signature);
-				EstEID_log("CAPI sign OK");
-			}
-			catch (CryptoException e)
-			{
-				EstEID_log("CAPI signing failed. Trying signing over PKCS11 interface.");
-				signWithPKCS11(NULL, id, hash, signature);
-				EstEID_log("PKCS11 sign OK");
-			}
-		}
+	try {
+		wstring hashToSign(hash, SysStringLen(hash));
+		std::string hashString(hashToSign.begin(), hashToSign.end());
+		char * certId = W2A(id);
+		CngCapiSigner *signer = new CngCapiSigner(hashString, certId);
+		string result = signer->sign();
+		*signature = _bstr_t(result.c_str()).Detach();
+		setError(ESTEID_NO_ERROR);
+		EstEID_log("Signing ended");
+		return S_OK;
 	}
-	catch (CryptoException e)
-	{
-		EstEID_log("CryptoException caught during signing!");
-		if(e._reason.compare("User cancel")){
-			setError(ESTEID_USER_CANCEL);
-			EstEID_log("CryptoExcepton reason - user cancel");
-		}
-		mapInternalErrorCodes(e.windowsErrorCode);
+	catch (BaseException &e) {
+		EstEID_log("Exception caught during signing: %s: %s", e.getErrorMessage(), e.getErrorDescription());
+		setError(e);
 		return Error((this->errorMessage).c_str());
 	}
-	*/
-	setError(ESTEID_NO_ERROR);
-	EstEID_log("Signing ended");
-	return S_OK;
 }
 
 BOOL CEstEIDIEPluginBHO::certificateMatchesId(PCCERT_CONTEXT certContext, BSTR id) {
@@ -604,4 +570,11 @@ void CEstEIDIEPluginBHO::setError(unsigned int code)
 	this->errorCode = code;
 	this->errorMessage.assign(getErrorMessage(code));
 	EstEID_log("Set error: %s (HEX %Xh, DEC %u)", this->errorMessage.c_str(), code, code);
+}
+
+void CEstEIDIEPluginBHO::setError(BaseException &exception) {
+	EstEID_log("");
+	this->errorCode = exception.getErrorCode();
+	this->errorMessage.assign(exception.getErrorDescription());
+	EstEID_log("Set error: %s (HEX %Xh, DEC %u)", this->errorMessage.c_str(), exception.getErrorCode(), exception.getErrorCode());
 }

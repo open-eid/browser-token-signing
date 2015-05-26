@@ -145,8 +145,9 @@ string CngCapiSigner::sign() {
 			throw TechnicalException("SetHashParam failed");
 		}
 
-		CryptSignHashW(hash, AT_SIGNATURE, 0, 0, LPBYTE(signature.data()), &size);
-		err = GetLastError();
+		INT retCode = CryptSignHashW(hash, AT_SIGNATURE, 0, 0, LPBYTE(signature.data()), &size);
+		err = retCode ? ERROR_SUCCESS : GetLastError();
+		//EstEID_log("CryptSignHash() return code: %u (%s) %x", retCode, retCode ? "SUCCESS" : "FAILURE", err);
 		if (freeKeyHandle) {
 			CryptReleaseContext(key, 0);
 		}

@@ -94,19 +94,22 @@ void CEstEIDCertificate::readFromCertContext() {
 	if (pCertContextForEnumeration){
 		CertFreeCertificateContext(pCertContextForEnumeration);
 	}
+	if (!pCertContext) {
+		EstEID_log("User didn't select sertificate");
+		throw CryptoException(ESTEID_USER_CANCEL);
+	}
 #else
 	pCertContext = CryptUIDlgSelectCertificate(&sel);
+	if (!pCertContext) {
+		EstEID_log("User didn't select sertificate");
+		throw CryptoException(ESTEID_USER_CANCEL);
+	}
 	loadCertContexts(pCertContext);
 
 	if (pCertContext){
 		CertFreeCertificateContext(pCertContext);
 	}
 #endif
-	if(!pCertContext) {
-		EstEID_log("User didn't select sertificate");
-		throw CryptoException(ESTEID_USER_CANCEL);
-	}
-
 	
 
 	EstEID_log("Pointer to CERT_STORE 0x%08X", hCertStore);

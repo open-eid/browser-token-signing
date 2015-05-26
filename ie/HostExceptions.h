@@ -26,62 +26,66 @@ using namespace std;
 
 class BaseException : public runtime_error {
 private:
+	string description;
 	string message;
-	string errorCode;
+	int errorCode;
 public:
-	BaseException(const string &code, const string &msg) :runtime_error(msg), message(msg), errorCode(code){}
+	BaseException(const string &msg, const string &desc, const int &code) :runtime_error(msg), message(msg), description(desc), errorCode(code){}
 
-	string getErrorCode() const{
+	int getErrorCode() const{
 		return errorCode;
 	}
 	string getErrorMessage() const{
 		return message;
 	}
+	string getErrorDescription() const{
+		return description;
+	}
 };
 
 class TechnicalException : public BaseException {
 public:
-	TechnicalException(const string &message) :BaseException("technical_error", message) {}
+	TechnicalException(const string &message) :BaseException("technical_error", message, 5) {}
 };
 
 class InvalidArgumentException : public BaseException {
 public:
-	InvalidArgumentException(const string &message) :BaseException("invalid_argument", message) {}
+	InvalidArgumentException(const string &message) :BaseException("invalid_argument", message, 21) {}
 };
 
 class InvalidHashException : public BaseException {
 public:
-	InvalidHashException() :BaseException("invalid_argument", "Invalid Hash") {}
+	InvalidHashException() :BaseException("invalid_argument", "Invalid Hash", 17) {}
 };
 
 class NotAllowedException : public BaseException {
 public:
-	NotAllowedException(const string &message) :BaseException("not_allowed", message) {}
+	NotAllowedException(const string &message) :BaseException("not_allowed", message, 19) {}
 };
 
 class UserCancelledException : public BaseException {
 public:
-	UserCancelledException() :BaseException("user_cancel", "User cancelled") {}
-	UserCancelledException(const string &message) :BaseException("user_cancel", message) {}
+	UserCancelledException() :BaseException("user_cancel", "User cancelled", 1) {}
+	UserCancelledException(const string &message) :BaseException("user_cancel", message, 1) {}
 };
 
 class NoCertificatesException : public BaseException {
 public:
-	NoCertificatesException() :BaseException("no_certificates", "Cert not found") {}
+	NoCertificatesException() :BaseException("no_certificates", "Cert not found", 2) {}
 };
 
 class NotSelectedCertificateException : public BaseException {
 public:
-	NotSelectedCertificateException() :BaseException("invalid_argument", "Unable to sign with certificate that has not been selected by the user") {}
+	NotSelectedCertificateException() :BaseException("invalid_argument", "Unable to sign with certificate that has not been selected by the user", 22) {}
 };
 
 class InconsistentOriginException : public BaseException {
 public:
-	InconsistentOriginException() :BaseException("invalid_argument", "Request origin can't change between requests") {}
+	InconsistentOriginException() :BaseException("invalid_argument", "Request origin can't change between requests", 23) {}
 };
 
 class PinBlockedException : public BaseException {
 public:
-	PinBlockedException() :BaseException("pin_blocked", "Maximum number of PIN entry attempts has been reached") {}
+	PinBlockedException() :BaseException("pin_blocked", "Maximum number of PIN entry attempts has been reached", 24) {}
 };
 

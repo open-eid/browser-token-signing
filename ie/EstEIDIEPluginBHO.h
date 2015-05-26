@@ -28,6 +28,7 @@
 #include "esteidpluginie_i.h"
 #include <comutil.h>
 #include "EstEIDPinPadDlg.h"
+#include "HostExceptions.h"
 
 
 
@@ -92,6 +93,7 @@ private:
 
 	void CryptoErrorHandler(BOOL result);
 	void setError(unsigned int code);
+	void setError(BaseException &exception);
 	void mapInternalErrorCodes(unsigned int code);
 	BOOL isSiteAllowed();
 	BOOL isSameCardInReader(CComPtr<IEstEIDCertificate> _cert);
