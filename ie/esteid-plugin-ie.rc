@@ -59,8 +59,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,42,0,0
- PRODUCTVERSION 0,42,0,0
+ FILEVERSION 3,11,0,0
+ PRODUCTVERSION 3,11,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -77,12 +77,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "RIA"
             VALUE "FileDescription", "Estonian ID card plugin"
-            VALUE "FileVersion", "0.42"
+            VALUE "FileVersion", "3.11"
             VALUE "LegalCopyright", "(c) RIA.  All rights reserved."
             VALUE "InternalName", "esteid-plugin-ie.dll"
             VALUE "OriginalFilename", "esteid-plugin-ie.dll"
             VALUE "ProductName", "Estonian ID card plugin"
-            VALUE "ProductVersion", "0.42"
+            VALUE "ProductVersion", "3.11"
         END
     END
     BLOCK "VarFileInfo"
