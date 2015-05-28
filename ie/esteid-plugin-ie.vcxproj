@@ -364,7 +364,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>../common;C:\OpenSSL-Win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_USRDLL;WIN_IE;DEVELOPMENT_MODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level3</WarningLevel>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
@@ -378,7 +378,7 @@
     </ResourceCompile>
     <Link>
       <RegisterOutput>true</RegisterOutput>
-      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib;C:\OpenSSL-Win32\lib\libeay32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib</AdditionalDependencies>
       <ModuleDefinitionFile>.\esteid-plugin-ie.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -406,7 +406,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>../common;C:\OpenSSL-Win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_USRDLL;WIN_IE;DEVELOPMENT_MODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level3</WarningLevel>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
@@ -419,7 +419,7 @@
     </ResourceCompile>
     <Link>
       <RegisterOutput>true</RegisterOutput>
-      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib;C:\OpenSSL-Win32\lib\libeay32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib</AdditionalDependencies>
       <ModuleDefinitionFile>.\esteid-plugin-ie.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -447,7 +447,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>../common;C:\OpenSSL-Win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN_XP;WIN32;_WINDOWS;_DEBUG;_USRDLL;WIN_IE;DEVELOPMENT_MODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level3</WarningLevel>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
@@ -460,7 +460,7 @@
     </ResourceCompile>
     <Link>
       <RegisterOutput>true</RegisterOutput>
-      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib;C:\OpenSSL-Win32\lib\libeay32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib</AdditionalDependencies>
       <ModuleDefinitionFile>.\esteid-plugin-ie.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -488,7 +488,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>../common;C:\OpenSSL-Win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_SEB_BUILD;WIN32;_WINDOWS;_DEBUG;_USRDLL;WIN_IE;DEVELOPMENT_MODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level3</WarningLevel>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
@@ -501,7 +501,7 @@
     </ResourceCompile>
     <Link>
       <RegisterOutput>true</RegisterOutput>
-      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib;C:\OpenSSL-Win32\lib\libeay32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib</AdditionalDependencies>
       <ModuleDefinitionFile>.\esteid-plugin-ie.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -529,7 +529,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>../common;C:\OpenSSL-Win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN_XP;INTERNATIONAL="$(PKCS11_DRIVER)";WIN32;_WINDOWS;_DEBUG;_USRDLL;WIN_IE;DEVELOPMENT_MODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level3</WarningLevel>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
@@ -542,7 +542,7 @@
     </ResourceCompile>
     <Link>
       <RegisterOutput>true</RegisterOutput>
-      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib;C:\OpenSSL-Win32\lib\libeay32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib</AdditionalDependencies>
       <ModuleDefinitionFile>.\esteid-plugin-ie.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -725,7 +725,7 @@
     </Midl>
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
-      <AdditionalIncludeDirectories>../common;C:\OpenSSL-Win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_USRDLL;WIN_IE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level3</WarningLevel>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
@@ -738,7 +738,7 @@
     </ResourceCompile>
     <Link>
       <RegisterOutput>true</RegisterOutput>
-      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib;C:\OpenSSL-Win32\lib\libeay32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib</AdditionalDependencies>
       <ModuleDefinitionFile>.\esteid-plugin-ie.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -758,7 +758,7 @@
     </Midl>
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
-      <AdditionalIncludeDirectories>../common;C:\OpenSSL-Win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_USRDLL;WIN_IE;DEVELOPMENT_MODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level3</WarningLevel>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
@@ -771,7 +771,7 @@
     </ResourceCompile>
     <Link>
       <RegisterOutput>true</RegisterOutput>
-      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib;C:\OpenSSL-Win32\lib\libeay32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib</AdditionalDependencies>
       <ModuleDefinitionFile>.\esteid-plugin-ie.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -791,7 +791,7 @@
     </Midl>
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
-      <AdditionalIncludeDirectories>../common;C:\OpenSSL-Win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN_XP;WIN32;_WINDOWS;NDEBUG;_USRDLL;WIN_IE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level3</WarningLevel>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
@@ -804,7 +804,7 @@
     </ResourceCompile>
     <Link>
       <RegisterOutput>true</RegisterOutput>
-      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib;C:\OpenSSL-Win32\lib\libeay32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib</AdditionalDependencies>
       <ModuleDefinitionFile>.\esteid-plugin-ie.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -824,7 +824,7 @@
     </Midl>
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
-      <AdditionalIncludeDirectories>../common;C:\OpenSSL-Win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_SEB_BUILD;WIN32;_WINDOWS;NDEBUG;_USRDLL;WIN_IE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level3</WarningLevel>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
@@ -837,7 +837,7 @@
     </ResourceCompile>
     <Link>
       <RegisterOutput>true</RegisterOutput>
-      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib;C:\OpenSSL-Win32\lib\libeay32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib</AdditionalDependencies>
       <ModuleDefinitionFile>.\esteid-plugin-ie.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -857,7 +857,7 @@
     </Midl>
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
-      <AdditionalIncludeDirectories>../common;C:\OpenSSL-Win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN_XP;INTERNATIONAL="$(PKCS11_DRIVER)";WIN32;_WINDOWS;NDEBUG;_USRDLL;WIN_IE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level3</WarningLevel>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
@@ -870,7 +870,7 @@
     </ResourceCompile>
     <Link>
       <RegisterOutput>true</RegisterOutput>
-      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib;C:\OpenSSL-Win32\lib\libeay32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib</AdditionalDependencies>
       <ModuleDefinitionFile>.\esteid-plugin-ie.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
