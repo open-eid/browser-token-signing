@@ -19,29 +19,19 @@
  *
  */
 
-// EstEIDIEPluginBHO.h : Declaration of the CEstEIDIEPluginBHO
-
 #pragma once
-#include "resource.h"       // main symbols
-#include <WinCrypt.h>
 #include "EstEIDHelper.h"
 #include "esteidpluginie_i.h"
-#include <comutil.h>
-#include "EstEIDPinPadDlg.h"
 #include "HostExceptions.h"
-
+#include <windows.h>
+#include <Wincrypt.h>
+#include <comutil.h>
 
 
 #if defined(_WIN32_WCE) && !defined(_CE_DCOM) && !defined(_CE_ALLOW_SINGLE_THREADED_OBJECTS_IN_MTA)
 #error "Single-threaded COM objects are not properly supported on Windows CE platform, such as the Windows Mobile platforms that do not include full DCOM support. Define _CE_ALLOW_SINGLE_THREADED_OBJECTS_IN_MTA to force ATL to support creating single-thread COM object's and allow use of it's single-threaded COM object implementations. The threading model in your rgs file was set to 'Free' as that is the only threading model supported in non DCOM Windows CE platforms."
 #endif
 
-#define BINARY_SHA1_LENGTH 20
-#define BINARY_SHA224_LENGTH 28
-#define BINARY_SHA256_LENGTH 32
-#define BINARY_SHA512_LENGTH 64
-
-// CEstEIDIEPluginBHO
 DEFINE_GUID(CATID_AppContainerCompatible,
     0x59fb2056, 0xd625, 0x48d0, 0xa9, 0x44, 0x1a, 0x85, 0xb5, 0xab, 0x26, 0x40);
 using namespace ATL;
@@ -54,9 +44,7 @@ class ATL_NO_VTABLE CEstEIDIEPluginBHO :
 	public IDispatchImpl<IEstEIDIEPluginBHO, &IID_IEstEIDIEPluginBHO, &LIBID_esteidpluginieLib, /*wMajor =*/ 1, /*wMinor =*/ 0>
 {
 public:
-	CEstEIDIEPluginBHO()
-	{
-	}
+	CEstEIDIEPluginBHO(){}
 
 DECLARE_REGISTRY_RESOURCEID(IDR_ESTEIDIEPLUGINBHO)
 
@@ -67,8 +55,6 @@ BEGIN_COM_MAP(CEstEIDIEPluginBHO)
 	COM_INTERFACE_ENTRY(IDispatch)
 	COM_INTERFACE_ENTRY(IObjectWithSite)
 END_COM_MAP()
-
-
 
 	DECLARE_PROTECT_FINAL_CONSTRUCT()
 
@@ -91,20 +77,12 @@ private:
 	int errorCode;
 	std::string errorMessage;
 
-	void CryptoErrorHandler(BOOL result);
 	void setError(unsigned int code);
 	void setError(BaseException &exception);
 	void mapInternalErrorCodes(unsigned int code);
 	BOOL isSiteAllowed();
 	BOOL isSameCardInReader(CComPtr<IEstEIDCertificate> _cert);
 	BOOL CEstEIDIEPluginBHO::certificateMatchesId(PCCERT_CONTEXT certContext, BSTR id);
-	void CEstEIDIEPluginBHO::signWithCSP(BSTR id, BSTR hash, BSTR *signature);
-	void CEstEIDIEPluginBHO::signWithCNG(BSTR id, BSTR hash, BSTR *signature);
-	BOOL CEstEIDIEPluginBHO::isCNGInstalled();
-	BOOL CEstEIDIEPluginBHO::isWinVistaOrLater() ;
-	BOOL CEstEIDIEPluginBHO::canUseCNG(BSTR id);
-	void CEstEIDIEPluginBHO::showAlert(void *nativeWindowHandle, const char *message);
-	void signWithPKCS11(HINSTANCE hInst, BSTR id, BSTR hash, BSTR *signature);
 
 public:
 	STDMETHOD(SetSite)(IUnknown *pUnkSite);

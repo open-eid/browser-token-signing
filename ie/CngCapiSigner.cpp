@@ -19,12 +19,14 @@
 #include "CngCapiSigner.h"
 #include "BinaryUtils.h"
 #include "HostExceptions.h"
-//#include "esteid_log.h"
 #include "EstEIDHelper.h"
 #include <Windows.h>
 #include <ncrypt.h>
 #include <WinCrypt.h>
 #include <cryptuiapi.h>
+extern "C" {
+#include "esteid_log.h"
+}
 
 using namespace std;
 
@@ -40,7 +42,7 @@ bool certificateMatchesId(PCCERT_CONTEXT certContext, char *certId) {
 
 	bool result = (strcmp(hashAsString.c_str(), certId) == 0);
 
-	//EstEID_log("Cert match check result: %s", result ? "matches" : "does not match");
+	EstEID_log("Cert match check result: %s", result ? "matches" : "does not match");
 
 	return result;
 }
@@ -52,7 +54,6 @@ PCCERT_CONTEXT findCertificateById(char *certId, HCERTSTORE cert_store){
 			return certContext;
 		}
 	}
-	//TODO throw correct exception
 	throw NotSelectedCertificateException();
 }
 
@@ -147,7 +148,7 @@ string CngCapiSigner::sign() {
 
 		INT retCode = CryptSignHashW(hash, AT_SIGNATURE, 0, 0, LPBYTE(signature.data()), &size);
 		err = retCode ? ERROR_SUCCESS : GetLastError();
-		//EstEID_log("CryptSignHash() return code: %u (%s) %x", retCode, retCode ? "SUCCESS" : "FAILURE", err);
+		EstEID_log("CryptSignHash() return code: %u (%s) %x", retCode, retCode ? "SUCCESS" : "FAILURE", err);
 		if (freeKeyHandle) {
 			CryptReleaseContext(key, 0);
 		}

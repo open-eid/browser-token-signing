@@ -16,13 +16,11 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// English (U.S.) resources
+// English (United States) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-#ifdef _WIN32
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 #pragma code_page(1252)
-#endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -100,38 +98,7 @@ END
 IDR_ESTEIDPLUGINIE      REGISTRY                "esteid-plugin-ie.rgs"
 IDR_ESTEIDIEPLUGINBHO   REGISTRY                "EstEIDIEPluginBHO.rgs"
 IDR_ESTEIDCERTIFICATE   REGISTRY                "EstEIDCertificate.rgs"
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Dialog
-//
-
-IDD_PIN_DIALOG DIALOGEX 0, 0, 193, 79
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTION
-CAPTION "EstEID PIN2"
-FONT 8, "MS Shell Dlg", 400, 0, 0x1
-BEGIN
-    EDITTEXT        IDC_PIN2,136,34,50,14,ES_PASSWORD | ES_AUTOHSCROLL
-    DEFPUSHBUTTON   "OK",IDOK,81,58,50,14,WS_DISABLED | WS_GROUP
-    PUSHBUTTON      "Katkesta",IDCANCEL,136,58,50,14
-    LTEXT           "LabelPIN2",IDC_PIN2_LABEL,7,37,124,8
-    LTEXT           "Name",IDC_NAME,7,21,179,8
-    LTEXT           "Message",IDC_ERROR,7,7,179,8
-END
-
-IDD_PINPAD_DIALOG DIALOGEX 0, 0, 290, 76
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTION
-EXSTYLE WS_EX_TOPMOST
-CAPTION "EstEID PIN2"
-FONT 8, "MS Shell Dlg", 400, 0, 0x1
-BEGIN
-    LTEXT           "Sisesta PIN2 kaardilugeja sõrmistikult",IDC_PINPAD_PIN2_LABEL,6,36,276,8
-    LTEXT           "Name",IDC_NAME,7,21,276,8
-    LTEXT           "",IDC_ERROR,7,7,271,8
-    CONTROL         "",IDC_PROGRESSBAR,"msctls_progress32",WS_BORDER,6,54,276,14
-END
-
-#endif    // English (U.S.) resources
+#endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

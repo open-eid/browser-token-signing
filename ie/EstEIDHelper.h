@@ -19,20 +19,10 @@
  *
  */
 
-#ifndef __ESTEID_HELPER_H__
-#define __ESTEID_HELPER_H__
+#pragma once
 
-#include <openssl/x509.h>
-#include <openssl/pem.h>
 #include <openssl/md5.h>
-
-#pragma comment(lib, "crypt32.lib")
-#include <stdio.h>
-#include <windows.h>
-#include <Wincrypt.h>
 #include <string>
-//#include "esteid_log.h"
-
 
 #define MD5_HASH_LEN 16
 
@@ -73,5 +63,3 @@ public:
 		return hex;
 	};
 };
-
-#endif

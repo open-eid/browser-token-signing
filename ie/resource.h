@@ -5,14 +5,6 @@
 #define IDR_ESTEIDPLUGINIE              101
 #define IDR_ESTEIDIEPLUGINBHO           102
 #define IDR_ESTEIDCERTIFICATE           103
-#define IDD_PIN_DIALOG                  8001
-#define IDC_PIN2                        8002
-#define IDC_NAME                        8003
-#define IDC_ERROR                       8004
-#define IDC_PIN2_LABEL                  8005
-#define IDC_PINPAD_PIN2_LABEL           8006
-#define IDC_PROGRESSBAR					1002
-#define IDD_PINPAD_DIALOG               9002
 
 // Next default values for new objects
 // 

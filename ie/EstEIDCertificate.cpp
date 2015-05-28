@@ -19,30 +19,18 @@
  *
  */
 
-// EstEIDCertificate.cpp : Implementation of CEstEIDCertificate
 #include "stdafx.h"
+#include "HostExceptions.h"
 #include "EstEIDCertificate.h"
-#include <Cryptuiapi.h>
+#include "EstEIDHelper.h"
+extern "C" {
 #include "esteid_log.h"
-
-#define BUFFER_SIZE 1024
-
-#pragma comment(lib, "comsuppw")
+}
 
 STDMETHODIMP CEstEIDCertificate::get_id(BSTR *id){
 	EstEID_log("");
 	*id = _bstr_t(this->id.c_str()).Detach();
 	return S_OK;
-}
-
-std::string CEstEIDCertificate::dateToString(FILETIME *filetime) {
-	EstEID_log("");
-	SYSTEMTIME systemtime;
-	FileTimeToSystemTime(filetime, &systemtime);
-	char buf[160] = {0};
-	sprintf_s(buf, "%02d.%02d.%04d %02d:%02d:%02d", systemtime.wDay, systemtime.wMonth, systemtime.wYear, systemtime.wHour, systemtime.wMinute, systemtime.wSecond);
-	std::string result = buf;
-	return result;
 }
 
 void CEstEIDCertificate::readFromCertContext() {
@@ -54,7 +42,7 @@ void CEstEIDCertificate::readFromCertContext() {
 
 	hCertStore = CertOpenStore(CERT_STORE_PROV_SYSTEM, 0, NULL, CERT_SYSTEM_STORE_CURRENT_USER | CERT_STORE_READONLY_FLAG, L"MY");
 	if(!hCertStore){
-		throw CryptoException();
+		throw TechnicalException("Failed to open Cert Store");
 	}
 
 	EstEID_log("Pointer to CERT_STORE 0x%08X", hCertStore);
@@ -96,13 +84,13 @@ void CEstEIDCertificate::readFromCertContext() {
 	}
 	if (!pCertContext) {
 		EstEID_log("User didn't select sertificate");
-		throw CryptoException(ESTEID_USER_CANCEL);
+		throw UserCancelledException();
 	}
 #else
 	pCertContext = CryptUIDlgSelectCertificate(&sel);
 	if (!pCertContext) {
 		EstEID_log("User didn't select sertificate");
-		throw CryptoException(ESTEID_USER_CANCEL);
+		throw UserCancelledException();
 	}
 	loadCertContexts(pCertContext);
 
@@ -123,33 +111,6 @@ void CEstEIDCertificate::readFromCertContext() {
 void CEstEIDCertificate::loadCertContexts(PCCERT_CONTEXT certContext) {
 	USES_CONVERSION;
 	EstEID_log("");
-	DWORD certNameSize = 0;
-
-	certNameSize = CertGetNameString(certContext, CERT_NAME_ATTR_TYPE, 0, szOID_COMMON_NAME, NULL, 0);
-	if (_tcslen(this->CN) > certNameSize) 
-	{
-		EstEID_log("Allocated buffer is to small %i to hold certificate CN %i", _tcslen(this->CN), certNameSize);
-	}
-	CryptoErrorHandler(CertGetNameString(certContext, CERT_NAME_ATTR_TYPE, 0, szOID_COMMON_NAME, this->CN, certNameSize));
-	
-	std::string s = W2A(this->CN);
-	EstEID_log("Certificate = %s", s.c_str());
-	
-	certNameSize = CertGetNameString(certContext, CERT_NAME_ATTR_TYPE, CERT_NAME_ISSUER_FLAG, szOID_COMMON_NAME, this->issuerCN, certNameSize);
-	if (_tcslen(this->issuerCN) > certNameSize)
-	{
-		EstEID_log("Allocated buffer is to small %i to hold certificate issuer CN %i", _tcslen(this->CN), certNameSize);
-	}
-	CryptoErrorHandler(CertGetNameString(certContext, CERT_NAME_ATTR_TYPE, CERT_NAME_ISSUER_FLAG, szOID_COMMON_NAME, this->issuerCN, certNameSize));
-
-	std::stringstream buf;
-	for(size_t i = certContext->pCertInfo->SerialNumber.cbData ; i > 0  ;i--) 
-		buf << std::hex << std::setfill('0') << std::setw(2) << (int) certContext->pCertInfo->SerialNumber.pbData[i-1] << " ";
-	std::string strBuf = buf.str();
-	EstEID_log("serial=%s", strBuf.c_str());
-
-	this->validFrom = dateToString(&certContext->pCertInfo->NotBefore);
-	this->validTo = dateToString(&certContext->pCertInfo->NotAfter);
 
 	this->certificate = (BYTE*)malloc(certContext->cbCertEncoded + 1);
 	memcpy(this->certificate, certContext->pbCertEncoded, certContext->cbCertEncoded);
@@ -158,36 +119,6 @@ void CEstEIDCertificate::loadCertContexts(PCCERT_CONTEXT certContext) {
 	
 	calculateMD5Hash(certContext->cbCertEncoded);
 	binCert2Hex(certContext->cbCertEncoded);
-}
-
-STDMETHODIMP CEstEIDCertificate::get_CN(BSTR *cn) {
-	EstEID_log("");
-	*cn = _bstr_t(this->CN).Detach();
-	return S_OK;
-}
-
-STDMETHODIMP CEstEIDCertificate::get_issuerCN(BSTR *issuerCN) {
-	EstEID_log("");
-	*issuerCN = _bstr_t(this->issuerCN).Detach();
-	return S_OK;
-}
-
-STDMETHODIMP CEstEIDCertificate::get_validFrom(BSTR *validFrom) {
-	EstEID_log("");
-	*validFrom = _bstr_t(this->validFrom.c_str()).Detach();
-	return S_OK;
-}
-
-STDMETHODIMP CEstEIDCertificate::get_validTo(BSTR *validTo) {
-	EstEID_log("");
-	*validTo = _bstr_t(this->validTo.c_str()).Detach();
-	return S_OK;
-}
-
-STDMETHODIMP CEstEIDCertificate::get_certificateAsPem(BSTR *certificate) {
-	EstEID_log("");
-	*certificate = _bstr_t("not implemented yet").Detach();
-	return S_OK;
 }
 
 STDMETHODIMP CEstEIDCertificate::get_certificateAsHex(BSTR *certificate) {
@@ -200,14 +131,6 @@ STDMETHODIMP CEstEIDCertificate::get_cert(BSTR *certificate) {
 	EstEID_log("");
 	*certificate = _bstr_t(this->certificateAsHex.data()).Detach();
 	return S_OK;
-}
-
-
-void CEstEIDCertificate::CryptoErrorHandler(BOOL result) {
-	EstEID_log("");
-	if (!result) {
-		throw CryptoException();
-	}
 }
 
 void CEstEIDCertificate::binCert2Hex(const unsigned int binLength) {

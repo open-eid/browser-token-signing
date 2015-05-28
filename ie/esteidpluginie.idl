@@ -34,13 +34,8 @@ interface IEstEIDIEPluginBHO : IDispatch{
 ]
 interface IEstEIDCertificate : IDispatch{
 	[propget, id(1), helpstring("property certificate id")] HRESULT id([out, retval] BSTR *id);
-	[propget, id(2), helpstring("property certificate CN")] HRESULT CN([out, retval] BSTR *cn);
-	[propget, id(4), helpstring("property certificate issuerCN")] HRESULT issuerCN([out, retval] BSTR *issuerCN);
-	[propget, id(5), helpstring("property certificate validFrom")] HRESULT validFrom([out, retval] BSTR *validFrom);
-	[propget, id(6), helpstring("property certificate validTo")] HRESULT validTo([out, retval] BSTR *validTo);
-	[propget, id(7), helpstring("property certificate certificateAsPem")] HRESULT certificateAsPem([out, retval] BSTR *certificate);
-	[propget, id(8), helpstring("property certificate certificateAsHex")] HRESULT certificateAsHex([out, retval] BSTR *certificate);
-	[propget, id(9), helpstring("property certificate cert (certificateAsHex)")] HRESULT cert([out, retval] BSTR *certificate);
+	[propget, id(2), helpstring("property certificate certificateAsHex")] HRESULT certificateAsHex([out, retval] BSTR *certificate);
+	[propget, id(3), helpstring("property certificate cert (certificateAsHex)")] HRESULT cert([out, retval] BSTR *certificate);
 };
 [
 	uuid(23EF5046-6402-4C39-B34B-3C47826805D1),
