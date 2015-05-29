@@ -63,14 +63,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 						<RegistryKey Root="HKCR" Key="CLSID\{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}\Implemented Categories\{59fb2056-d625-48d0-a944-1a85b5ab2640}" Action="createAndRemoveOnUninstall"/>
 						<RegistryKey Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Ext\CLSID" Action="create"/>
 						<RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Ext\CLSID" Name="{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}" Value="1" Action="write" Type="string"/>							  
-					</Component>
-					
-						  
-					<!-- TODO: This might cause permission issues - removed for 3.11.0-beta-2 release. Should investigate further before official 3.11.0 release
-					<Component Id="approve" Guid="5C5728FC-2664-4A52-9A84-562C077BA8DD" Win64="no">
-						<RegistryValue Root="HKCU" Key="Software\Microsoft\Internet Explorer\Approved Extensions" Name="{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}" Value="51667a6c4c1d3b1bb4895b3145e674018a3f8b3a27bb3b2e" Type="binary" Action="write"/>
-					</Component>
-					-->						  
+					</Component>				  
 				</Directory>
 			</Directory>
 			
@@ -107,9 +100,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 			<?if $(var.Platform) = "x64" ?>
 				<ComponentRef Id="Application64"/>
 			<?endif ?>
-			<!-- TODO: This might cause permission issues - removed for 3.11.0-beta-2 release. Should investigate further before official 3.11.0 release
-			<ComponentRef Id="approve"/>
-			-->
 		</Feature>
 	</Product>
 </Wix>
