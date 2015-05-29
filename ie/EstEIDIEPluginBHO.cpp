@@ -96,11 +96,11 @@ BOOL CEstEIDIEPluginBHO::isSiteAllowed() {
 	EstEID_log("*** Development Mode, all protocols allowed ***");
 #endif	
 	if(!allowed){
-		setError(ESTEID_SITE_NOT_ALLOWED);
+		this->errorCode = ESTEID_SITE_NOT_ALLOWED;
+		this->errorMessage.assign("Site not allowed");
 		EstEID_log("Protocol not allowed");
 	}
 	SysFreeString(url_buffer);	
-
 	return allowed;
 }
 
@@ -111,22 +111,17 @@ STDMETHODIMP CEstEIDIEPluginBHO::getCertificate(IDispatch **_certificate){
 		if(!this->certificate || !isSameCardInReader(this->certificate)) {
 			this->certificate.CoCreateInstance(CLSID_EstEIDCertificate);
 		}
-		
 		CComPtr<IEstEIDCertificate> cert;
-		
 		this->certificate.CopyTo(&cert);
-
 		*_certificate = cert.Detach();
+		clearErrors();
+		return S_OK;
 	}
 	catch (BaseException &e) {
 		EstEID_log("Exception caught when getting certificate: %s: %s", e.getErrorMessage().c_str(), e.getErrorDescription().c_str());
 		setError(e);
 		return Error((this->errorMessage).c_str());
 	}
-	setError(ESTEID_NO_ERROR);
-	
-	return S_OK;
-	
 }
 
 BOOL CEstEIDIEPluginBHO::isSameCardInReader(CComPtr<IEstEIDCertificate> _cert){ //todo: must check is card changed
@@ -146,7 +141,7 @@ STDMETHODIMP CEstEIDIEPluginBHO::sign(BSTR id, BSTR hash, BSTR language, BSTR *s
 		CngCapiSigner *signer = new CngCapiSigner(hashString, certId);
 		string result = signer->sign();
 		*signature = _bstr_t(result.c_str()).Detach();
-		setError(ESTEID_NO_ERROR);
+		clearErrors();
 		EstEID_log("Signing ended");
 		return S_OK;
 	}
@@ -163,24 +158,18 @@ BOOL CEstEIDIEPluginBHO::certificateMatchesId(PCCERT_CONTEXT certContext, BSTR i
 	cert = (BYTE*)malloc(certContext->cbCertEncoded + 1);
 	memcpy(cert, certContext->pbCertEncoded, certContext->cbCertEncoded);
 	cert[certContext->cbCertEncoded] = '\0';
-
 	std::string hashAsString;
 	hashAsString = CEstEIDHelper::calculateMD5Hash((char*)cert);
 	free(cert);
-
 	BOOL result = (strcmp(hashAsString.c_str(), W2A(id)) == 0);
-
 	EstEID_log("Cert match check result: %s", result ? "matches" : "does not match");
-
 	return result;
 }
 
-void CEstEIDIEPluginBHO::setError(unsigned int code)
-{
+void CEstEIDIEPluginBHO::clearErrors() {
 	EstEID_log("");
-	this->errorCode = code;
-	this->errorMessage.assign(getErrorMessage(code));
-	EstEID_log("Set error: %s (HEX %Xh, DEC %u)", this->errorMessage.c_str(), code, code);
+	this->errorCode = 0;
+	this->errorMessage.assign("");
 }
 
 void CEstEIDIEPluginBHO::setError(BaseException &exception) {

@@ -54,11 +54,11 @@ PCCERT_CONTEXT findCertificateById(char *certId, HCERTSTORE cert_store){
 			return certContext;
 		}
 	}
-	throw NotSelectedCertificateException();
+	throw NoCertificatesException();
 }
 
 string CngCapiSigner::sign() {
-
+	EstEID_log("Signing with hash: %s, with certId: %s", getHash()->c_str(), getCertId());
 	BCRYPT_PKCS1_PADDING_INFO padInfo;
 	DWORD obtainKeyStrategy = CRYPT_ACQUIRE_PREFER_NCRYPT_KEY_FLAG;
 	vector<unsigned char> digest = BinaryUtils::hex2bin(getHash()->c_str());
@@ -121,6 +121,7 @@ string CngCapiSigner::sign() {
 	{
 	case CERT_NCRYPT_KEY_SPEC:
 	{
+		EstEID_log("Using CNG");
 		err = NCryptSignHash(key, &padInfo, PBYTE(&digest[0]), DWORD(digest.size()),
 			&signature[0], DWORD(signature.size()), (DWORD*)&size, BCRYPT_PAD_PKCS1);
 		if (freeKeyHandle) {
@@ -130,6 +131,7 @@ string CngCapiSigner::sign() {
 	}
 	case AT_SIGNATURE:
 	{
+		EstEID_log("Using CAPI");
 		HCRYPTHASH hash = 0;
 		if (!CryptCreateHash(key, alg, 0, 0, &hash)) {
 			if (freeKeyHandle) {

@@ -142,5 +142,7 @@ void CEstEIDCertificate::binCert2Hex(const unsigned int binLength) {
 
 void CEstEIDCertificate::calculateMD5Hash(unsigned int certLength) {
 	EstEID_log("");
-	this->id.assign(CEstEIDHelper::calculateMD5Hash((char*)this->certificate));
+	char *certMd5Hash = CEstEIDHelper::calculateMD5Hash((char*)this->certificate);
+	EstEID_log("Certificate ID (MD5 hash) is %s", certMd5Hash);
+	this->id.assign(certMd5Hash);
 }

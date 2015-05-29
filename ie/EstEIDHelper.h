@@ -63,7 +63,7 @@ public:
 
 		char *hex = "0123456789abcdef";
 		char result[2 * MD5_HASH_LEN + 1] = "";
-		for (int i = 0; i < cbHash; i++) {
+		for (unsigned int i = 0; i < cbHash; i++) {
 			result[i * 2] = hex[hash[i] >> 4];
 			result[(i * 2) + 1] = hex[hash[i] & 0xF];
 		}

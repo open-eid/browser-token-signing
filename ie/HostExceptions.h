@@ -18,6 +18,7 @@
 
 #pragma once
 
+#include "esteid_error.h"
 #include <string>
 #include <stdexcept>
 
@@ -45,47 +46,32 @@ public:
 
 class TechnicalException : public BaseException {
 public:
-	TechnicalException(const string &message) :BaseException("technical_error", message, 5) {}
-};
-
-class InvalidArgumentException : public BaseException {
-public:
-	InvalidArgumentException(const string &message) :BaseException("invalid_argument", message, 21) {}
+	TechnicalException(const string &message) :BaseException("technical_error", message, ESTEID_UNKNOWN_ERROR) {}
 };
 
 class InvalidHashException : public BaseException {
 public:
-	InvalidHashException() :BaseException("invalid_argument", "Invalid Hash", 17) {}
+	InvalidHashException() :BaseException("invalid_argument", "Invalid Hash", ESTEID_INVALID_HASH_ERROR) {}
 };
 
 class NotAllowedException : public BaseException {
 public:
-	NotAllowedException(const string &message) :BaseException("not_allowed", message, 19) {}
+	NotAllowedException(const string &message) :BaseException("not_allowed", message, ESTEID_SITE_NOT_ALLOWED) {}
 };
 
 class UserCancelledException : public BaseException {
 public:
-	UserCancelledException() :BaseException("user_cancel", "User cancelled", 1) {}
-	UserCancelledException(const string &message) :BaseException("user_cancel", message, 1) {}
+	UserCancelledException() :BaseException("user_cancel", "User cancelled", ESTEID_USER_CANCEL) {}
+	UserCancelledException(const string &message) :BaseException("user_cancel", message, ESTEID_USER_CANCEL) {}
 };
 
 class NoCertificatesException : public BaseException {
 public:
-	NoCertificatesException() :BaseException("no_certificates", "Cert not found", 2) {}
-};
-
-class NotSelectedCertificateException : public BaseException {
-public:
-	NotSelectedCertificateException() :BaseException("invalid_argument", "Unable to sign with certificate that has not been selected by the user", 22) {}
-};
-
-class InconsistentOriginException : public BaseException {
-public:
-	InconsistentOriginException() :BaseException("invalid_argument", "Request origin can't change between requests", 23) {}
+	NoCertificatesException() :BaseException("no_certificates", "Cert not found", ESTEID_CERT_NOT_FOUND_ERROR) {}
 };
 
 class PinBlockedException : public BaseException {
 public:
-	PinBlockedException() :BaseException("pin_blocked", "Maximum number of PIN entry attempts has been reached", 24) {}
+	PinBlockedException() :BaseException("pin_blocked", "Maximum number of PIN entry attempts has been reached", ESTEID_PIN_BLOCKED) {}
 };
 

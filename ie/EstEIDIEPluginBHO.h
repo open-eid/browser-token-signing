@@ -77,7 +77,7 @@ private:
 	int errorCode;
 	std::string errorMessage;
 
-	void setError(unsigned int code);
+	void clearErrors();
 	void setError(BaseException &exception);
 	void mapInternalErrorCodes(unsigned int code);
 	BOOL isSiteAllowed();

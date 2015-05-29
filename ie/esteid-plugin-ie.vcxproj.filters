@@ -16,9 +16,6 @@
     <ClCompile Include="EstEIDIEPluginBHO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="esteid_error.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="dllmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
