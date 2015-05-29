@@ -21,6 +21,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 	<Product Name="IE Token Signing Plugin" UpgradeCode="713f9d27-5016-4c6a-bee1-94403255fbd4" Id="*" Language="1033" Version="$(var.VERSION)" Codepage="1251" Manufacturer="RIA">
 		<Package Keywords="Installer" Platform="$(var.Platform)" InstallerVersion="405" Compressed="yes"/>
 		<MediaTemplate EmbedCab="yes" CompressionLevel="high"/>
+		<Icon Id="Icon.ico" SourceFile="ie/ID.ico"/>
 		<MajorUpgrade AllowSameVersionUpgrades="yes" DowngradeErrorMessage=
 		"A newer version of [ProductName] is already installed. If you are trying to downgrade, please uninstall the newer version first."/>
 		<Condition Message="[ProductName] requires Windows 7 or higher.">
