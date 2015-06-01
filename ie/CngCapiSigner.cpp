@@ -95,7 +95,7 @@ string CngCapiSigner::sign() {
 	DWORD size = 256;
 	vector<unsigned char> signature(size, 0);
 
-	HCERTSTORE store = CertOpenSystemStore(0, L"MY");
+	HCERTSTORE store = CertOpenStore(CERT_STORE_PROV_SYSTEM, 0, NULL, CERT_SYSTEM_STORE_CURRENT_USER | CERT_STORE_READONLY_FLAG, L"MY");
 	if (!store) {
 		throw TechnicalException("Failed to open Cert Store");
 	}
