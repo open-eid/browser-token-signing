@@ -64,6 +64,8 @@ BOOL Unicode16ToAnsi(WCHAR *in_Src, CHAR *out_Dst, INT in_MaxLen);
 
 char* byteToChar(BYTE* signature, int length );
 
+void reverseBytes(BYTE* signature, int signatureLength);
+
 bool selectCertificate(PluginInstance *obj, PCCERT_CONTEXT *certContext);
 
 void handleError(char* methodName, PluginInstance *obj);
