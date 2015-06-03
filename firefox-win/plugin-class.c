@@ -285,12 +285,7 @@ bool doSignCSP(PluginInstance *obj, BCRYPT_PKCS1_PADDING_INFO padInfo, char *inH
 	DWORD key_type = 0;
 	HCRYPTHASH _hash = NULL;
 
-	int hashHexLenth = strlen(inHash);
-	wHashLen = MultiByteToWideChar(CP_ACP, 0, inHash, -1, NULL, 0);
-	hash = new WCHAR[hashHexLength];
-	MultiByteToWideChar(CP_ACP, 0, inHash, -1, (LPWSTR)hash, hashHexLength);
-
-	int hashAlgorithm = getHashAlgorithm(hashHexLenth*2);
+	int hashAlgorithm = getHashAlgorithm(hashHexLength*2);
 	if (hashAlgorithm == -1) {
 		browserFunctions->setexception(&obj->header, EstEID_error);
 		return false;
@@ -300,12 +295,8 @@ bool doSignCSP(PluginInstance *obj, BCRYPT_PKCS1_PADDING_INFO padInfo, char *inH
 	{
 		EstEID_log("must_release_provider = %i", must_release_provider);
 
-		BYTE hashBytes[21];
-		DWORD hashBytesLength = 20;
-		CryptStringToBinary(hash, hashHexLenth, CRYPT_STRING_HEX, hashBytes, &hashBytesLength, 0, 0);
-		EstEID_log("Number of bytes stored in hashBytes buffer = %u", hashBytesLength);
-
-		hashBytes[hashBytesLength] = '\0';
+		BYTE* hashBytes = (BYTE*)malloc(sizeof(BYTE)*hashHexLength);
+		memcpy(hashBytes, inHash, sizeof(BYTE)*hashHexLength);
 
 		for (int i = 0; i < sizeof(hashBytes); i++)
 			EstEID_log("hashBytes: %02X", hashBytes[i]);
@@ -366,7 +357,9 @@ bool doSignCSP(PluginInstance *obj, BCRYPT_PKCS1_PADDING_INFO padInfo, char *inH
 			CryptReleaseContext(cryptoProvider, 0);
 		}
 
+		reverseBytes(_signature, signatureLength);
 		*signature = byteToChar(_signature, signatureLength);
+		free(hashBytes);
 	}
 	else
 	{
@@ -741,6 +734,16 @@ char* byteToChar(BYTE* signature, int length ) {
 	sprintf(buf_ptr, "\0");
 	
 	return buf_str;
+}
+
+void reverseBytes(BYTE* signature, int signatureLength) {
+
+	int middle = signatureLength / 2;
+	for (int i = 0; i < middle; i++) {
+		BYTE tmp = signature[i];
+		signature[i] = signature[signatureLength - 1 - i];
+		signature[signatureLength - 1 - i] = tmp;
+	}
 }
 
 void handleError(char* methodName, PluginInstance *obj) {
