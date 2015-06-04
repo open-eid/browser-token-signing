@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Firefox Token Signing Plugin
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+-->
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Name="Firefox Token Signing Plugin" UpgradeCode="4e7f96ae-a8c9-45ae-bcf1-1fb64597df5b"
+      Id="*" Language="1033" Version="$(var.VERSION)" Codepage="1251" Manufacturer="RIA">
+    <Package Keywords="Installer" InstallerVersion="405" Compressed="yes"/>
+    <MediaTemplate EmbedCab="yes" CompressionLevel="high"/>
+    <Icon Id="Icon.ico" SourceFile="firefox-win/media/ID.ico"/>
+    <Property Id="ARPPRODUCTICON" Value="Icon.ico"/>
+    <MajorUpgrade AllowSameVersionUpgrades="yes" DowngradeErrorMessage=
+      "A newer version of [ProductName] is already installed. If you are trying to downgrade, please uninstall the newer version first."/>
+    <Condition Message="[ProductName] requires Windows 7 or higher.">
+      <![CDATA[Installed OR (VersionNT >= 601)]]>
+    </Condition>
+    <UIRef Id="WixUI_Minimal" />
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id='ProgramFilesFolder'>
+        <Directory Id="APPLICATIONFOLDER" Name="Firefox Token Signing Plugin">
+          <Component Id="Application" Guid="6d75cfe1-2ba2-4563-8e03-6036eef5d07b">
+            <File Source="../npesteid-firefox-plugin.dll"/>
+            <RegistryValue Root='HKLM' Type='string' Value='[APPLICATIONFOLDER]npesteid-firefox-plugin.dll'
+                Key='Software\MozillaPlugins\@RIA/esteid-firefox-plugin' Name="Path" Action="write"/>
+          </Component>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <Feature Id="Install" Level="1" Title="Firefox Token Signing Plugin" Display="expand" ConfigurableDirectory="APPLICATIONFOLDER">
+      <ComponentRef Id="Application"/>
+    </Feature>
+  </Product>
+</Wix>
