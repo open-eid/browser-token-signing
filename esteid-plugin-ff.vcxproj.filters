@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx</Extensions>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="firefox-win\cert-class.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common\esteid_certinfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="firefox-win\plugin-class.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="firefox-win\plugin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common\version.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common\esteid_map.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\pkcs11.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\npapi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\npfunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common\esteid_log.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common\esteid_error.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common\esteid_time.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common\l10n.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common\dialogs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common\esteid_dialog_common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common\esteid_json.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common\esteid_sign.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common\esteid_timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common\labels.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common\pkcs11_errors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="firefox-win\certselection-win.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="firefox-win\dialogs-win.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common\cert_dialog_win.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="firefox-win\cert-class.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="common\esteid_certinfo.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="common\esteid_json_test.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="firefox-win\plugin-class.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="firefox-win\plugin.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="common\esteid_log.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="common\esteid_map.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="common\esteid_time.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="common\l10n.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="common\esteid_dialog_common.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="common\esteid_json.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="common\esteid_sign.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="common\esteid_timer.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="common\l10n-win.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="common\pkcs11_errors.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="common\cert_dialog_win.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="firefox-win\certselection-win.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="firefox-win\dialogs-win.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="plugin-test.html" />
+    <None Include="Makefile.win">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="firefox\plugin-win.def">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="firefox\plugin-win.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

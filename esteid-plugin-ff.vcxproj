@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>esteid-plugin</ProjectName>
+    <ProjectGuid>{9E5A1D20-2030-44B0-99D1-3CA9CC546D88}</ProjectGuid>
+    <RootNamespace>esteid-plugin</RootNamespace>
+    <Keyword>MakeFileProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>12.0.21005.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>Debug\</OutDir>
+    <IntDir>Debug\</IntDir>
+    <NMakeBuildCommandLine>nmake /f Makefile.win plugin-development install</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine />
+    <NMakeCleanCommandLine />
+    <NMakeOutput />
+    <NMakePreprocessorDefinitions>WIN32;_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>Release\</OutDir>
+    <IntDir>Release\</IntDir>
+    <NMakeBuildCommandLine>nmake /f makefile-ff.win plugin install</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine />
+    <NMakeCleanCommandLine />
+    <NMakeOutput />
+    <NMakePreprocessorDefinitions>WIN32;NDEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="common\cert_dialog_win.h" />
+    <ClInclude Include="common\dialogs.h" />
+    <ClInclude Include="common\esteid_dialog_common.h" />
+    <ClInclude Include="common\esteid_error.h" />
+    <ClInclude Include="common\esteid_json.h" />
+    <ClInclude Include="common\esteid_log.h" />
+    <ClInclude Include="common\esteid_map.h" />
+    <ClInclude Include="common\esteid_sign.h" />
+    <ClInclude Include="common\esteid_time.h" />
+    <ClInclude Include="common\esteid_timer.h" />
+    <ClInclude Include="common\l10n.h" />
+    <ClInclude Include="common\labels.h" />
+    <ClInclude Include="common\pkcs11_errors.h" />
+    <ClInclude Include="firefox-win\cert-class.h" />
+    <ClInclude Include="common\esteid_certinfo.h" />
+    <ClInclude Include="firefox-win\certselection-win.h" />
+    <ClInclude Include="firefox-win\dialogs-win.h" />
+    <ClInclude Include="firefox-win\plugin-class.h" />
+    <ClInclude Include="firefox-win\plugin.h" />
+    <ClInclude Include="common\version.h" />
+    <ClInclude Include="include\npapi.h" />
+    <ClInclude Include="include\npfunctions.h" />
+    <ClInclude Include="include\pkcs11.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="common\cert_dialog_win.c" />
+    <ClCompile Include="common\esteid_dialog_common.c" />
+    <ClCompile Include="common\esteid_json.c" />
+    <ClCompile Include="common\esteid_log.c" />
+    <ClCompile Include="common\esteid_map.c" />
+    <ClCompile Include="common\esteid_sign.c" />
+    <ClCompile Include="common\esteid_time.c" />
+    <ClCompile Include="common\esteid_timer.c" />
+    <ClCompile Include="common\l10n-win.c" />
+    <ClCompile Include="common\l10n.c" />
+    <ClCompile Include="common\pkcs11_errors.c" />
+    <ClCompile Include="firefox-win\cert-class.c" />
+    <ClCompile Include="common\esteid_certinfo.c" />
+    <ClCompile Include="common\esteid_json_test.c" />
+    <ClCompile Include="firefox-win\certselection-win.c" />
+    <ClCompile Include="firefox-win\dialogs-win.c" />
+    <ClCompile Include="firefox-win\plugin-class.c" />
+    <ClCompile Include="firefox-win\plugin.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="firefox\plugin-win.def" />
+    <None Include="Makefile.win" />
+    <None Include="plugin-test.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="firefox\plugin-win.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -27,13 +27,13 @@ plugin-cng: $(COMMON_HEADERS) $(COMMON_SOURCES) $(PLUGIN_HEADERS_CNG) $(PLUGIN_S
 
 plugin-development:
 	set MODE_FLAG=/DDEVELOPMENT_MODE
-	nmake /f Makefile.win plugin
+	nmake /f Makefile.win plugin-cng
 
 clean:
 	del /Q $(OUT).dll $(OUT).exp $(OUT).lib plugin-win.res *.obj
 
 install:
-	copy /Y $(OUT).dll "c:\Program Files (x86)\Mozilla Firefox\plugins"
+	copy /Y $(OUT).dll "C:\Program Files (x86)\Firefox Token Signing Plugin\npesteid-firefox-plugin.dll"
 
 maptest: plugin common/esteid_map_test.c
 	$(CC) $(C_FLAGS) common/esteid_map.c common/esteid_map_test.c -o maptest
