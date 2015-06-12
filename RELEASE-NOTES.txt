@@ -1,3 +1,23 @@
+Esteid-plugin version 3.11.0 release notes
+--------------------------------------
+Changes compared to ver 3.9.1
+
+- Improved Esteid-plugin for Internet Explorer
+	- Added support for international tokens
+	- Removed openssl dependency
+	- Added license and icon to the installer
+	- Added CAPI support beyond SHA-1
+	- Created installers for x86 and x64 platforms
+	- Fixed CAPI signing error check
+	- Fixed certificate selection cancelling
+	- Fixed signing cancelling
+	- Fixed access denied error that could occur on some versions of Windows after certificate selection
+	- Added platform (32bit or 64bit) to IE plugin version number
+	- Refactoring. Cleaned up a lot of code, deleted unused code
+
+List on known issues: https://github.com/open-eid/browser-token-signing/wiki/Known-issues
+
+
 Esteid-plugin version 3.9.1 release notes
 --------------------------------------
 Changes compared to ver 3.8
