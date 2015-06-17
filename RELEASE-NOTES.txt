@@ -16,6 +16,7 @@ Changes compared to ver 3.9.1
 	- Refactoring. Cleaned up a lot of code, deleted unused code
 
 List on known issues: https://github.com/open-eid/browser-token-signing/wiki/Known-issues
+List of supported tokens: hhttps://github.com/open-eid/browser-token-signing/wiki/Token-Support
 
 
 Esteid-plugin version 3.9.1 release notes
