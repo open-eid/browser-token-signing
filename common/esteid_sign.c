@@ -343,7 +343,7 @@ int EstEID_signHash(char **signature, unsigned int *signatureLength, CK_SLOT_ID 
 			// Simple card reader
 			char *pin = pinPromptData.promptFunction(pinPromptData.nativeWindowHandle, name, message, (unsigned)atoi(EstEID_mapGet(cert, "minPinLen")), isPinPad);
 			if (!pin || strlen(pin) == 0) {
-				if (pin) free(pin);
+				free(pin);
 				setUserCancelErrorCodeAndMessage();
 				CLOSE_SESSION_AND_RETURN(FAILURE);
 			}
