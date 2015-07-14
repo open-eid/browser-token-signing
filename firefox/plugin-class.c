@@ -140,7 +140,7 @@ bool doSign(PluginInstance *obj, NPVariant *args, unsigned argCount, NPVariant *
 
 	void* wnd = getNativeWindowHandle(obj);
 
-	EstEID_PINPromptData pinPromptData = {promptForPIN, showAlert, wnd};
+	EstEID_PINPromptData pinPromptData = {promptForPIN, showAlert, wnd, NULL};
 	NPUTF8* certId = createStringFromNPVariant(&args[0]);
 	NPUTF8* hash = createStringFromNPVariant(&args[1]);
 	char *signature = NULL;
@@ -305,6 +305,9 @@ static NPClass _class = {
 	(NPHasPropertyFunctionPtr)pluginHasProperty,
 	(NPGetPropertyFunctionPtr)pluginGetProperty,
 	(NPSetPropertyFunctionPtr)pluginSetProperty,
+	(NPRemovePropertyFunctionPtr)NULL,
+	(NPEnumerationFunctionPtr)NULL,
+	(NPConstructFunctionPtr)NULL
 };
 
 NPClass *pluginClass() {

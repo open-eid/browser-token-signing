@@ -91,6 +91,9 @@ static NPClass _class = {
     (NPHasPropertyFunctionPtr) certHasProperty,
     (NPGetPropertyFunctionPtr) certGetProperty,
     (NPSetPropertyFunctionPtr) certSetProperty,
+    (NPRemovePropertyFunctionPtr)NULL,
+    (NPEnumerationFunctionPtr)NULL,
+    (NPConstructFunctionPtr)NULL
 };
 
 NPClass *certClass() {
