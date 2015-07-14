@@ -258,13 +258,12 @@ NPError NPP_SetWindow(NPP instanceData, NPWindow* window) {
 	LOG_LOCATION;
 	if (window == NULL || instanceData == NULL) return NPERR_NO_ERROR;
 	PluginInstance* currentInstance = (PluginInstance*)(instanceData->pdata);
-
-	EstEID_log("window=%p, window->window=%p, currentInstance=%p, nativeWindowHandle=%p", window, window->window, currentInstance, currentInstance->nativeWindowHandle);
-
-	if (currentInstance && window->window && (currentInstance->nativeWindowHandle != window->window)) {
-		currentInstance->nativeWindowHandle = window->window;
+	if (currentInstance) {
+		EstEID_log("window=%p, window->window=%p, currentInstance=%p, nativeWindowHandle=%p", window, window->window, currentInstance, currentInstance->nativeWindowHandle);
+		if (window->window && (currentInstance->nativeWindowHandle != window->window))
+			currentInstance->nativeWindowHandle = window->window;
+		EstEID_log("nativeWindowHandle=%p", currentInstance->nativeWindowHandle);
 	}
-	EstEID_log("nativeWindowHandle=%p", currentInstance->nativeWindowHandle);
 
 	return NPERR_NO_ERROR;
 }
