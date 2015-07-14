@@ -188,7 +188,7 @@ BOOL canUseCNG(char* id)
 	HCERTSTORE cert_store;
 	PCCERT_CONTEXT certContext = NULL;
 	NCRYPT_KEY_HANDLE hKey = NULL;
-	BOOL must_release_provider;
+	BOOL must_release_provider = FALSE;
 
 	if (isCNGInstalled())
 	{
