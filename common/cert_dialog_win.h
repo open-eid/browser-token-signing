@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef __CERT_DIAOLG_WIN_H__
-#define	__CERT_DIAOLG_WIN_H__
+#ifndef ESTEID_CERT_DIAOLG_WIN_H
+#define	ESTEID_CERT_DIAOLG_WIN_H
 
 #include <windows.h>
 #include <cryptuiapi.h>

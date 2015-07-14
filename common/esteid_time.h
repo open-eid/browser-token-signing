@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef __ESTEID_TIME_H__
-#define __ESTEID_TIME_H__
+#ifndef ESTEID_TIME_H
+#define ESTEID_TIME_H
 
 #include <time.h>
 #ifndef _WIN32

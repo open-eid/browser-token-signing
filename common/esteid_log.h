@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef __ESTEID_LOG__
-#define __ESTEID_LOG__
+#ifndef ESTEID_LOG_H
+#define ESTEID_LOG_H
 
 #include "esteid_map.h"
 

@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef __MIME_TYPES_H__
-#define __MIME_TYPES_H__
+#ifndef ESTEID_MIME_TYPES_H
+#define ESTEID_MIME_TYPES_H
 
 #define MIME_TYPE         "application/x-digidoc"
 

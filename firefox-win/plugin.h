@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef __PLUGIN_H__
-#define	__PLUGIN_H__
+#ifndef ESTEID_PLUGIN_H
+#define	ESTEID_PLUGIN_H
 
 #include <windows.h>
 #define XP_WIN

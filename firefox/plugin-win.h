@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef __PLUGIN_WIN_H__
-#define	__PLUGIN_WIN_H__
+#ifndef ESTEID_PLUGIN_WIN_H
+#define	ESTEID_PLUGIN_WIN_H
 
 #define IDD_DIALOG1 8001
 #define IDC_PIN2 8002

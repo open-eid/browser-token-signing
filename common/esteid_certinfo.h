@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef __ESTEID_CERTINFO_H__
-#define __ESTEID_CERTINFO_H__
+#ifndef ESTEID_CERTINFO_H
+#define ESTEID_CERTINFO_H
 
 #define CRYPTOKI_COMPAT
 #include "pkcs11.h"

@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef __L10N_H__
-#define	__L10N_H__
+#ifndef ESTEID_L10N_H
+#define	ESTEID_L10N_H
 
 const char *l10n(const char *en);
 

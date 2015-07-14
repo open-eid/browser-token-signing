@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef __ESTEID_ERROR_H__
-#define	__ESTEID_ERROR_H__
+#ifndef ESTEID_ERROR_H
+#define	ESTEID_ERROR_H
 
 #define ESTEID_ERROR_SIZE 1024
 
