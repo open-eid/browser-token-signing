@@ -29,10 +29,15 @@ int isEscapedSymbol(char c) {
 }
 
 char *EstEID_jsonString(const char *src) {
-	int specialSymbolCount = 0;
+	size_t specialSymbolCount = 0u;
 	char *s = (char *)src;
-	while (*s) if (isEscapedSymbol(*(s++))) specialSymbolCount++;
-	char *result = (char*)malloc(strlen(src) + specialSymbolCount + 1);
+	size_t srcLen = 0u;
+	for (; *s; srcLen++) if (isEscapedSymbol(*(s++))) specialSymbolCount++;
+	if (SIZE_MAX - srcLen < specialSymbolCount)
+		return NULL;
+	if (SIZE_MAX - srcLen - specialSymbolCount < 1u)
+		return NULL;
+	char *result = (char*)malloc(srcLen + specialSymbolCount + 1u);
 	if (!result)
 		return NULL;
 	s = (char *)src;
@@ -56,41 +61,59 @@ char *EstEID_mapEntryToJson(struct EstEID_MapEntry entry) {
 	if (!k)
 		return NULL;
 	char *v = EstEID_jsonString(entry.value);
-	if (!v) {
-		free(k);
-		return NULL;
-	}
-	char *result = (char *)malloc(strlen(k) + strlen(v) + 7);
+	if (!v)
+		goto EstEID_mapEntryToJson_cleanup;
+	size_t const kLen = strlen(k);
+	if (SIZE_MAX - kLen < 7u)
+		goto EstEID_mapEntryToJson_cleanup_2;
+	size_t const vLen = strlen(v);
+	if (SIZE_MAX - kLen - 7u < vLen)
+		goto EstEID_mapEntryToJson_cleanup_2;
+	char *result = (char *)malloc(kLen + vLen + 7u);
 	if (result)
 		sprintf(result, "\"%s\": \"%s\"", k, v);
 	free(k);
 	free(v);
 	return result;
+EstEID_mapEntryToJson_cleanup_2:
+	free(v);
+EstEID_mapEntryToJson_cleanup:
+	free(k);
+	return NULL;
 }
 
 char *EstEID_mapToJson(EstEID_Map map) {
-	char *result = (char *)malloc(3);
+	size_t rLen = 3u;
+	char * result = (char *) malloc(rLen);
 	if (!result)
 		return NULL;
 	memcpy(result, "{", 2u);
-	while (map) {
-		char *entry = EstEID_mapEntryToJson(*map);
-		if (!entry)
-			goto EstEID_mapToJson_error_cleanup;
-		char * const newResult = (char *) realloc(result, strlen(result) + strlen(entry) + 4);
-		if (!newResult) {
-			free(entry);
-			goto EstEID_mapToJson_error_cleanup;
+	char * entry;
+	for (; map; map = map->next) {
+		if (map->next) {
+			if (SIZE_MAX - rLen < 2u)
+				goto EstEID_mapToJson_error_cleanup;
+			rLen += 2u;
 		}
+		if (!(entry = EstEID_mapEntryToJson(*map)))
+			goto EstEID_mapToJson_error_cleanup;
+		size_t const eLen = strlen(entry);
+		if (SIZE_MAX - rLen < eLen)
+			goto EstEID_mapToJson_error_cleanup;
+		rLen += eLen;
+		char * const newResult = (char *) realloc(result, rLen);
+		if (!newResult)
+			goto EstEID_mapToJson_error_cleanup;
 		result = newResult;
 		strcat(result, entry);
 		free(entry);
+		entry = NULL;
 		if (map->next) strcat(result, ", ");
-		map = map->next;
 	}
 	strcat(result, "}");
 	return result;
 EstEID_mapToJson_error_cleanup:
+	free(entry);
 	free(result);
 	return NULL;
 }
