@@ -63,7 +63,13 @@ char *EstEID_mapToJson(EstEID_Map map) {
 	sprintf(result, "{");
 	while (map) {
 		char *entry = EstEID_mapEntryToJson(*map);
-		result = (char *)realloc(result, strlen(result) + strlen(entry) + 4);
+		char * const newResult = (char *) realloc(result, strlen(result) + strlen(entry) + 4);
+		if (!newResult) {
+			free(entry);
+			free(result);
+			return NULL;
+		}
+		result = newResult;
 		strcat(result, entry);
 		free(entry);
 		if (map->next) strcat(result, ", ");
