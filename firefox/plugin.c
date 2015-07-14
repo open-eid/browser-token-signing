@@ -263,7 +263,6 @@ NPError NPP_SetWindow(NPP instanceData, NPWindow* window) {
 
 	if (currentInstance && window->window && (currentInstance->nativeWindowHandle != window->window)) {
 		currentInstance->nativeWindowHandle = window->window;
-		EstEID_log("nativeWindowHandle=%p", currentInstance->nativeWindowHandle);
 	}
 	EstEID_log("nativeWindowHandle=%p", currentInstance->nativeWindowHandle);
 
