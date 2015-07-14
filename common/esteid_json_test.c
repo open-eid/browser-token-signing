@@ -19,12 +19,18 @@
  *
  */
 
+#include <assert.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include "esteid_json.h"
 
 void assertStringEquals(const char *expected, char *actual) {
+	assert(expected);
+	if (!actual) {
+		fprintf(stderr, "Out of memory!\n");
+		abort();
+	}
 	if (strcmp(expected, actual)) {
 		printf("assertion failed - expected: [%s], actual [%s]\n", expected, actual);
 		free(actual);

@@ -20,6 +20,7 @@
  */
 
 #include <string.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include "esteid_json.h"
 
@@ -32,6 +33,8 @@ char *EstEID_jsonString(const char *src) {
 	char *s = (char *)src;
 	while (*s) if (isEscapedSymbol(*(s++))) specialSymbolCount++;
 	char *result = (char*)malloc(strlen(src) + specialSymbolCount + 1);
+	if (!result)
+		return NULL;
 	s = (char *)src;
 	char *r = result;
   while (*s) {
@@ -50,9 +53,16 @@ char *EstEID_jsonString(const char *src) {
 
 char *EstEID_mapEntryToJson(struct EstEID_MapEntry entry) {
 	char *k = EstEID_jsonString(entry.key);
+	if (!k)
+		return NULL;
 	char *v = EstEID_jsonString(entry.value);
+	if (!v) {
+		free(k);
+		return NULL;
+	}
 	char *result = (char *)malloc(strlen(k) + strlen(v) + 7);
-	sprintf(result, "\"%s\": \"%s\"", k, v);
+	if (result)
+		sprintf(result, "\"%s\": \"%s\"", k, v);
 	free(k);
 	free(v);
 	return result;
@@ -60,14 +70,17 @@ char *EstEID_mapEntryToJson(struct EstEID_MapEntry entry) {
 
 char *EstEID_mapToJson(EstEID_Map map) {
 	char *result = (char *)malloc(3);
-	sprintf(result, "{");
+	if (!result)
+		return NULL;
+	memcpy(result, "{", 2u);
 	while (map) {
 		char *entry = EstEID_mapEntryToJson(*map);
+		if (!entry)
+			goto EstEID_mapToJson_error_cleanup;
 		char * const newResult = (char *) realloc(result, strlen(result) + strlen(entry) + 4);
 		if (!newResult) {
 			free(entry);
-			free(result);
-			return NULL;
+			goto EstEID_mapToJson_error_cleanup;
 		}
 		result = newResult;
 		strcat(result, entry);
@@ -77,5 +90,8 @@ char *EstEID_mapToJson(EstEID_Map map) {
 	}
 	strcat(result, "}");
 	return result;
+EstEID_mapToJson_error_cleanup:
+	free(result);
+	return NULL;
 }
 
