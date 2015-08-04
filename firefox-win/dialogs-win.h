@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef __DIALOGS_WIN_H__
-#define __DIALOGS_WIN_H__
+#ifndef ESTEID_DIALOGS_WIN_H
+#define ESTEID_DIALOGS_WIN_H
 
 INT_PTR CALLBACK Pin2DialogProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 

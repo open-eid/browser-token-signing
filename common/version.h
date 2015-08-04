@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef __VERSION_H__
-#define __VERSION_H__
+#ifndef ESTEID_VERSION_H
+#define ESTEID_VERSION_H
 
 #ifdef WIN64
 #define ESTEID_PLUGIN_VERSION "3.11.0 64bit"

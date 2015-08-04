@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef __CERTSELECTION_WIN_H__
-#define __CERTSELECTION_WIN_H__
+#ifndef ESTEID_CERTSELECTION_WIN_H
+#define ESTEID_CERTSELECTION_WIN_H
 
 #include <windows.h>
 #include <windowsx.h>

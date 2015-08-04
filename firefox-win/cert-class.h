@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef __CERT_CLASS_H__
-#define	__CERT_CLASS_H__
+#ifndef ESTEID_CERT_CLASS_H
+#define	ESTEID_CERT_CLASS_H
 
 #include "plugin.h"
 #include "esteid_map.h"

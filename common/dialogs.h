@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef __DIALOGS_H__
-#define __DIALOGS_H__
+#ifndef ESTEID_DIALOGS_H
+#define ESTEID_DIALOGS_H
 
 #ifndef _WIN32
 #define IDOK 0

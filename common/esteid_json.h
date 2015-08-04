@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef __ESTEID_JSON_H__
-#define	__ESTEID_JSON_H__
+#ifndef ESTEID_JSON_H
+#define	ESTEID_JSON_H
 
 #include "esteid_map.h"
 

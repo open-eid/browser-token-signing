@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef __PLUGIN_CLASS_H__
-#define	__PLUGIN_CLASS_H__
+#ifndef ESTEID_PLUGIN_CLASS_H
+#define	ESTEID_PLUGIN_CLASS_H
 
 #define FAIL_IF_NOT_ALLOWED_SITE if(!isAllowedSite()) return false;
 

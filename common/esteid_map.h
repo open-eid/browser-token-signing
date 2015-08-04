@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef __ESTEID_MAP_H__
-#define	__ESTEID_MAP_H__
+#ifndef ESTEID_MAP_H
+#define	ESTEID_MAP_H
 
 #include <stdio.h>
 
