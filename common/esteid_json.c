@@ -42,7 +42,7 @@ char *EstEID_jsonString(const char *src) {
 		return NULL;
 	s = (char *)src;
 	char *r = result;
-  while (*s) {
+	while (*s) {
 		if (isEscapedSymbol(*s)) *(r++) = '\\';
 		switch (*s) {
 			case '\n' : *(r++) = 'n'; break;
@@ -57,28 +57,28 @@ char *EstEID_jsonString(const char *src) {
 }
 
 char *EstEID_mapEntryToJson(struct EstEID_MapEntry entry) {
-	char *k = EstEID_jsonString(entry.key);
-	if (!k)
+	char *key = EstEID_jsonString(entry.key);
+	if (!key)
 		return NULL;
-	char *v = EstEID_jsonString(entry.value);
-	if (!v)
+	char *value = EstEID_jsonString(entry.value);
+	if (!value)
 		goto EstEID_mapEntryToJson_cleanup;
-	size_t const kLen = strlen(k);
+	size_t const kLen = strlen(key);
 	if (SIZE_MAX - kLen < 7u)
 		goto EstEID_mapEntryToJson_cleanup_2;
-	size_t const vLen = strlen(v);
+	size_t const vLen = strlen(value);
 	if (SIZE_MAX - kLen - 7u < vLen)
 		goto EstEID_mapEntryToJson_cleanup_2;
 	char *result = (char *)malloc(kLen + vLen + 7u);
 	if (result)
-		sprintf(result, "\"%s\": \"%s\"", k, v);
-	free(k);
-	free(v);
+		sprintf(result, "\"%s\": \"%s\"", key, value);
+	free(key);
+	free(value);
 	return result;
 EstEID_mapEntryToJson_cleanup_2:
-	free(v);
+	free(value);
 EstEID_mapEntryToJson_cleanup:
-	free(k);
+	free(key);
 	return NULL;
 }
 
