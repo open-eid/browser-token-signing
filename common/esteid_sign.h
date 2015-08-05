@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef __ESTEID_SIGN__
-#define __ESTEID_SIGN__
+#ifndef ESTEID_SIGN_H
+#define ESTEID_SIGN_H
 
 #include "esteid_certinfo.h"
 

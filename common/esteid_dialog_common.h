@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef __ESTEID_DIALOG_COMMON_H__
-#define __ESTEID_DIALOG_COMMON_H__
+#ifndef ESTEID_DIALOG_COMMON_H
+#define ESTEID_DIALOG_COMMON_H
 
 char* createDialogTitle(const char* nameAndID);
 

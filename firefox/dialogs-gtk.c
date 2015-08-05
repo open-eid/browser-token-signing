@@ -255,7 +255,7 @@ static GtkTreeModel* createAndFillModel() {
 
   EstEID_Certs *certs = EstEID_loadCerts();
   EstEID_log("%i certificates found", certs->count);
-  for (int i = 0; i < certs->count; i++) {
+  for (unsigned i = 0u; i < certs->count; i++) {
     EstEID_Map cert = certs->certs[i];
     if (!EstEID_mapGet(cert, "usageNonRepudiation")) continue;
 

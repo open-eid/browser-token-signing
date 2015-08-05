@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef __ESTEID_TIMER_H__
-#define	__ESTEID_TIMER_H__
+#ifndef ESTEID_TIMER_H
+#define	ESTEID_TIMER_H
 
 #include "esteid_time.h"
 

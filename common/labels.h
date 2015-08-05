@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef __LABELS_H__
-#define	__LABELS_H__
+#ifndef ESTEID_LABELS_H
+#define	ESTEID_LABELS_H
 
 
 label labels[] = {

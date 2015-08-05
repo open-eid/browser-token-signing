@@ -396,7 +396,7 @@ int EstEID_loadCertInfoEntries(EstEID_Certs *certs, int index) {
 	EstEID_mapPutNoAlloc(cert, strdup("validFrom"), EstEID_ASN1_TIME_toString(X509_get_notBefore(x509)));
 
 	usage = (ASN1_BIT_STRING *)X509_get_ext_d2i(x509, NID_key_usage, NULL, NULL);
-	if (usage->length > 0) keyUsage = usage->data[0];
+	keyUsage = (usage->length > 0) ? usage->data[0] : 0u;
 	ASN1_BIT_STRING_free(usage);
 
 	if (keyUsage & X509v3_KU_DIGITAL_SIGNATURE) EstEID_mapPut(cert, "usageDigitalSignature", "TRUE");

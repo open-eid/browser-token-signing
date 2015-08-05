@@ -140,7 +140,7 @@ bool doSign(PluginInstance *obj, NPVariant *args, unsigned argCount, NPVariant *
 
 	void* wnd = getNativeWindowHandle(obj);
 
-	EstEID_PINPromptData pinPromptData = {promptForPIN, showAlert, wnd};
+	EstEID_PINPromptData pinPromptData = {promptForPIN, showAlert, wnd, NULL};
 	NPUTF8* certId = createStringFromNPVariant(&args[0]);
 	NPUTF8* hash = createStringFromNPVariant(&args[1]);
 	char *signature = NULL;
@@ -227,7 +227,7 @@ bool doGetCertificates(PluginInstance *obj, NPVariant *result) {
 	NPVariant array;
 	browserFunctions->invoke(obj->npp, windowObject, browserFunctions->getstringidentifier("Array"), NULL, 0, &array);
 	EstEID_Certs *certs = EstEID_loadCerts();
-	for (int i = 0; i < certs->count; i++) {
+	for (unsigned i = 0u; i < certs->count; i++) {
 		EstEID_Map cert = certs->certs[i];
 		if (!EstEID_mapGet(cert, "usageNonRepudiation")) continue;
 		CertInstance *certInstance = (CertInstance *)browserFunctions->createobject(obj->npp, certClass());
@@ -305,6 +305,9 @@ static NPClass _class = {
 	(NPHasPropertyFunctionPtr)pluginHasProperty,
 	(NPGetPropertyFunctionPtr)pluginGetProperty,
 	(NPSetPropertyFunctionPtr)pluginSetProperty,
+	(NPRemovePropertyFunctionPtr)NULL,
+	(NPEnumerationFunctionPtr)NULL,
+	(NPConstructFunctionPtr)NULL
 };
 
 NPClass *pluginClass() {

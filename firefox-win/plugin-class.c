@@ -188,7 +188,7 @@ BOOL canUseCNG(char* id)
 	HCERTSTORE cert_store;
 	PCCERT_CONTEXT certContext = NULL;
 	NCRYPT_KEY_HANDLE hKey = NULL;
-	BOOL must_release_provider;
+	BOOL must_release_provider = FALSE;
 
 	if (isCNGInstalled())
 	{
@@ -304,6 +304,7 @@ bool doSignCSP(PluginInstance *obj, BCRYPT_PKCS1_PADDING_INFO padInfo, char *inH
 		EstEID_log("_hash = %p, cryptoProvider = %p", _hash, cryptoProvider);
 		if (!CryptCreateHash(cryptoProvider, hashAlgorithm, 0, 0, &_hash)){
 			handleError("CryptCreateHash", obj);
+			free(hashBytes);
 			return false;
 		}
 		EstEID_log("CryptCreateHash() set hash object pointer to %p", _hash);

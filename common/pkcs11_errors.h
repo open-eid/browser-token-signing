@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef __PKCS11_ERRORS_H__
-#define __PKCS11_ERRORS_H__
+#ifndef ESTEID_PKCS11_ERRORS_H
+#define ESTEID_PKCS11_ERRORS_H
 
 #define CRYPTOKI_COMPAT
 #include "pkcs11.h"

@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef __PIN_PROMPT_COCOA_H__
-#define __PIN_PROMPT_COCOA_H__
+#ifndef ESTEID_PIN_PROMPT_COCOA_H
+#define ESTEID_PIN_PROMPT_COCOA_H
 
 #import <Cocoa/Cocoa.h>
 
