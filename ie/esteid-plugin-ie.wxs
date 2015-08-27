@@ -19,7 +19,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
 	<Product Name="IE Token Signing Plugin" UpgradeCode="713f9d27-5016-4c6a-bee1-94403255fbd4" Id="*" Language="1033" Version="$(var.VERSION)" Codepage="1251" Manufacturer="RIA">
-		<Package Keywords="Installer" Platform="$(var.Platform)" InstallerVersion="405" Compressed="yes"/>
+		<Package Keywords="Installer" Platform="$(var.Platform)" InstallerVersion="405" Compressed="yes" InstallPrivileges="elevated" InstallScope="perMachine"/>
 		<MediaTemplate EmbedCab="yes" CompressionLevel="high"/>
 		<Icon Id="Icon.ico" SourceFile="ie/ID.ico"/>
 		<MajorUpgrade AllowSameVersionUpgrades="yes" DowngradeErrorMessage=
@@ -88,7 +88,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 								<Interface Id="{4E59E13F-7CEE-4013-9275-685FAFCD560B}" Name="IEstEIDIEPluginBHO" ProxyStubClassId32="{00020424-0000-0000-C000-000000000046}"/>
 								<Interface Id="{E23AF8B5-2D34-45EC-95E6-24791F84486E}" Name="IEstEIDCertificate" ProxyStubClassId32="{00020424-0000-0000-C000-000000000046}"/>
 							</TypeLib>
-						</File>							  
+						</File>				
 					</Component>
 				</Directory>
 			</Directory>
