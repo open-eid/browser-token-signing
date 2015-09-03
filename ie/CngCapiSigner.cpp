@@ -131,23 +131,28 @@ string CngCapiSigner::sign() {
 	}
 	case AT_SIGNATURE:
 	{
-		EstEID_log("Using CAPI");
+		EstEID_log("keySpec is AT_SIGNATURE... Using CAPI");
 		HCRYPTHASH hash = 0;
+		EstEID_log("calling CryptCreateHash()...");
 		if (!CryptCreateHash(key, alg, 0, 0, &hash)) {
+			EstEID_log("CryptCreateHash() return code: (%s) %x", "FAILURE", GetLastError());
 			if (freeKeyHandle) {
 				CryptReleaseContext(key, 0);
 			}
+			EstEID_log("throwing technical exception - createHash failed..");
 			throw TechnicalException("CreateHash failed");
 		}
-
+		EstEID_log("calling CryptSetHashParam()..");
 		if (!CryptSetHashParam(hash, HP_HASHVAL, digest.data(), 0))	{
+			EstEID_log("CryptSetHashParam() error code: (%s) %x", "FAILURE", GetLastError());
 			if (freeKeyHandle) {
 				CryptReleaseContext(key, 0);
 			}
 			CryptDestroyHash(hash);
+			EstEID_log("throwing technical exception - SetHashParam failed..");
 			throw TechnicalException("SetHashParam failed");
 		}
-
+		EstEID_log("calling CryptSignHashW()..");
 		INT retCode = CryptSignHashW(hash, AT_SIGNATURE, 0, 0, LPBYTE(signature.data()), &size);
 		err = retCode ? ERROR_SUCCESS : GetLastError();
 		EstEID_log("CryptSignHash() return code: %u (%s) %x", retCode, retCode ? "SUCCESS" : "FAILURE", err);
