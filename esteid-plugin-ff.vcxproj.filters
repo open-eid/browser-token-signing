@@ -54,12 +54,6 @@
     <ClInclude Include="common\l10n.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="common\dialogs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="common\esteid_dialog_common.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="common\esteid_json.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -73,12 +67,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="common\pkcs11_errors.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="firefox-win\certselection-win.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="firefox-win\dialogs-win.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="common\cert_dialog_win.h">
@@ -113,9 +101,6 @@
     <ClCompile Include="common\l10n.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="common\esteid_dialog_common.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="common\esteid_json.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -132,12 +117,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="common\cert_dialog_win.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="firefox-win\certselection-win.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="firefox-win\dialogs-win.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

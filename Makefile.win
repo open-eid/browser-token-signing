@@ -9,18 +9,14 @@ D_FLAGS = /DWIN32 /D_UNICODE /DUNICODE
 !IF "$(PKCS11_DRIVER)" != ""
 D_FLAGS = $(D_FLAGS) "/DINTERNATIONAL=\"$(PKCS11_DRIVER)\""
 !ENDIF
-COMMON_HEADERS = common/esteid_certinfo.h common/pkcs11_errors.h common/esteid_log.h common/esteid_sign.h common/esteid_timer.h common/l10n.h common/esteid_time.h common/labels.h common/esteid_map.h common/esteid_json.h common/dialogs.h common/esteid_dialog_common.h
-COMMON_SOURCES = common/esteid_certinfo.c common/pkcs11_errors.c common/esteid_log.c common/esteid_sign.c common/esteid_timer.c common/l10n.c common/esteid_time.c common/esteid_map.c common/esteid_json.c common/l10n-win.c common/esteid_dialog_common.c
-PLUGIN_HEADERS = firefox/plugin.h firefox/plugin-class.h firefox/cert-class.h firefox/dialogs-win.h firefox/certselection-win.h
-PLUGIN_SOURCES = firefox/plugin.c firefox/plugin-class.c firefox/cert-class.c firefox/dialogs-win.c firefox/certselection-win.c
-PLUGIN_HEADERS_CNG = firefox-win/plugin.h firefox-win/plugin-class.h firefox-win/cert-class.h firefox-win/dialogs-win.h firefox-win/certselection-win.h common/cert_dialog_win.h
-PLUGIN_SOURCES_CNG = firefox-win/plugin.c firefox-win/plugin-class.c firefox-win/cert-class.c firefox-win/dialogs-win.c firefox-win/certselection-win.c common/cert_dialog_win.c
+COMMON_HEADERS = common/esteid_certinfo.h common/pkcs11_errors.h common/esteid_log.h common/binary_utils.h common/esteid_timer.h common/l10n.h common/esteid_time.h common/labels.h common/esteid_map.h common/esteid_json.h
+COMMON_SOURCES = common/esteid_certinfo.c common/pkcs11_errors.c common/esteid_log.c common/binary_utils.c common/esteid_timer.c common/l10n.c common/esteid_time.c common/esteid_map.c common/esteid_json.c common/l10n-win.c 
+
+PLUGIN_HEADERS_CNG = firefox-win/plugin.h firefox-win/plugin-class.h firefox-win/cert-class.h common/cert_dialog_win.h
+PLUGIN_SOURCES_CNG = firefox-win/plugin.c firefox-win/plugin-class.c firefox-win/cert-class.c common/cert_dialog_win.c
 
 plugin-win.res: firefox/plugin-win.rc
 	rc $(D_FLAGS) /fo plugin-win.res firefox/plugin-win.rc 
-
-plugin: $(COMMON_HEADERS) $(COMMON_SOURCES) $(PLUGIN_HEADERS) $(PLUGIN_SOURCES) plugin-win.res
-	$(CC) $(C_FLAGS) $(I_FLAGS) $(D_FLAGS) $(MODE_FLAG) $(COMMON_SOURCES) $(PLUGIN_SOURCES) $(L_FLAGS)
 
 plugin-cng: $(COMMON_HEADERS) $(COMMON_SOURCES) $(PLUGIN_HEADERS_CNG) $(PLUGIN_SOURCES_CNG) plugin-win.res
 	$(CC) $(C_FLAGS) $(I_FLAGS) $(D_FLAGS) $(MODE_FLAG) $(COMMON_SOURCES) $(PLUGIN_SOURCES_CNG) $(L_FLAGS) ncrypt.lib cryptui.lib crypt32.lib

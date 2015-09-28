@@ -29,7 +29,7 @@
 #include "esteid_error.h"
 #include "npapi.h"
 #include "esteid_certinfo.h"
-#include "esteid_sign.h"
+#include "binary_utils.h"
 #include <ncrypt.h>
 #include "cert_dialog_win.h"
 #include "atlsafe.h"
@@ -456,7 +456,7 @@ bool doSign(PluginInstance *obj, NPVariant *args, unsigned argCount, NPVariant *
 		return false;
 	}
 
-	hash = EstEID_hex2bin(createStringFromNPVariant(&args[1]));
+	hash = hex2bin(createStringFromNPVariant(&args[1]));
 	
 	//Convert certId from char * to BSTR
 	/*WCHAR* wCertID = NULL;

@@ -46,6 +46,8 @@
     <NMakeCleanCommandLine />
     <NMakeOutput />
     <NMakePreprocessorDefinitions>WIN32;_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+    <NMakeIncludeSearchPath>include;common;C:\OpenSSL-Win32\include;firefox-win;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <AdditionalOptions>/TP /nologo /EHsc /MD Iinclude /Icommon /IC:\OpenSSL-Win32\include /DWIN32 /D_UNICODE /DUNICODE /LD /link user32.lib gdi32.lib C:\OpenSSL-Win32\lib\VC\libeay32MD.lib win.res /OUT:npesteid-firefox-plugin.dll /IMPLIB:npesteid-firefox-plugin.lib /DEF:firefox\plugin-win.def ncrypt.lib cryptui.lib crypt32.lib </AdditionalOptions>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>Release\</OutDir>
@@ -60,8 +62,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="common\cert_dialog_win.h" />
-    <ClInclude Include="common\dialogs.h" />
-    <ClInclude Include="common\esteid_dialog_common.h" />
     <ClInclude Include="common\esteid_error.h" />
     <ClInclude Include="common\esteid_json.h" />
     <ClInclude Include="common\esteid_log.h" />
@@ -74,8 +74,6 @@
     <ClInclude Include="common\pkcs11_errors.h" />
     <ClInclude Include="firefox-win\cert-class.h" />
     <ClInclude Include="common\esteid_certinfo.h" />
-    <ClInclude Include="firefox-win\certselection-win.h" />
-    <ClInclude Include="firefox-win\dialogs-win.h" />
     <ClInclude Include="firefox-win\plugin-class.h" />
     <ClInclude Include="firefox-win\plugin.h" />
     <ClInclude Include="common\version.h" />
@@ -85,7 +83,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="common\cert_dialog_win.c" />
-    <ClCompile Include="common\esteid_dialog_common.c" />
     <ClCompile Include="common\esteid_json.c" />
     <ClCompile Include="common\esteid_log.c" />
     <ClCompile Include="common\esteid_map.c" />
@@ -98,8 +95,6 @@
     <ClCompile Include="firefox-win\cert-class.c" />
     <ClCompile Include="common\esteid_certinfo.c" />
     <ClCompile Include="common\esteid_json_test.c" />
-    <ClCompile Include="firefox-win\certselection-win.c" />
-    <ClCompile Include="firefox-win\dialogs-win.c" />
     <ClCompile Include="firefox-win\plugin-class.c" />
     <ClCompile Include="firefox-win\plugin.c" />
   </ItemGroup>
