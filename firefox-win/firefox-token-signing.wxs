@@ -35,6 +35,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
       <Directory Id='ProgramFilesFolder'>
         <Directory Id="APPLICATIONFOLDER" Name="Firefox Token Signing Plugin">
           <Component Id="Application" Guid="6d75cfe1-2ba2-4563-8e03-6036eef5d07b">
+			<File Source="C:\OpenSSL-Win32\bin\libeay32.dll"/>
             <File Source="npesteid-firefox-plugin.dll"/>
             <RegistryValue Root='HKLM' Type='string' Value='[APPLICATIONFOLDER]npesteid-firefox-plugin.dll'
                 Key='Software\MozillaPlugins\@RIA/esteid-firefox-plugin' Name="Path" Action="write"/>
