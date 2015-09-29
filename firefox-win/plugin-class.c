@@ -116,6 +116,9 @@ int getHashAlgorithm(int hashHexLength) {
 	case BINARY_SHA256_LENGTH * 2:
 		hashAlgorithm = CALG_SHA_256;
 		break;
+	case BINARY_SHA384_LENGTH * 2:
+		hashAlgorithm = CALG_SHA_384;
+		break;
 	case BINARY_SHA512_LENGTH * 2:
 		hashAlgorithm = CALG_SHA_512;
 		break;
@@ -442,6 +445,8 @@ bool doSign(PluginInstance *obj, NPVariant *args, unsigned argCount, NPVariant *
 			padInfo.pszAlgId = L"SHA224"; break;
 		case BINARY_SHA256_LENGTH :
 			padInfo.pszAlgId = NCRYPT_SHA256_ALGORITHM; break;
+		case BINARY_SHA384_LENGTH:
+			padInfo.pszAlgId = NCRYPT_SHA384_ALGORITHM; break;
 		case BINARY_SHA512_LENGTH:
 			padInfo.pszAlgId = NCRYPT_SHA512_ALGORITHM; break;
 		default:
