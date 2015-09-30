@@ -20,7 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <Product Name="Firefox Token Signing Plugin" UpgradeCode="4e7f96ae-a8c9-45ae-bcf1-1fb64597df5b"
       Id="*" Language="1033" Version="$(var.VERSION)" Codepage="1251" Manufacturer="RIA">
-    <Package Keywords="Installer" InstallerVersion="405" Compressed="yes"/>
+    <Package Keywords="Installer" Platform="$(var.Platform)" InstallerVersion="405" Compressed="yes"/>
     <MediaTemplate EmbedCab="yes" CompressionLevel="high"/>
     <Icon Id="Icon.ico" SourceFile="firefox-win/media/ID.ico"/>
     <Property Id="ARPPRODUCTICON" Value="Icon.ico"/>
@@ -32,20 +32,38 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
     <UIRef Id="WixUI_Minimal" />
 
     <Directory Id="TARGETDIR" Name="SourceDir">
-      <Directory Id='ProgramFilesFolder'>
-        <Directory Id="APPLICATIONFOLDER" Name="Firefox Token Signing Plugin">
-          <Component Id="Application" Guid="6d75cfe1-2ba2-4563-8e03-6036eef5d07b">
-			<File Source="C:\OpenSSL-Win32\bin\libeay32.dll"/>
-            <File Source="npesteid-firefox-plugin.dll"/>
-            <RegistryValue Root='HKLM' Type='string' Value='[APPLICATIONFOLDER]npesteid-firefox-plugin.dll'
-                Key='Software\MozillaPlugins\@RIA/esteid-firefox-plugin' Name="Path" Action="write"/>
-          </Component>
-        </Directory>
-      </Directory>
+		<Directory Id='ProgramFilesFolder'>
+			<Directory Id="APPLICATIONFOLDER" Name="Firefox Token Signing Plugin">
+				<Component Id="Application" Guid="6d75cfe1-2ba2-4563-8e03-6036eef5d07b">
+					<File Source="C:\OpenSSL-Win32\bin\libeay32.dll"/>
+					<File Source="x86\npesteid-firefox-plugin.dll"/>
+					<RegistryValue Root='HKLM' Type='string' Value='[APPLICATIONFOLDER]npesteid-firefox-plugin.dll'
+						Key='Software\MozillaPlugins\@RIA/esteid-firefox-plugin' Name="Path" Action="write"/>
+				</Component>
+			</Directory>
+		</Directory>
+		
+		<!-- 64bit -->
+		<?if $(var.Platform) = "x64" ?>
+		<Directory Id='ProgramFiles64Folder'>
+			<Directory Id="APPLICATION64FOLDER" Name="Firefox Token Signing Plugin">		
+				<Component Id="Application64" Guid="{80676F1F-CCC6-4165-B54A-6263EC037548}" Win64="yes">	
+					<File Source="C:\OpenSSL-Win64\bin\libeay32.dll" Id="libeay32_x64.dll"/>				
+					<File Source="x64\npesteid-firefox-plugin.dll" Id="npesteid_firefox_plugin64.dll" KeyPath="yes" Name="npesteid-firefox-plugin64.dll"/>	
+					<RegistryValue Root="HKLM" Key="Software\MozillaPlugins\@RIA/esteid-firefox-plugin" Name="Path"
+                       Value="[APPLICATION64FOLDER]npesteid-firefox-plugin64.dll" Type="string" Action="write"/>					
+				</Component>
+			</Directory>
+		</Directory>
+		<?endif ?>
+		
     </Directory>
 
     <Feature Id="Install" Level="1" Title="Firefox Token Signing Plugin" Display="expand" ConfigurableDirectory="APPLICATIONFOLDER">
-      <ComponentRef Id="Application"/>
+		<ComponentRef Id="Application"/>
+		<?if $(var.Platform) = "x64" ?>
+			<ComponentRef Id="Application64"/>
+		<?endif ?>
     </Feature>
   </Product>
 </Wix>
