@@ -102,25 +102,11 @@ NP_EXPORT(NPError) NP_Shutdown(void) {
 	return NPERR_NO_ERROR;
 }
 
-#ifdef _WIN32
-HINSTANCE pluginInstance;
-BOOL APIENTRY DllMain(HINSTANCE instance, DWORD reason, LPVOID reserved) {
-	EstEID_log("reason: %lu", reason);
-	pluginInstance = instance;
-	if (reason == DLL_PROCESS_ATTACH || reason == DLL_THREAD_ATTACH) {
-		DisableThreadLibraryCalls(instance);
-	}
-    return TRUE;
-}
-
-#else
 NP_EXPORT(const char*) NP_GetMIMEDescription() {
 	char *mime = (char *) MIME_TYPE "::" PLUGIN_NAME;
 	EstEID_log("NP_GetMIMEDescription: %s", mime);
 	return mime;
 }
-
-#endif
 
 NP_EXPORT(char*) NP_GetPluginVersion() {
 	EstEID_log("NP_GetPluginVersion: %s", ESTEID_PLUGIN_VERSION);

@@ -32,12 +32,6 @@
 #include "esteid_error.h"
 #include "npapi.h"
 #include "esteid_certinfo.h"
-#ifdef _WIN32
-#include "certselection-win.h"
-#include "esteid_dialog_common.h"
-#include "dialogs-win.h"
-extern HINSTANCE pluginInstance;
-#endif
 
 extern NPNetscapeFuncs* browserFunctions;
 extern char EstEID_error[1024];
@@ -95,10 +89,6 @@ bool pluginHasProperty(NPClass *theClass, NPIdentifier name) {
 
 void *getNativeWindowHandle(PluginInstance *obj) {
 	void *nativeWindowHandle = obj->nativeWindowHandle;
-#ifdef _WIN32
-	EstEID_log("_WIN32 detected, forcing nativeWindowHandle query from browser");
-	nativeWindowHandle = 0;
-#endif
 	if (!nativeWindowHandle) {
 		browserFunctions->getvalue(obj->npp, NPNVnetscapeWindow, &nativeWindowHandle);
 		EstEID_log("reading nativeWindowHandle=%p from browserFunctions", nativeWindowHandle);
@@ -145,32 +135,8 @@ bool doSign(PluginInstance *obj, NPVariant *args, unsigned argCount, NPVariant *
 	NPUTF8* hash = createStringFromNPVariant(&args[1]);
 	char *signature = NULL;
 
-#ifdef _WIN32
-	DialogData dialogData;
-	dialogData.pin2[0] = '\0';
-	dialogData.minPin2Length = 5;
-	dialogData.certId = certId;
-	dialogData.hash = hash;
-	dialogData.signature[0] = '\0';
-
-	CK_SLOT_ID slotId;	
-	if(EstEID_getSlotId(certId, &slotId)){
-		if(EstEID_isPinPad(slotId)) {
-			signature = EstEID_sign(certId, hash, pinPromptData);
-		}
-		else {
-			DialogBoxParam(pluginInstance, MAKEINTRESOURCEW(IDD_PIN_DIALOG), (HWND)wnd, Pin2DialogProc, (LPARAM)&dialogData);
-			LOG_LOCATION;
-			signature = (char*)malloc(SIGNATURE_BUFFER_SIZE); // check?
-			strcpy(signature, dialogData.signature);
-		}
-	}
-	else {
-		return false;
-	}
-#else
 	signature = EstEID_sign(certId, hash, pinPromptData);
-#endif
+
 	LOG_LOCATION
 	if (signature) {
 		copyStringToNPVariant(signature, result);
@@ -190,13 +156,8 @@ bool doGetCertificate(PluginInstance *obj, NPVariant *result) {
 	char selectedCertID[33];
 	int dlg_result = 0;
 	
-#ifdef _WIN32
-	HWND ownerWindowHandle = (HWND)getNativeWindowHandle(obj);
-	EstEID_log("owner window handle passed to DialogBoxParam() = %08X", ownerWindowHandle);
-	dlg_result = (int)DialogBoxParam(pluginInstance, MAKEINTRESOURCE(IDD_CERTIFICATESELECTIONDLG), ownerWindowHandle, CertSelectionDialogProc, (LPARAM)selectedCertID);
-#else
 	dlg_result = promptForCertificate(getNativeWindowHandle(obj), selectedCertID);
-#endif
+
 	EstEID_log("Certificate selection dialog result = %i", dlg_result);
 	EstEID_log("Selected certificate ID = %s", selectedCertID);
 
