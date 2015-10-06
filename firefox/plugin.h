@@ -27,13 +27,6 @@
 #define XP_UNIX
 #endif
 
-#ifdef _WIN32
-#include <windows.h>
-#define XP_WIN
-#define _WINDOWS
-#define NP_EXPORT(type) type OSCALL
-#endif
-
 #include "npapi.h"
 #include "npfunctions.h"
 

@@ -125,12 +125,12 @@
     <None Include="Makefile.win">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="firefox\plugin-win.def">
+    <None Include="firefox-win\plugin-win.def">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="firefox\plugin-win.rc">
+    <ResourceCompile Include="firefox-win\plugin-win.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>

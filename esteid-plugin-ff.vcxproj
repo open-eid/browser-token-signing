@@ -99,12 +99,12 @@
     <ClCompile Include="firefox-win\plugin.c" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="firefox\plugin-win.def" />
+    <None Include="firefox-win\plugin-win.def" />
     <None Include="Makefile.win" />
     <None Include="plugin-test.html" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="firefox\plugin-win.rc" />
+    <ResourceCompile Include="firefox-win\plugin-win.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
