@@ -38,6 +38,7 @@
 #include "pkcs11_errors.h"
 #include "esteid_map.h"
 #include "esteid_error.h"
+#include "preferences.h"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -64,7 +65,11 @@ char *library_error() {
 }
 #else
 #include <dlfcn.h>
+#ifdef __APPLE__
+#define LOAD_LIBRARY void *handle = dlopen(loadDefaultPKCS11ModulePath(), RTLD_NOW)
+#else
 #define LOAD_LIBRARY void *handle = dlopen(PKCS11_DRIVER, RTLD_NOW)
+#endif
 #define GET_FUNCTION_PTR dlsym
 char *library_error() {
 	return dlerror();
@@ -221,6 +226,9 @@ int EstEID_startInitializeCryptokiThread() {
 
 int EstEID_loadLibrary() {
 	CK_C_GetFunctionList GetFunctionList;
+#ifdef __APPLE__
+    EstEID_log("using pkcs11 library %s", loadDefaultPKCS11ModulePath());
+#endif
 	LOAD_LIBRARY;
 
 	LOG_LOCATION;
@@ -446,8 +454,12 @@ int EstEID_loadCertInfo(EstEID_Certs *certs, int index) {
     EstEID_log("---------------------- index = %i", index);
 
 	FAIL_IF(EstEID_CK_failure("C_GetSlotInfo", fl->C_GetSlotInfo(slotID, &slotInfo)));
+    
+    LOG_LOCATION
 
 	if (!(slotInfo.flags & CKF_TOKEN_PRESENT)) return SUCCESS;
+    
+    LOG_LOCATION
 
 	FAIL_IF(EstEID_CK_failure("C_GetTokenInfo", fl->C_GetTokenInfo(slotID, &tokenInfo)));
 
@@ -577,4 +589,6 @@ char *EstEID_bin2hex(const char *bin, const int binLength) {
 	hex[binLength * 2] = '\0';
 	return hex;
 }
+
+
 

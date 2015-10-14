@@ -18,6 +18,9 @@
 		12910C96122B8A77002722A4 /* dialogs-cocoa.m in Sources */ = {isa = PBXBuildFile; fileRef = 12910C94122B8A77002722A4 /* dialogs-cocoa.m */; };
 		4E8895EB1A8C1792006332A7 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E8895EA1A8C1792006332A7 /* libcrypto.dylib */; };
 		4ECC1BC5163B0A7D0079E4AC /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F642D75C1238CB0800CBFD02 /* Security.framework */; };
+		9D8F1D7A1BB1465000ED50DA /* preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D8F1D791BB1465000ED50DA /* preferences.m */; settings = {ASSET_TAGS = (); }; };
+		9DDEA2B91BB36B5500A14D8A /* ModuleSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DDEA2B81BB36B5500A14D8A /* ModuleSelection.m */; settings = {ASSET_TAGS = (); }; };
+		9DDEA2C11BB36CAA00A14D8A /* ModuleSelection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DDEA2C01BB36CAA00A14D8A /* ModuleSelection.xib */; settings = {ASSET_TAGS = (); }; };
 		D82FCC4512ACF9A6007942EB /* esteid_log.c in Sources */ = {isa = PBXBuildFile; fileRef = D82FCC4412ACF9A6007942EB /* esteid_log.c */; };
 		F63D048112005FF400CA11F4 /* pkcs11_errors.c in Sources */ = {isa = PBXBuildFile; fileRef = 128B2FBF11FDBEE4000A8EDE /* pkcs11_errors.c */; };
 		F63D048212005FF800CA11F4 /* esteid_certinfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 128B2DE111F9D1E4000A8EDE /* esteid_certinfo.c */; };
@@ -61,6 +64,11 @@
 		12910C93122B8A77002722A4 /* dialogs-cocoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "dialogs-cocoa.h"; sourceTree = "<group>"; };
 		12910C94122B8A77002722A4 /* dialogs-cocoa.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "dialogs-cocoa.m"; sourceTree = "<group>"; };
 		4E8895EA1A8C1792006332A7 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = usr/lib/libcrypto.dylib; sourceTree = SDKROOT; };
+		9D8F1D781BB144C700ED50DA /* preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = preferences.h; sourceTree = "<group>"; };
+		9D8F1D791BB1465000ED50DA /* preferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = preferences.m; sourceTree = "<group>"; };
+		9DDEA2B71BB36B5500A14D8A /* ModuleSelection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModuleSelection.h; sourceTree = "<group>"; };
+		9DDEA2B81BB36B5500A14D8A /* ModuleSelection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModuleSelection.m; sourceTree = "<group>"; };
+		9DDEA2C01BB36CAA00A14D8A /* ModuleSelection.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ModuleSelection.xib; sourceTree = "<group>"; };
 		D82FCC4412ACF9A6007942EB /* esteid_log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = esteid_log.c; sourceTree = "<group>"; };
 		D86B00FA1251FB4D00D9A6FA /* esteid_json.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = esteid_json.h; sourceTree = "<group>"; };
 		D8A4AA381271DC0900746CF9 /* keychain-tool */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "keychain-tool"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -187,6 +195,11 @@
 				F6AA0AC712C1E1820001468B /* CertificateSelection.xib */,
 				F6AA0ACF12C1E60B0001468B /* CertificateSelection.h */,
 				F6AA0AD012C1E60B0001468B /* CertificateSelection.m */,
+				9D8F1D781BB144C700ED50DA /* preferences.h */,
+				9D8F1D791BB1465000ED50DA /* preferences.m */,
+				9DDEA2B71BB36B5500A14D8A /* ModuleSelection.h */,
+				9DDEA2B81BB36B5500A14D8A /* ModuleSelection.m */,
+				9DDEA2C01BB36CAA00A14D8A /* ModuleSelection.xib */,
 			);
 			path = common;
 			sourceTree = "<group>";
@@ -309,6 +322,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DDEA2C11BB36CAA00A14D8A /* ModuleSelection.xib in Resources */,
 				124E7EF911F6E03C00AED77F /* InfoPlist.strings in Resources */,
 				124E7F0B11F6E09300AED77F /* PINDialog.xib in Resources */,
 				F6F089471212D5CC009A48CB /* PINDialogWithMessage.xib in Resources */,
@@ -331,11 +345,13 @@
 				F66C51501210325A003AA2E1 /* esteid_sign.c in Sources */,
 				F6F4A4E11214025800933C3D /* l10n.c in Sources */,
 				F6F4A5971219297200933C3D /* esteid_timer.c in Sources */,
+				9DDEA2B91BB36B5500A14D8A /* ModuleSelection.m in Sources */,
 				F6F4A5FE121A8CCC00933C3D /* l10n-mac.m in Sources */,
 				F69726561225427F0059AC50 /* cert-class.c in Sources */,
 				F69726571225427F0059AC50 /* plugin-class.c in Sources */,
 				12037281122B847C00F7063E /* esteid_map_test.c in Sources */,
 				12037282122B847D00F7063E /* esteid_map.c in Sources */,
+				9D8F1D7A1BB1465000ED50DA /* preferences.m in Sources */,
 				12910C90122B8A5A002722A4 /* dialogs.m in Sources */,
 				12910C96122B8A77002722A4 /* dialogs-cocoa.m in Sources */,
 				F6DA9256126606AC008D9295 /* esteid_json.c in Sources */,

@@ -30,4 +30,6 @@ void cocoa_showAlert(NSWindow *window, const char *message);
 
 int cocoa_promptForCertificate(void* nativeWindowHandle, char* certId);
 
+const char *cocoa_promptForDriver(void* nativeWindowHandle);
+
 #endif

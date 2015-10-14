@@ -152,7 +152,7 @@ bool doSign(PluginInstance *obj, NPVariant *args, unsigned argCount, NPVariant *
 
 bool doGetCertificate(PluginInstance *obj, NPVariant *result) {
 	LOG_LOCATION;
-	FAIL_IF_NOT_ALLOWED_SITE;
+	FAIL_IF_NOT_ALLOWED_SITE;    
 	char selectedCertID[33];
 	int dlg_result = 0;
 	

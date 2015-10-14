@@ -23,9 +23,9 @@
 #define ESTEID_VERSION_H
 
 #ifdef WIN64
-#define ESTEID_PLUGIN_VERSION "3.11.0 64bit"
+#define ESTEID_PLUGIN_VERSION "3.12.0 64bit"
 #else
-#define ESTEID_PLUGIN_VERSION "3.11.0 32bit"
+#define ESTEID_PLUGIN_VERSION "3.12.0 32bit"
 #endif
 #define PLUGIN_NAME        "EstEID plug-in"
 #define PLUGIN_DESCRIPTION "Allows digital signing with Estonian ID cards"
