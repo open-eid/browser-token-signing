@@ -18,9 +18,9 @@
 		12910C96122B8A77002722A4 /* dialogs-cocoa.m in Sources */ = {isa = PBXBuildFile; fileRef = 12910C94122B8A77002722A4 /* dialogs-cocoa.m */; };
 		4E8895EB1A8C1792006332A7 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E8895EA1A8C1792006332A7 /* libcrypto.dylib */; };
 		4ECC1BC5163B0A7D0079E4AC /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F642D75C1238CB0800CBFD02 /* Security.framework */; };
-		9D8F1D7A1BB1465000ED50DA /* preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D8F1D791BB1465000ED50DA /* preferences.m */; settings = {ASSET_TAGS = (); }; };
-		9DDEA2B91BB36B5500A14D8A /* ModuleSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DDEA2B81BB36B5500A14D8A /* ModuleSelection.m */; settings = {ASSET_TAGS = (); }; };
-		9DDEA2C11BB36CAA00A14D8A /* ModuleSelection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DDEA2C01BB36CAA00A14D8A /* ModuleSelection.xib */; settings = {ASSET_TAGS = (); }; };
+		9D8F1D7A1BB1465000ED50DA /* preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D8F1D791BB1465000ED50DA /* preferences.m */; };
+		9DDEA2B91BB36B5500A14D8A /* ModuleSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DDEA2B81BB36B5500A14D8A /* ModuleSelection.m */; };
+		9DDEA2C11BB36CAA00A14D8A /* ModuleSelection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DDEA2C01BB36CAA00A14D8A /* ModuleSelection.xib */; };
 		D82FCC4512ACF9A6007942EB /* esteid_log.c in Sources */ = {isa = PBXBuildFile; fileRef = D82FCC4412ACF9A6007942EB /* esteid_log.c */; };
 		F63D048112005FF400CA11F4 /* pkcs11_errors.c in Sources */ = {isa = PBXBuildFile; fileRef = 128B2FBF11FDBEE4000A8EDE /* pkcs11_errors.c */; };
 		F63D048212005FF800CA11F4 /* esteid_certinfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 128B2DE111F9D1E4000A8EDE /* esteid_certinfo.c */; };
@@ -295,7 +295,7 @@
 		0259C573FE90428111CA0C5A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0710;
 			};
 			buildConfigurationList = C027D11D08A954E7001699E2 /* Build configuration list for PBXProject "esteid-plugin" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -385,6 +385,7 @@
 		124E7EE211F6DE0200AED77F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -395,6 +396,7 @@
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/include";
 				INFOPLIST_FILE = firefox/Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Internet Plug-Ins/";
+				PRODUCT_BUNDLE_IDENTIFIER = "ee.ria.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = esteidfirefoxplugin;
 				WRAPPER_EXTENSION = bundle;
 			};
@@ -403,10 +405,12 @@
 		124E7EE311F6DE0200AED77F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/include";
 				INFOPLIST_FILE = firefox/Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Internet Plug-Ins/";
+				PRODUCT_BUNDLE_IDENTIFIER = "ee.ria.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = esteidfirefoxplugin;
 				WRAPPER_EXTENSION = bundle;
 			};
@@ -416,6 +420,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ENABLE_TESTABILITY = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = "PKCS11_DRIVER=\\\"$(PKCS11_DRIVER)\\\"";
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -423,7 +428,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				PKCS11_DRIVER = "/Library/EstonianIDCard/lib/esteid-pkcs11.so";
-				SDKROOT = macosx10.9;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -437,7 +442,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PKCS11_DRIVER = "/Library/EstonianIDCard/lib/esteid-pkcs11.so";
-				SDKROOT = macosx10.9;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
