@@ -22,7 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
       Id="*" Language="1033" Version="$(var.VERSION)" Codepage="1251" Manufacturer="RIA">
     <Package Keywords="Installer" Platform="$(var.Platform)" InstallerVersion="405" Compressed="yes"/>
     <MediaTemplate EmbedCab="yes" CompressionLevel="high"/>
-    <Icon Id="Icon.ico" SourceFile="firefox-win/media/ID.ico"/>
+    <Icon Id="Icon.ico" SourceFile="$(var.SolutionDir)media/ID.ico"/>
     <Property Id="ARPPRODUCTICON" Value="Icon.ico"/>
     <MajorUpgrade AllowSameVersionUpgrades="yes" DowngradeErrorMessage=
       "A newer version of [ProductName] is already installed. If you are trying to downgrade, please uninstall the newer version first."/>
@@ -36,7 +36,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 			<Directory Id="APPLICATIONFOLDER" Name="Firefox Token Signing Plugin">
 				<Component Id="Application" Guid="6d75cfe1-2ba2-4563-8e03-6036eef5d07b">
 					<File Source="C:\OpenSSL-Win32\bin\libeay32.dll"/>
-					<File Source="x86\npesteid-firefox-plugin.dll"/>
+					<File Source="$(var.SolutionDir)Release\npesteid-firefox-plugin.dll"/>
 					<RegistryValue Root='HKLM' Type='string' Value='[APPLICATIONFOLDER]npesteid-firefox-plugin.dll'
 						Key='Software\MozillaPlugins\@RIA/esteid-firefox-plugin' Name="Path" Action="write"/>
 				</Component>
@@ -49,7 +49,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 			<Directory Id="APPLICATION64FOLDER" Name="Firefox Token Signing Plugin">		
 				<Component Id="Application64" Guid="{80676F1F-CCC6-4165-B54A-6263EC037548}" Win64="yes">	
 					<File Source="C:\OpenSSL-Win64\bin\libeay32.dll" Id="libeay32_x64.dll"/>				
-					<File Source="x64\npesteid-firefox-plugin.dll" Id="npesteid_firefox_plugin64.dll" KeyPath="yes" Name="npesteid-firefox-plugin64.dll"/>	
+					<File Source="$(var.SolutionDir)x64\Release\npesteid-firefox-plugin.dll" Id="npesteid_firefox_plugin64.dll" KeyPath="yes" Name="npesteid-firefox-plugin64.dll"/>	
 					<RegistryValue Root="HKLM" Key="Software\MozillaPlugins\@RIA/esteid-firefox-plugin" Name="Path"
                        Value="[APPLICATION64FOLDER]npesteid-firefox-plugin64.dll" Type="string" Action="write"/>					
 				</Component>

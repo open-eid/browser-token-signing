@@ -1,4 +1,8 @@
 # EstEID Browser Plugin
+ifeq ($(BUILD_NUMBER),)
+BUILD_NUMBER = 0
+endif
+include VERSION.mk
 CC = gcc
 OUT = npesteid-firefox-plugin.so
 PKCS11_DRIVER = opensc-pkcs11.so
@@ -7,7 +11,7 @@ COMMON_SOURCES = common/esteid_certinfo.c common/pkcs11_errors.c common/esteid_l
 C_FLAGS = -g -O2 -std=gnu99 -Wall $(CPPFLAGS)
 I_FLAGS = -Iinclude -Icommon `pkg-config --cflags gtk+-2.0`
 L_FLAGS = -ldl -lcrypto -lpthread `pkg-config --libs gtk+-2.0`
-D_FLAGS = -DXP_UNIX -DMOZ_X11
+D_FLAGS = -DXP_UNIX -DMOZ_X11 -DVERSION=\"$(VERSION)\"
 PLUGIN_HEADERS = firefox/plugin.h firefox/plugin-class.h firefox/cert-class.h
 PLUGIN_SOURCES = firefox/plugin.c firefox/plugin-class.c firefox/cert-class.c firefox/dialogs-gtk.c
 

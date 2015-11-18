@@ -21,8 +21,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 	<Product Name="IE Token Signing Plugin" UpgradeCode="713f9d27-5016-4c6a-bee1-94403255fbd4" Id="*" Language="1033" Version="$(var.VERSION)" Codepage="1251" Manufacturer="RIA">
 		<Package Keywords="Installer" Platform="$(var.Platform)" InstallerVersion="405" Compressed="yes" InstallPrivileges="elevated" InstallScope="perMachine"/>
 		<MediaTemplate EmbedCab="yes" CompressionLevel="high"/>
-		<Icon Id="Icon.ico" SourceFile="ie/ID.ico"/>
-		<MajorUpgrade AllowSameVersionUpgrades="yes" DowngradeErrorMessage=
+		<Icon Id="Icon.ico" SourceFile="$(var.SolutionDir)media/ID.ico"/>
+    <Property Id="ARPPRODUCTICON" Value="Icon.ico"/>
+    <MajorUpgrade AllowSameVersionUpgrades="yes" DowngradeErrorMessage=
 		"A newer version of [ProductName] is already installed. If you are trying to downgrade, please uninstall the newer version first."/>
 		<Condition Message="[ProductName] requires Windows 7 or higher.">
 		  <![CDATA[Installed OR (VersionNT >= 601)]]>
@@ -32,9 +33,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 		<Directory Id="TARGETDIR" Name="SourceDir">
 			<Directory Id='ProgramFilesFolder'>
 				<Directory Id="APPLICATIONFOLDER" Name="IE Token Signing Plugin">					
-					<Component Id="Application" Guid="{B5C61F10-1F23-497a-91A5-9348BA3DB6E6}">
+					<Component Id="Application" Guid="{B5C61F10-1F23-497a-91A5-9348BA3DB6E6}" Win64="no">
 						<AppId Description="IE plugin for Estonian ID Card" Id="545B4ED6-A2FE-49F1-AF8E-FA18B6261E48"/>
-						<File Source="ie/Release/esteid-plugin-ie.dll" Id="esteid_plugin_ie.dll" KeyPath="yes" Name="esteid-plugin-ie.dll">
+						<File Source="$(var.SolutionDir)Release/esteid-plugin-ie.dll" Id="esteid_plugin_ie.dll" KeyPath="yes" Name="esteid-plugin-ie.dll">
 							<TypeLib Id="{23EF5046-6402-4C39-B34B-3C47826805D1}" Description="esteidpluginie 1.0 Type Library" Language="0" MajorVersion="1" MinorVersion="0">
 								<Class Id="{2615B13B-A08B-442C-8032-4D9981060190}" Context="InprocServer32" Description="EstEIDCertificate Class" ThreadingModel="apartment" Programmable="yes">
 									<ProgId Id="esteidpluginie.EstEIDCertificate.1" Description="EstEIDCertificate Class">
@@ -73,7 +74,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 				<Directory Id="APPLICATION64FOLDER" Name="IE Token Signing Plugin">		
 					<Component Id="Application64" Guid="{86DFD242-790A-425a-B0B6-C3860A8674E4}" Win64="yes">
 						<AppId Description="IE plugin for Estonian ID Card" Id="545B4ED6-A2FE-49F1-AF8E-FA18B6261E48"/>
-						<File Source="ie/x64/Release/esteid-plugin-ie.dll" Id="esteid_plugin_ie64.dll" KeyPath="yes" Name="esteid-plugin-ie64.dll">
+						<File Source="$(var.SolutionDir)x64/Release/esteid-plugin-ie.dll" Id="esteid_plugin_ie64.dll" KeyPath="yes" Name="esteid-plugin-ie64.dll">
 							<TypeLib Id="{23EF5046-6402-4C39-B34B-3C47826805D1}" Description="esteidpluginie 1.0 Type Library" Language="0" MajorVersion="1" MinorVersion="0">
 								<Class Id="{2615B13B-A08B-442C-8032-4D9981060190}" Context="InprocServer32" Description="EstEIDCertificate Class" ThreadingModel="apartment" Programmable="yes">
 									<ProgId Id="esteidpluginie.EstEIDCertificate.1" Description="EstEIDCertificate Class">

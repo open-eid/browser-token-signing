@@ -22,11 +22,18 @@
 #ifndef ESTEID_VERSION_H
 #define ESTEID_VERSION_H
 
-#ifdef WIN64
-#define ESTEID_PLUGIN_VERSION "3.12.0 64bit"
+#if defined(MAJOR_VER) && defined(MINOR_VER) && defined(RELEASE_VER)
+# define VER_STR_HELPER(x)       #x
+# define VER_STR(x)              VER_STR_HELPER(x)
+# ifdef WIN64
+#  define ESTEID_PLUGIN_VERSION VER_STR(MAJOR_VER.MINOR_VER.RELEASE_VER) " 64bit"
+# else
+#  define ESTEID_PLUGIN_VERSION VER_STR(MAJOR_VER.MINOR_VER.RELEASE_VER) " 32bit"
+# endif
 #else
-#define ESTEID_PLUGIN_VERSION "3.12.0 32bit"
+#  define ESTEID_PLUGIN_VERSION VERSION
 #endif
+
 #define PLUGIN_NAME        "EstEID plug-in"
 #define PLUGIN_DESCRIPTION "Allows digital signing with Estonian ID cards"
 #define MIME_TYPE         "application/x-digidoc"

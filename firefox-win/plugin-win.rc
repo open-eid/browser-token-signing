@@ -2,6 +2,9 @@
 //
 #include "resource.h"
 
+#define VER_STR_HELPER(x)       #x
+#define VER_STR(x)              VER_STR_HELPER(x)
+
 #define APSTUDIO_READONLY_SYMBOLS
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -23,9 +26,9 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 // Version
 //
 
-1 VERSIONINFO
- FILEVERSION 0,49,0,0
- PRODUCTVERSION 0,49,0,0
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION MAJOR_VER, MINOR_VER, RELEASE_VER, BUILD_VER
+ PRODUCTVERSION MAJOR_VER, MINOR_VER, RELEASE_VER, BUILD_VER
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -42,12 +45,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "RIA"
             VALUE "FileDescription", "Allows digital signing with Estonian ID cards"
-            VALUE "FileVersion", "0.49"
+			VALUE "FileVersion", VER_STR(MAJOR_VER.MINOR_VER.RELEASE_VER.BUILD_VER)
             VALUE "InternalName", "Firefox Token Signing Plugin"
             VALUE "MIMEType", "application/x-digidoc|application/x-idcard-plugin"
             VALUE "OriginalFilename", "npesteid-firefox-plugin.dll"
             VALUE "ProductName", "Firefox Token Signing Plugin"
-            VALUE "ProductVersion", "0.49"
+			VALUE "ProductVersion", VER_STR(MAJOR_VER.MINOR_VER.RELEASE_VER.BUILD_VER)
         END
     END
     BLOCK "VarFileInfo"
@@ -183,7 +186,8 @@ END
 //
 // Generated from the TEXTINCLUDE 3 resource.
 //
-
+
+
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
 

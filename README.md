@@ -53,6 +53,27 @@
 
         open /Application/Safari.app
 
+### Windows
+
+1. Fetch the source
+
+        git clone --recursive https://github.com/open-eid/browser-token-signing
+        cd browser-token-signing
+
+2. Build
+
+        msbuild /t:ie-token-signing:Rebuild;ie-token-signing-wix:Rebuild /p:Configuration=Release;Platform=Win32 browser-token-signing.sln
+        msbuild /t:firefox-token-signing:Rebuild;firefox-token-signing-wix:Rebuild /p:Configuration=Release;Platform=Win32 browser-token-signing.sln
+
+3. Install
+
+        ie/Release/ie-token-signing_3.12.0.0_x86.msi
+        ie/Release/firefox_token_signing_3.12.0.0_x86.msi
+
+4. Execute
+
+        Open Internet Explorer or Firefox
+
 ## Support
 Official builds are provided through official distribution point [installer.id.ee](https://installer.id.ee). If you want support, you need to be using official builds. Contact for assistance by email abi@id.ee or http://www.id.ee.
 

@@ -63,7 +63,7 @@ int promptForCertificate(void* nativeWindowHandle, char* certId) {
 
 const char* promptForDriver(void* nativeWindowHandle) {
     NSWindow *browserWindow = getNSWindow(nativeWindowHandle);
-    char *result = cocoa_promptForDriver(browserWindow);
+    const char *result = cocoa_promptForDriver(browserWindow);
     [browserWindow release];
     return result;    
 }

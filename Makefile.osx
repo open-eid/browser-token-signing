@@ -1,0 +1,27 @@
+ifeq ($(BUILD_NUMBER),)
+BUILD_NUMBER = 0
+endif
+include VERSION.mk
+SIGNCERT = Developer ID Application: Riigi Infosüsteemi Amet
+INSTCERT = Developer ID Installer: Riigi Infosüsteemi Amet
+PROJ = xcodebuild -project esteid-plugin.xcodeproj VERSION=$(VERSION) BUILD_NUMBER=$(BUILD_NUMBER) CODE_SIGN_IDENTITY='$(SIGNCERT)' CODE_SIGNING_REQUIRED=YES
+
+all: *.mm
+	$(PROJ)
+
+clean:
+	$(PROJ) clean
+
+pkg:
+	$(PROJ) DSTROOT=/tmp/firefox-token-signing.dst install
+	pkgbuild --root /tmp/firefox-token-signing.dst --sign "$(INSTCERT)" firefox-token-signing_$(VERSIONEX).pkg
+	pkgbuild --component build/Release/esteidfirefoxplugin.bundle.dSYM --sign "$(INSTCERT)" \
+		--identifier "ee.ria.firefox-token-signing-dbg" --version "$(VERSION)" \
+		--install-location /Library/Internet\ Plug-Ins/esteidfirefoxplugin.bundle/Contents/MacOS \
+		firefox-token-signing-dbg_$(VERSIONEX).pkg
+
+install:
+	cp -rv build/Release/esteidfirefoxplugin.bundle /Library/Internet\ Plug-Ins/
+
+uninstall:
+	rm -rf /Library/Internet\ Plug-Ins/esteidfirefoxplugin.bundle

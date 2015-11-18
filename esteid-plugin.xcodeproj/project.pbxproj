@@ -390,8 +390,9 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					DEVELOPMENT_MODE,
 					"PKCS11_DRIVER=\\\"$(PKCS11_DRIVER)\\\"",
+					"VERSION=\\\"$(VERSION)\\\"",
+					DEVELOPMENT_MODE,
 				);
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/include";
 				INFOPLIST_FILE = firefox/Info.plist;
@@ -420,15 +421,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				BUILD_NUMBER = 0;
 				ENABLE_TESTABILITY = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = "PKCS11_DRIVER=\\\"$(PKCS11_DRIVER)\\\"";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"PKCS11_DRIVER=\\\"$(PKCS11_DRIVER)\\\"",
+					"VERSION=\\\"$(VERSION)\\\"",
+				);
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				PKCS11_DRIVER = "/Library/EstonianIDCard/lib/esteid-pkcs11.so";
 				SDKROOT = macosx;
+				VERSION = 3.12.0;
 			};
 			name = Debug;
 		};
@@ -436,13 +442,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				GCC_PREPROCESSOR_DEFINITIONS = "PKCS11_DRIVER=\\\"$(PKCS11_DRIVER)\\\"";
+				BUILD_NUMBER = 0;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"PKCS11_DRIVER=\\\"$(PKCS11_DRIVER)\\\"",
+					"VERSION=\\\"$(VERSION)\\\"",
+				);
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PKCS11_DRIVER = "/Library/EstonianIDCard/lib/esteid-pkcs11.so";
 				SDKROOT = macosx;
+				VERSION = 3.12.0;
 			};
 			name = Release;
 		};

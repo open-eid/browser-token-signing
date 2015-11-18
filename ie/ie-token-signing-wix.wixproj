@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <MAJOR_VERSION Condition=" '$(MAJOR_VERSION)' == '' ">3</MAJOR_VERSION>
+    <MINOR_VERSION Condition=" '$(MINOR_VERSION)' == '' ">12</MINOR_VERSION>
+    <RELEASE_VERSION Condition=" '$(RELEASE_VERSION)' == '' ">0</RELEASE_VERSION>
+    <BUILD_NUMBER Condition=" '$(BUILD_NUMBER)' == '' ">0</BUILD_NUMBER>
+    <ProductVersion>3.10</ProductVersion>
+    <ProjectGuid>d0a88d6a-6fe4-4374-a324-b801a6f6ec26</ProjectGuid>
+    <SchemaVersion>2.0</SchemaVersion>
+    <OutputName>ie-token-signing_$(MAJOR_VERSION).$(MINOR_VERSION).$(RELEASE_VERSION).$(BUILD_NUMBER)_$(Platform)</OutputName>
+    <OutputType>Package</OutputType>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' AND '$(MSBuildExtensionsPath32)' != '' ">$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
+    <Name>ie-token-signing-wix</Name>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <OutputPath>$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>$(Configuration)\obj\</IntermediateOutputPath>
+    <DefineConstants>Debug;VERSION=$(MAJOR_VERSION).$(MINOR_VERSION).$(RELEASE_VERSION).$(BUILD_NUMBER)</DefineConstants>
+    <WixVariables>WixUILicenseRtf=LICENSE.LGPL.rtf;WixUIDialogBmp=dlgbmp.bmp</WixVariables>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>$(SolutionDir)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>$(Configuration)\obj\</IntermediateOutputPath>
+    <DefineConstants>VERSION=$(MAJOR_VERSION).$(MINOR_VERSION).$(RELEASE_VERSION).$(BUILD_NUMBER)</DefineConstants>
+    <WixVariables>WixUILicenseRtf=$(SolutionDir)media/LICENSE.LGPL.rtf;WixUIDialogBmp=$(SolutionDir)media/dlgbmp.bmp</WixVariables>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <OutputPath>$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>$(Platform)\$(Configuration)\</IntermediateOutputPath>
+    <DefineConstants>Debug;VERSION=$(MAJOR_VERSION).$(MINOR_VERSION).$(RELEASE_VERSION).$(BUILD_NUMBER)</DefineConstants>
+    <WixVariables>WixUILicenseRtf=LICENSE.LGPL.rtf;WixUIDialogBmp=dlgbmp.bmp</WixVariables>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <OutputPath>$(SolutionDir)\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>$(Platform)\$(Configuration)\</IntermediateOutputPath>
+    <DefineConstants>VERSION=$(MAJOR_VERSION).$(MINOR_VERSION).$(RELEASE_VERSION).$(BUILD_NUMBER)</DefineConstants>
+    <WixVariables>WixUILicenseRtf=$(SolutionDir)media/LICENSE.LGPL.rtf;WixUIDialogBmp=$(SolutionDir)media/dlgbmp.bmp</WixVariables>
+    <SuppressAllWarnings>False</SuppressAllWarnings>
+    <Pedantic>False</Pedantic>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="ie-token-signing.wxs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WixExtension Include="WixUIExtension">
+      <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
+      <Name>WixUIExtension</Name>
+    </WixExtension>
+  </ItemGroup>
+  <Import Project="$(WixTargetsPath)" />
+  <PropertyGroup>
+    <PostBuildEvent>IF "$(SIGNCERT)" NEQ "" signtool.exe sign /a /v /s MY /n "$(SIGNCERT)" /fd SHA256 /du http://installer.id.ee /t http://timestamp.verisign.com/scripts/timstamp.dll !(TargetPath)</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>IF "$(SIGNCERT)" NEQ "" signtool.exe sign /a /v /s MY /n "$(SIGNCERT)" /fd SHA256 /du http://installer.id.ee /t http://timestamp.verisign.com/scripts/timstamp.dll $(SolutionDir)\Release\esteid-plugin-ie.dll
+IF "$(SIGNCERT)" NEQ "" (IF EXIST $(SolutionDir)\x64\Release\esteid-plugin-ie.dll signtool.exe sign /a /v /s MY /n "$(SIGNCERT)" /fd SHA256 /du http://installer.id.ee /t http://timestamp.verisign.com/scripts/timstamp.dll $(SolutionDir)\x64\Release\esteid-plugin-ie.dll)</PreBuildEvent>
+  </PropertyGroup>
+  <!--
+	To modify your build process, add your task inside one of the targets below and uncomment it.
+	Other similar extension points exist, see Wix.targets.
+	<Target Name="BeforeBuild">
+	</Target>
+	<Target Name="AfterBuild">
+	</Target>
+	-->
+</Project>
