@@ -23,7 +23,7 @@
 #include "EstEIDIEPluginBHO.h"
 #include "esteid_error.h"
 #include "version.h"
-#include "CngCapiSigner.h"
+#include "SignerFactory.h"
 #include "HostExceptions.h"
 #include <string.h>
 extern "C" {
@@ -138,7 +138,7 @@ STDMETHODIMP CEstEIDIEPluginBHO::sign(BSTR id, BSTR hash, BSTR language, BSTR *s
 		wstring hashToSign(hash, SysStringLen(hash));
 		std::string hashString(hashToSign.begin(), hashToSign.end());
 		char * certId = W2A(id);
-		CngCapiSigner *signer = new CngCapiSigner(hashString, certId);
+		Signer * signer = SignerFactory::createSigner(hashString, certId);
 		string result = signer->sign();
 		*signature = _bstr_t(result.c_str()).Detach();
 		clearErrors();

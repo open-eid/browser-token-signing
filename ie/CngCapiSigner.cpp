@@ -30,33 +30,6 @@ extern "C" {
 
 using namespace std;
 
-bool certificateMatchesId(PCCERT_CONTEXT certContext, char *certId) {
-	BYTE *cert;
-	cert = (BYTE*)malloc(certContext->cbCertEncoded + 1);
-	memcpy(cert, certContext->pbCertEncoded, certContext->cbCertEncoded);
-	cert[certContext->cbCertEncoded] = '\0';
-
-	std::string hashAsString;
-	hashAsString = CEstEIDHelper::calculateMD5Hash((char*)cert);
-	free(cert);
-
-	bool result = (strcmp(hashAsString.c_str(), certId) == 0);
-
-	EstEID_log("Cert match check result: %s", result ? "matches" : "does not match");
-
-	return result;
-}
-
-PCCERT_CONTEXT findCertificateById(char *certId, HCERTSTORE cert_store){
-	PCCERT_CONTEXT certContext = NULL;
-	while (certContext = CertFindCertificateInStore(cert_store, X509_ASN_ENCODING, 0, CERT_FIND_ANY, NULL, certContext)) {
-		if (certificateMatchesId(certContext, certId)) {
-			return certContext;
-		}
-	}
-	throw NoCertificatesException();
-}
-
 string CngCapiSigner::sign() {
 	EstEID_log("Signing with hash: %s, with certId: %s", getHash()->c_str(), getCertId());
 	BCRYPT_PKCS1_PADDING_INFO padInfo;
@@ -95,27 +68,13 @@ string CngCapiSigner::sign() {
 	DWORD size = 256;
 	vector<unsigned char> signature(size, 0);
 
-	HCERTSTORE store = CertOpenStore(CERT_STORE_PROV_SYSTEM, 0, NULL, CERT_SYSTEM_STORE_CURRENT_USER | CERT_STORE_READONLY_FLAG, L"MY");
-	if (!store) {
-		throw TechnicalException("Failed to open Cert Store");
-	}
-
-	PCCERT_CONTEXT certInStore = findCertificateById(certId, store);
-
-	if (!certInStore)
-	{
-		CertCloseStore(store, 0);
-		throw NoCertificatesException();
-	}
-
 	DWORD flags = obtainKeyStrategy | CRYPT_ACQUIRE_COMPARE_KEY_FLAG;
 	DWORD spec = 0;
 	BOOL freeKeyHandle = false;
 	HCRYPTPROV_OR_NCRYPT_KEY_HANDLE key = NULL;
 	BOOL gotKey = true;
-	gotKey = CryptAcquireCertificatePrivateKey(certInStore, flags, 0, &key, &spec, &freeKeyHandle);
-	CertFreeCertificateContext(certInStore);
-	CertCloseStore(store, 0);
+	gotKey = CryptAcquireCertificatePrivateKey(certContext, flags, 0, &key, &spec, &freeKeyHandle);
+	CertFreeCertificateContext(certContext);
 
 	switch (spec)
 	{

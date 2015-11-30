@@ -19,18 +19,31 @@
 #pragma once
 
 #include "Signer.h"
-#include <Windows.h>
-#include <ncrypt.h>
-#include <WinCrypt.h>
-#include <cryptuiapi.h>
+#include "PKCS11CardManager.h"
+#include "PinDialog.h"
+#include <future>
+#include <string>
 
-class CngCapiSigner : public Signer {
+using namespace std;
+
+class Pkcs11Signer : public Signer {
 public:
-	CngCapiSigner(const string &_hash, char *_certId, PCCERT_CONTEXT _certContext) : Signer(_hash, _certId) {
-		certContext = _certContext;
+	Pkcs11Signer(const string &_hash, char *_certId, const string &_certInHex) : Signer(_hash, _certId){
+		certInHex = _certInHex;
 	}
+	void initialize();
 	string sign();
-
+	void setPkcs11ModulePath(string &path);
 private:
-	PCCERT_CONTEXT certContext;
+	string certInHex;
+	string pkcs11ModulePath;
+	int pinTriesLeft;
+	CPinDialog * dialog;
+	unique_ptr<PKCS11CardManager> cardManager;
+	unique_ptr<PKCS11CardManager> getCardManager();
+	PKCS11CardManager* createCardManager();
+	void validateHashLength();
+	string askPinAndSignHash();
+	char* askPin();
+	void handleWrongPinEntry();
 };

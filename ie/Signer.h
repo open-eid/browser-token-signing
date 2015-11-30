@@ -18,19 +18,30 @@
 
 #pragma once
 
-#include "Signer.h"
-#include <Windows.h>
-#include <ncrypt.h>
-#include <WinCrypt.h>
-#include <cryptuiapi.h>
+#include <string>
 
-class CngCapiSigner : public Signer {
+#define BINARY_SHA1_LENGTH 20
+#define BINARY_SHA224_LENGTH 28
+#define BINARY_SHA256_LENGTH 32
+#define BINARY_SHA384_LENGTH 48
+#define BINARY_SHA512_LENGTH 64
+
+using namespace std;
+
+class Signer {
 public:
-	CngCapiSigner(const string &_hash, char *_certId, PCCERT_CONTEXT _certContext) : Signer(_hash, _certId) {
-		certContext = _certContext;
+	Signer(const string &_hash, char *_certId) : hash(_hash), certId(_certId){}
+	virtual string sign() = 0;
+
+	string * getHash() {
+		return &hash;
 	}
-	string sign();
+
+	char * getCertId() {
+		return certId;
+	}
 
 private:
-	PCCERT_CONTEXT certContext;
+	string hash;
+	char *certId;
 };

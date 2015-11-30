@@ -19,18 +19,19 @@
 #pragma once
 
 #include "Signer.h"
+#include "BinaryUtils.h"
+#include "HostExceptions.h"
+#include "EstEIDHelper.h"
 #include <Windows.h>
 #include <ncrypt.h>
 #include <WinCrypt.h>
 #include <cryptuiapi.h>
 
-class CngCapiSigner : public Signer {
+class SignerFactory {
 public:
-	CngCapiSigner(const string &_hash, char *_certId, PCCERT_CONTEXT _certContext) : Signer(_hash, _certId) {
-		certContext = _certContext;
-	}
-	string sign();
-
+	static Signer * createSigner(const string &_hash, char *_certId);
 private:
-	PCCERT_CONTEXT certContext;
+	static bool isLithuanianCertificate(PCCERT_CONTEXT certContext);
+	static bool certificateMatchesId(PCCERT_CONTEXT certContext, char *certId);
+	static PCCERT_CONTEXT findCertificateById(char *certId);
 };

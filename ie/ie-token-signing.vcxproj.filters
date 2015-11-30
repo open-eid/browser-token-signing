@@ -31,6 +31,15 @@
     <ClCompile Include="CngCapiSigner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SignerFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PKCS11Signer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\cert_dialog_win.h">
@@ -79,6 +88,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Signer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SignerFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PKCS11CardManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PKCS11Signer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinDialog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

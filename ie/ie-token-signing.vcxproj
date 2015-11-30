@@ -416,6 +416,10 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /Y "$(Configuration)\esteid-plugin-ie.dll" "c:\Program Files\Estonian ID Card\esteid-plugin-ie64.dll"</Command>
+      <Message>copy plugin</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug HTTP|x64'">
     <Midl>
@@ -679,6 +683,9 @@
     <ClCompile Include="esteidpluginie_i.c" />
     <ClCompile Include="BinaryUtils.cpp" />
     <ClCompile Include="CngCapiSigner.cpp" />
+    <ClCompile Include="PinDialog.cpp" />
+    <ClCompile Include="PKCS11Signer.cpp" />
+    <ClCompile Include="SignerFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="esteid-plugin-ie.def" />
@@ -702,7 +709,12 @@
     <ClInclude Include="EstEIDIEPluginBHO.h" />
     <ClInclude Include="..\common\cert_dialog_win.h" />
     <ClInclude Include="HostExceptions.h" />
+    <ClInclude Include="PinDialog.h" />
+    <ClInclude Include="PKCS11CardManager.h" />
+    <ClInclude Include="PKCS11Signer.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Signer.h" />
+    <ClInclude Include="SignerFactory.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="..\common\version.h" />
