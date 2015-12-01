@@ -18,7 +18,7 @@
 
 #pragma once
 
-#include "pkcs11.h"
+#include "../include/pkcs11.h"
 #include <algorithm>
 #include <cstring>
 #include <stdexcept>
