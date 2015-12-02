@@ -15,7 +15,9 @@ clean:
 pkg:
 	rm -rf /tmp/firefox-token-signing.dst
 	$(PROJ) DSTROOT=/tmp/firefox-token-signing.dst install
-	pkgbuild --root /tmp/firefox-token-signing.dst --sign "$(INSTCERT)" firefox-token-signing_$(VERSIONEX).pkg
+	pkgbuild --root /tmp/firefox-token-signing.dst --sign "$(INSTCERT)" \
+		--identifier "ee.ria.firefox-token-signing" --version "$(VERSION)"
+		firefox-token-signing_$(VERSIONEX).pkg
 	pkgbuild --component build/Release/esteidfirefoxplugin.bundle.dSYM --sign "$(INSTCERT)" \
 		--identifier "ee.ria.firefox-token-signing-dbg" --version "$(VERSION)" \
 		--install-location /Library/Internet\ Plug-Ins/esteidfirefoxplugin.bundle/Contents/MacOS \
