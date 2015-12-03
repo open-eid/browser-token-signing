@@ -16,6 +16,8 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+#include "Shlobj.h"
+#include "Knownfolders.h"
 #include "SignerFactory.h"
 #include "PKCS11Signer.h"
 #include "CngCapiSigner.h"
@@ -32,8 +34,7 @@ Signer * SignerFactory::createSigner(const string &hash, char *certId) {
 	vector<unsigned char> data(cert->pbCertEncoded, cert->pbCertEncoded + cert->cbCertEncoded);
 	CertFreeCertificateContext(cert);
 	Pkcs11Signer *signer = new Pkcs11Signer(hash, certId, BinaryUtils::bin2hex(data));
-	string pkcs11ModulePath = "C:\\Program Files (x86)\\CryptoTech\\CryptoCard\\CCPkiP11.dll";
-	signer->setPkcs11ModulePath(pkcs11ModulePath);
+	signer->setPkcs11ModulePath(getLithuanianPKCS11ModulePath());
 	signer->initialize();
 	return signer;
 }
@@ -93,4 +94,13 @@ PCCERT_CONTEXT SignerFactory::findCertificateById(char *certId) {
 	}
 	CertCloseStore(cert_store, 0);
 	throw NoCertificatesException();
+}
+
+string SignerFactory::getLithuanianPKCS11ModulePath() {
+	wchar_t* ppszPath = 0;
+	SHGetKnownFolderPath(FOLDERID_ProgramFilesX86, 0, NULL, &ppszPath);
+	wstring programFilesX86(ppszPath);
+	wstring path = programFilesX86 + L"\\CryptoTech\\CryptoCard\\CCPkiP11.dll";
+	CoTaskMemFree(static_cast<void*>(ppszPath));
+	return string(CW2A(path.c_str()));
 }
