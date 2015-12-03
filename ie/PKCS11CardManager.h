@@ -196,8 +196,9 @@ public:
 		if (privateKeyHandle.empty()) {
 			throw std::runtime_error("Could not read private key");
 		}
+		int pos = privateKeyHandle.size() - 1;
 		CK_MECHANISM mechanism = { CKM_RSA_PKCS, 0, 0 };
-		C(SignInit, session, &mechanism, privateKeyHandle[0]);
+		C(SignInit, session, &mechanism, privateKeyHandle[pos]);
 		std::vector<unsigned char> hashWithPadding;
 		switch (hash.size()) {
 		case BINARY_SHA1_LENGTH:
