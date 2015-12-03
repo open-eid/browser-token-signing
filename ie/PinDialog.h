@@ -67,7 +67,7 @@ END_MSG_MAP()
 		if (GetDlgItem(IDC_PIN_MESSAGE).m_hWnd == (HWND)lParam && (invalidPin || attemptsRemainig <= 0)) {
 			SetTextColor((HDC)wParam, RGB(255, 0, 0));
 		}
-		HBRUSH  hBr = (HBRUSH)GetStockObject(HOLLOW_BRUSH);
+		HBRUSH  hBr = (HBRUSH)GetStockObject(WHITE_BRUSH);
 		return (LRESULT)hBr;
 	}
 
