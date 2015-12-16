@@ -39,14 +39,7 @@ void Pkcs11Signer::initialize() {
 unique_ptr<PKCS11CardManager> Pkcs11Signer::getCardManager() {
 	try {
 		unique_ptr<PKCS11CardManager> manager;
-		for (auto &token : createCardManager()->getAvailableTokens()) {
-			manager.reset(createCardManager()->getManagerForReader(token));
-			if (manager->getSignCert() == BinaryUtils::hex2bin(certInHex)) {
-				break;
-			}
-			manager.reset();
-		}
-
+		manager.reset(createCardManager());
 		if (!manager) {
 			EstEID_log("No card manager found for this certificate");
 			throw TechnicalException("No card manager found for this certificate");
@@ -55,15 +48,15 @@ unique_ptr<PKCS11CardManager> Pkcs11Signer::getCardManager() {
 	}
 	catch (const std::runtime_error &a) {
 		EstEID_log("Technical error: %s", a.what());
-		throw TechnicalException("Error getting certificate manager: " + string(a.what()));
+		throw TechnicalException("Error getting card manager: " + string(a.what()));
 	}
 }
 
 PKCS11CardManager* Pkcs11Signer::createCardManager() {
 	if (pkcs11ModulePath.empty()) {
-		return PKCS11CardManager::instance();
+		return PKCS11CardManager::instance(BinaryUtils::hex2bin(certInHex));
 	}
-	return PKCS11CardManager::instance(pkcs11ModulePath);
+	return PKCS11CardManager::instance(BinaryUtils::hex2bin(certInHex), pkcs11ModulePath);
 }
 
 string Pkcs11Signer::sign() {

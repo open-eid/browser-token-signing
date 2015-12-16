@@ -65,11 +65,11 @@ private:
 	CK_TOKEN_INFO tokenInfo;
 	CK_SESSION_HANDLE session = 0;
 	std::vector<unsigned char> signCert;
+	size_t certIndex = 0;
 
 	template <typename Func, typename... Args>
 	void Call(const char *file, int line, const char *function, Func func, Args... args) const
 	{
-		LOG_LOCATION
 		CK_RV rv = func(args...);
 		switch (rv) {
 		case CKR_OK:
@@ -85,8 +85,19 @@ private:
 		}
 	}
 
+	std::vector<CK_SLOT_ID> getAvailableTokens() const {
+		if (!fl) {
+			throw std::runtime_error("PKCS11 is not loaded");
+		}
+		CK_ULONG slotCount = 0;
+		C(GetSlotList, CK_TRUE, nullptr, &slotCount);
+		EstEID_log("slotCount = %i", slotCount);
+		std::vector<CK_SLOT_ID> slotIDs(slotCount, 0);
+		C(GetSlotList, CK_TRUE, slotIDs.data(), &slotCount);
+		return slotIDs;
+	}
+
 	std::vector<CK_OBJECT_HANDLE> findObject(CK_OBJECT_CLASS objectClass, CK_ULONG max = 2) const {
-		LOG_LOCATION
 		if (!fl) {
 			throw std::runtime_error("PKCS11 is not loaded");
 		}
@@ -95,32 +106,40 @@ private:
 		CK_ULONG objectCount = max;
 		std::vector<CK_OBJECT_HANDLE> objectHandle(objectCount);
 		C(FindObjects, session, objectHandle.data(), objectHandle.size(), &objectCount);
-		EstEID_log("object count: %i", objectCount);
 		C(FindObjectsFinal, session);
 		objectHandle.resize(objectCount);
 		return objectHandle;
 	}
 
-	PKCS11CardManager(CK_SLOT_ID slotID, CK_FUNCTION_LIST_PTR fl)
-		: fl(fl)
-	{
-		LOG_LOCATION
-		C(GetTokenInfo, slotID, &tokenInfo);
-		C(OpenSession, slotID, CKF_SERIAL_SESSION, nullptr, nullptr, &session);
-		std::vector<CK_OBJECT_HANDLE> objectHandle = findObject(CKO_CERTIFICATE);
-		if (objectHandle.empty()) {
-			throw std::runtime_error("Could not read cert");
-		}
-		int pos = objectHandle.size() - 1; 
-		CK_ATTRIBUTE attribute = { CKA_VALUE, nullptr, 0 };
-		C(GetAttributeValue, session, objectHandle[pos], &attribute, 1);
-		signCert.resize(attribute.ulValueLen, 0);
-		attribute.pValue = signCert.data();
-		C(GetAttributeValue, session, objectHandle[pos], &attribute, 1);
+	bool isSignCertificate(const std::vector<unsigned char> &certificateCandidate) {
+		return signCert == certificateCandidate;
 	}
 
-	PKCS11CardManager(const std::string &module) {
-		LOG_LOCATION
+	bool findSigningCertificateIndex() {
+		std::vector<CK_OBJECT_HANDLE> certificateObjectHandle = findObject(CKO_CERTIFICATE);
+		size_t certificateCount = certificateObjectHandle.size();
+		EstEID_log("certificate count: %i", certificateCount);
+		if (certificateObjectHandle.empty()) {
+			throw std::runtime_error("Could not read cert");
+		}
+		for (size_t i = 0; i < certificateCount; i++) {
+			EstEID_log("check cert %i", i);
+			std::vector<unsigned char> certCandidate;
+			CK_ATTRIBUTE attribute = { CKA_VALUE, nullptr, 0 };
+			C(GetAttributeValue, session, certificateObjectHandle[i], &attribute, 1);
+			certCandidate.resize(attribute.ulValueLen, 0);
+			attribute.pValue = certCandidate.data();
+			C(GetAttributeValue, session, certificateObjectHandle[i], &attribute, 1);
+			if (isSignCertificate(certCandidate)) {
+				certIndex = i;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	PKCS11CardManager(const std::string &module, const std::vector<unsigned char> &signingCertificate) {
+		signCert = signingCertificate;
 		CK_C_GetFunctionList C_GetFunctionList = nullptr;
 		library = LoadLibraryA(module.c_str());
 		if (library)
@@ -130,60 +149,33 @@ private:
 		}
 		Call(__FILE__, __LINE__, "C_GetFunctionList", C_GetFunctionList, &fl);
 		C(Initialize, nullptr);
+
+		for (auto &token : getAvailableTokens()) {
+			C(GetTokenInfo, token, &tokenInfo);
+			C(OpenSession, token, CKF_SERIAL_SESSION, nullptr, nullptr, &session);
+			if (findSigningCertificateIndex()) {
+				break;
+			}
+			else {
+				C(CloseSession, session);
+			}
+		}
 	}
 
 public:
 
-	static PKCS11CardManager* instance(const std::string &module = PKCS11_MODULE) {
-		LOG_LOCATION
-		static PKCS11CardManager instance(module);
+	static PKCS11CardManager* instance(const std::vector<unsigned char> &signingCertificate, const std::string &module = PKCS11_MODULE) {
+		static PKCS11CardManager instance(module, signingCertificate);
 		return &instance;
 	}
 
 	~PKCS11CardManager() {
-		LOG_LOCATION
 		if (session)
 			C(CloseSession, session);
 		if (!library)
 			return;
 		C(Finalize, nullptr);
 		FreeLibrary(library);
-	}
-
-	std::vector<CK_SLOT_ID> getAvailableTokens() const {
-		LOG_LOCATION
-		if (!fl) {
-			throw std::runtime_error("PKCS11 is not loaded");
-		}
-		CK_ULONG slotCount = 0;
-		C(GetSlotList, CK_TRUE, nullptr, &slotCount);
-		EstEID_log("slotCount = %i", slotCount);
-		std::vector<CK_SLOT_ID> slotIDs(slotCount, 0);
-		C(GetSlotList, CK_TRUE, slotIDs.data(), &slotCount);
-
-		if (slotCount == 1) {
-			EstEID_log("Found only one slot, assume It's signing slot");
-			return slotIDs;
-		}
-
-		std::vector<CK_SLOT_ID> signingSlotIDs;
-		for (CK_ULONG i = 0; i < slotCount; ++i) {
-			EstEID_log("slotID: %i", slotIDs[i]);
-			if (i & 1) {
-				EstEID_log("Found signing slotID: %i", slotIDs[i]);
-				signingSlotIDs.push_back(slotIDs[i]);
-			}
-		}
-		return signingSlotIDs;
-	}
-
-	PKCS11CardManager *getManagerForReader(CK_SLOT_ID slotId) {
-		LOG_LOCATION
-		if (!fl) {
-			throw std::runtime_error("PKCS11 is not loaded");
-		}
-		LOG_LOCATION
-		return new PKCS11CardManager(slotId, fl);
 	}
 
 	std::vector<unsigned char> sign(const std::vector<unsigned char> &hash, const char *pin) const {
@@ -196,9 +188,9 @@ public:
 		if (privateKeyHandle.empty()) {
 			throw std::runtime_error("Could not read private key");
 		}
-		int pos = privateKeyHandle.size() - 1;
 		CK_MECHANISM mechanism = { CKM_RSA_PKCS, 0, 0 };
-		C(SignInit, session, &mechanism, privateKeyHandle[pos]);
+		EstEID_log("found %i private keys in slot, using key in position %i", privateKeyHandle.size(), certIndex);
+		C(SignInit, session, &mechanism, privateKeyHandle[certIndex]);
 		std::vector<unsigned char> hashWithPadding;
 		switch (hash.size()) {
 		case BINARY_SHA1_LENGTH:
