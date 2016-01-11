@@ -33,8 +33,6 @@ void showAlert(void* nativeWindowHandle, const char* message);
 
 int promptForCertificate(void* nativeWindowHandle, char* certId);
 
-const char* promptForDriver(void* nativeWindowHandle);
-
 void closePinPadModalSheet();
 
 #endif

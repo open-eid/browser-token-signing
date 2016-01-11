@@ -26,6 +26,7 @@
 #ifndef _WIN32
 #include <unistd.h>
 #include <pthread.h>
+#include "pkcs11_path.h"
 #endif
 
 #include <openssl/x509.h>
@@ -38,7 +39,6 @@
 #include "pkcs11_errors.h"
 #include "esteid_map.h"
 #include "esteid_error.h"
-#include "preferences.h"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -65,11 +65,7 @@ char *library_error() {
 }
 #else
 #include <dlfcn.h>
-#ifdef __APPLE__
-#define LOAD_LIBRARY void *handle = dlopen(loadDefaultPKCS11ModulePath(), RTLD_NOW)
-#else
-#define LOAD_LIBRARY void *handle = dlopen(PKCS11_DRIVER, RTLD_NOW)
-#endif
+#define LOAD_LIBRARY void *handle = dlopen(getPkcs11ModulePath(), RTLD_NOW)
 #define GET_FUNCTION_PTR dlsym
 char *library_error() {
 	return dlerror();
@@ -226,11 +222,7 @@ int EstEID_startInitializeCryptokiThread() {
 
 int EstEID_loadLibrary() {
 	CK_C_GetFunctionList GetFunctionList;
-#ifdef __APPLE__
-    EstEID_log("using pkcs11 library %s", loadDefaultPKCS11ModulePath());
-#endif
 	LOAD_LIBRARY;
-
 	LOG_LOCATION;
 	if (fl) return SUCCESS;
 	
@@ -356,7 +348,6 @@ int EstEID_loadCertInfoEntries(EstEID_Certs *certs, int index) {
 	CK_SLOT_ID slotID = certs->slotIDs[index];
 	CK_SESSION_HANDLE session;
 	CK_OBJECT_CLASS objectClass = CKO_CERTIFICATE;
-	CK_OBJECT_HANDLE objectHandle;
 	CK_ULONG objectCount;
 	CK_ATTRIBUTE searchAttribute ={CKA_CLASS, &objectClass, sizeof(objectClass)};
 	CK_ATTRIBUTE attribute = {CKA_VALUE, NULL_PTR, 0};
@@ -369,6 +360,15 @@ int EstEID_loadCertInfoEntries(EstEID_Certs *certs, int index) {
 	ASN1_BIT_STRING *usage;
 	BIO *bio;
 	int len;
+    
+#ifdef _WIN32
+    unsigned int max = 1;
+    CK_OBJECT_HANDLE objectHandle[1];
+#else
+    EstEID_log("Is Lithuanian driver loaded? %s", isLithuanianDriverLoaded() ? "true" : "false");
+    unsigned int max = isLithuanianDriverLoaded() ? 2 : 1; //Lithuanian eID has both certificates in same slot
+    CK_OBJECT_HANDLE objectHandle[max];
+#endif
 
 	LOG_LOCATION;
 
@@ -376,16 +376,22 @@ int EstEID_loadCertInfoEntries(EstEID_Certs *certs, int index) {
 
 	if (EstEID_CK_failure("C_FindObjectsInit", fl->C_FindObjectsInit(session, &searchAttribute, 1))) return FAILURE;
 
-	if (EstEID_CK_failure("C_FindObjects", fl->C_FindObjects(session, &objectHandle, 1, &objectCount))) return FAILURE;
+	if (EstEID_CK_failure("C_FindObjects", fl->C_FindObjects(session, objectHandle, max, &objectCount))) return FAILURE;
 
 	if (objectCount == 0) return SUCCESS;
 
-	if (EstEID_CK_failure("C_GetAttributeValue", fl->C_GetAttributeValue(session, objectHandle, &attribute, 1))) return FAILURE;
+    unsigned int pos = objectCount - 1;
+    
+    char positionStr[2];
+    sprintf(positionStr, "%i", pos);
+    EstEID_mapPut(cert, "privateKeyIndex", positionStr);
+    
+	if (EstEID_CK_failure("C_GetAttributeValue", fl->C_GetAttributeValue(session, objectHandle[pos], &attribute, 1))) return FAILURE;
 
 	certificateLength = attribute.ulValueLen;
 	certificate = (CK_BYTE_PTR)malloc(certificateLength);
 	attribute.pValue = certificate;
-	if (EstEID_CK_failure("C_GetAttributeValue", fl->C_GetAttributeValue(session, objectHandle, &attribute, 1))) return FAILURE;
+	if (EstEID_CK_failure("C_GetAttributeValue", fl->C_GetAttributeValue(session, objectHandle[pos], &attribute, 1))) return FAILURE;
 
 	EstEID_log("cert = %p, certificate = %p, certificateLength = %i", cert, certificate, certificateLength);
 	EstEID_mapPutNoAlloc(cert, strdup("certificateAsHex"), EstEID_bin2hex((char *)certificate, certificateLength));

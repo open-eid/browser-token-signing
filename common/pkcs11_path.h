@@ -19,25 +19,11 @@
  *
  */
 
-#import <Cocoa/Cocoa.h>
+#ifndef pkcs11_path_h
+#define pkcs11_path_h
+#include "stdbool.h"
 
-@interface ModuleSelection : NSObject {
-    NSPanel *driverSelectionPanel;
-    NSTextField *informationLabel;
-    NSTableView *moduleSelection;
-    
-    NSMutableArray* modules;
-}
-@property (assign) IBOutlet NSTableView *moduleSelection;
-@property (assign) IBOutlet NSTextField *informationLabel;
+const char *getPkcs11ModulePath();
+bool isLithuanianDriverLoaded();
 
-
-@property (assign) IBOutlet NSPanel *driverSelectionPanel;
-- (IBAction)OkClicked:(id)pId;
-- (IBAction)BrowseClicked:(id)sender;
-
-- (NSString *)showForWindow:(NSWindow *)window;
-
-- (BOOL)tableView:(NSTableView*)pTableView shouldSelectRow:(int)row;
-
-@end
+#endif /* pkcs11_path_h */

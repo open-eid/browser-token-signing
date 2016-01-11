@@ -19,17 +19,20 @@
  *
  */
 
-#ifndef preferences_h
-#define preferences_h
+#ifndef atr_fetcher_h
+#define atr_fetcher_h
 
-#include <stdbool.h>
-#include "esteid_map.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+#ifdef __APPLE__
+#include <PCSC/winscard.h>
+#include <PCSC/wintypes.h>
+#else
+#include <winscard.h>
+#endif
+
+const char *fetchAtrs();
 
 
-void saveDefaultPreferences();
-void saveDefaultPKCS11ModulePath(const char *path);
-const char *loadDefaultPKCS11ModulePath();
-EstEID_Map getAvailablePKCS11Modules();
-bool isDefaultPKCS11ModulePathSet();
-
-#endif /* preferences_h */
+#endif /* atr_fetcher_h */

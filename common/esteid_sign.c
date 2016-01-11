@@ -196,23 +196,26 @@ char* EstEID_getFullNameWithPersonalCode(EstEID_Map cert) {
 	return name;
 }
 
-int EstEID_RealSign(CK_SESSION_HANDLE session, char **signature, unsigned int *signatureLength, const char *hash, unsigned int hashLength, char* name) {
-	CK_OBJECT_HANDLE privateKeyHandle;
+int EstEID_RealSign(CK_SESSION_HANDLE session, char **signature, unsigned int *signatureLength, const char *hash, unsigned int hashLength, char* name, unsigned int privateKeyIndex) {
 	CK_ULONG objectCount;
 	unsigned int hashWithPaddingLength = 0;
 	char *hashWithPadding;
 	CK_MECHANISM mechanism = {CKM_RSA_PKCS, 0, 0};
 	CK_OBJECT_CLASS objectClass = CKO_PRIVATE_KEY;
 	CK_ATTRIBUTE searchAttribute = {CKA_CLASS, &objectClass, sizeof(objectClass)};
+    
+    unsigned int max = privateKeyIndex + 1;
+    CK_OBJECT_HANDLE privateKeyHandle[max];
 
 	if (EstEID_CK_failure("C_FindObjectsInit", fl->C_FindObjectsInit(session, &searchAttribute, 1))) CLOSE_SESSION_AND_RETURN(FAILURE);
 
-	if (EstEID_CK_failure("C_FindObjects", fl->C_FindObjects(session, &privateKeyHandle, 1, &objectCount))) CLOSE_SESSION_AND_RETURN(FAILURE);
+	if (EstEID_CK_failure("C_FindObjects", fl->C_FindObjects(session, privateKeyHandle, max, &objectCount))) CLOSE_SESSION_AND_RETURN(FAILURE);
 	if (EstEID_CK_failure("C_FindObjectsFinal", fl->C_FindObjectsFinal(session))) CLOSE_SESSION_AND_RETURN(FAILURE);
 
 	if (objectCount == 0) CLOSE_SESSION_AND_RETURN(FAILURE); // todo ?? set error message
+    EstEID_log("found %i private keys in slot, using key in position %i", objectCount, privateKeyIndex);
 
-	if (EstEID_CK_failure("C_SignInit", fl->C_SignInit(session, &mechanism, privateKeyHandle))) CLOSE_SESSION_AND_RETURN(FAILURE);
+    if (EstEID_CK_failure("C_SignInit", fl->C_SignInit(session, &mechanism, privateKeyHandle[privateKeyIndex]))) CLOSE_SESSION_AND_RETURN(FAILURE);
 
 	hashWithPadding = EstEID_addPadding(hash, hashLength, &hashWithPaddingLength);
 	if (hashWithPadding) { // This is additional safeguard, as digest length is checked already before calling EstEID_addPadding()
@@ -299,7 +302,7 @@ int EstEID_sighHashWindows(char **signature, unsigned int *signatureLength, CK_S
 		CLOSE_SESSION_AND_RETURN(loginResult);
 	}
 	
-	return EstEID_RealSign(session, signature, signatureLength, hash, hashLength, NULL);
+	return EstEID_RealSign(session, signature, signatureLength, hash, hashLength, NULL, 0);
 }
 #endif
 
@@ -311,6 +314,7 @@ int EstEID_signHash(char **signature, unsigned int *signatureLength, CK_SLOT_ID 
 	int remainingTries = -1;
 	int attempt = 0, blocked = FALSE;
 	int isPinPad;
+    unsigned int privateKeyIndex;
 #ifdef _WIN32
 	EstEID_PINPromptDataEx pinPromptDataEx;
 #endif
@@ -321,6 +325,7 @@ int EstEID_signHash(char **signature, unsigned int *signatureLength, CK_SLOT_ID 
 	if (EstEID_CK_failure("C_OpenSession", fl->C_OpenSession(slotID, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session))) return FAILURE;
 
 	name = EstEID_getFullNameWithPersonalCode(cert);
+    privateKeyIndex = (unsigned)atoi(EstEID_mapGet(cert, "privateKeyIndex"));
 
 	for (attempt = 0;; attempt++) {
 		remainingTries = EstEID_getRemainingTries(slotID);
@@ -404,7 +409,7 @@ int EstEID_signHash(char **signature, unsigned int *signatureLength, CK_SLOT_ID 
 		break; // Login successful - correct PIN supplied
 	}
 
-	return EstEID_RealSign(session, signature, signatureLength, hash, hashLength, name);
+	return EstEID_RealSign(session, signature, signatureLength, hash, hashLength, name, privateKeyIndex);
 }
 
 char *EstEID_base64Encode(const char *input, int length) {

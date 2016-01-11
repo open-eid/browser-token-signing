@@ -23,7 +23,6 @@
 #include "dialogs.h"
 #include "PINPanel.h"
 #include "CertificateSelection.h"
-#include "ModuleSelection.h"
 #include "esteid_log.h"
 
 char *cocoa_promptForPIN(NSWindow *window, const char *name, const char *message, unsigned minPin2Length, int usePinPad) {
@@ -62,15 +61,6 @@ int cocoa_promptForCertificate(void* nativeWindowHandle, char* certId) {
 	}
 	[pool release];
 	return returnValue;
-}
-
-const char *cocoa_promptForDriver(void* nativeWindowHandle) {
-    LOG_LOCATION
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    ModuleSelection *moduleSelection = [[ModuleSelection alloc] init];
-    NSString* driver = [moduleSelection showForWindow: nativeWindowHandle];
-    [pool release];
-    return [driver UTF8String];
 }
 
 void closePinPadModalSheet() {

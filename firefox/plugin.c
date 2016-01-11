@@ -29,8 +29,6 @@
 #include "plugin-class.h"
 #include "esteid_mime_types.h"
 #include "esteid_misc.h"
-#include "preferences.h"
-#include "dialogs.h"
 
 //#define PLUGIN_NAME        "EstEID Firefox plug-in"
 //#define PLUGIN_DESCRIPTION "Allows digital signing with Estonian ID cards"
@@ -186,36 +184,7 @@ NPError NPP_New(NPMIMEType mimeType, NPP instanceData, uint16_t mode, int16_t ar
 #endif
 
 	browserFunctions->setvalue(instanceData, NPPVpluginWindowBool, (void*)false);
-#ifdef XP_MACOSX
-    saveDefaultPreferences();
-    
-    if (!isDefaultPKCS11ModulePathSet()) {
-        
-        EstEID_log("multiple available pkcs11 modules...");
-        EstEID_Map map = getAvailablePKCS11Modules();
-        EstEID_log("got %i available pkcs11 modules", EstEID_mapSize(map));
-        if (EstEID_mapSize(map) == 1) {
-            saveDefaultPKCS11ModulePath(map->value);
-        } else if (EstEID_mapSize(map) > 1) {
-            void *nativeWindowHandle = NULL;
-            browserFunctions->getvalue(instanceData, NPNVnetscapeWindow, &nativeWindowHandle);
-            saveDefaultPKCS11ModulePath((promptForDriver(nativeWindowHandle)));
-        } else if (EstEID_mapSize(map) < 1) {
-            if (!loadErrorShown) {
-                NPVariant result;
-                char code[2048];
-                sprintf(code, "alert('EstEID Plugin initialization failed:\\n%s');", EstEID_error);
-                NPString codeString = {strdup(code), strlen(code)};
-                NPObject *windowObject;
-                browserFunctions->getvalue(instanceData, NPNVWindowNPObject, &windowObject);
-                browserFunctions->evaluate(instanceData, windowObject, &codeString, &result);
-                browserFunctions->releasevariantvalue(&result);
-                loadErrorShown = 1;
-            }
-            return NPERR_MODULE_LOAD_FAILED_ERROR;
-        }
-    }
-#endif
+
     if (!EstEID_loadLibrary()) {
         if (!loadErrorShown) {
             NPVariant result;
@@ -230,7 +199,7 @@ NPError NPP_New(NPMIMEType mimeType, NPP instanceData, uint16_t mode, int16_t ar
         }
         return NPERR_MODULE_LOAD_FAILED_ERROR;
     }
-    
+    EstEID_log("loaded");
 	PluginInstance *pluginInstance = (PluginInstance *)browserFunctions->createobject(instanceData, pluginClass());
 	pluginInstance->npp = instanceData;
 	pluginInstance->nativeWindowHandle = NULL;	
