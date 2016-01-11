@@ -434,7 +434,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PKCS11_DRIVER = "/Library/EstonianIDCard/lib/esteid-pkcs11.so";
 				SDKROOT = macosx;
-				VERSION = 3.12.0;
+				VERSION = 3.12.1;
 			};
 			name = Debug;
 		};
@@ -454,7 +454,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PKCS11_DRIVER = "/Library/EstonianIDCard/lib/esteid-pkcs11.so";
 				SDKROOT = macosx;
-				VERSION = 3.12.0;
+				VERSION = 3.12.1;
 			};
 			name = Release;
 		};
