@@ -15,7 +15,7 @@
 
 1. Install dependencies
 
-        sudo apt-get install libgtk2.0-dev libssl-dev
+        sudo apt-get install libgtk2.0-dev libssl-dev libpcsclite-dev
 
 2. Fetch the source
 
