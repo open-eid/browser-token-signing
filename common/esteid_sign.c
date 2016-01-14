@@ -326,9 +326,8 @@ int EstEID_signHash(char **signature, unsigned int *signatureLength, CK_SLOT_ID 
 
 	name = EstEID_getFullNameWithPersonalCode(cert);
     privateKeyIndex = (unsigned)atoi(EstEID_mapGet(cert, "privateKeyIndex"));
-
+    remainingTries = EstEID_getRemainingTries(slotID);
 	for (attempt = 0;; attempt++) {
-		remainingTries = EstEID_getRemainingTries(slotID);
 		if (remainingTries == -1)
 			CLOSE_SESSION_AND_RETURN(FAILURE);
 		if (!remainingTries || blocked) {
@@ -342,7 +341,6 @@ int EstEID_signHash(char **signature, unsigned int *signatureLength, CK_SLOT_ID 
 		else {
 			message[0] = 0;
 		}
-
 		isPinPad = EstEID_isPinPad(slotID);
 		if(!isPinPad) {
 			// Simple card reader
@@ -399,6 +397,7 @@ int EstEID_signHash(char **signature, unsigned int *signatureLength, CK_SLOT_ID 
 			case CKR_PIN_LOCKED:
 				blocked = TRUE;
 			case CKR_PIN_INCORRECT:
+                remainingTries--;
 			case CKR_PIN_INVALID:
 			case CKR_PIN_LEN_RANGE:
 				EstEID_log("this was attempt %i, loginResult causes to run next round", attempt);

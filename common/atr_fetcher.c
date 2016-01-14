@@ -94,7 +94,7 @@ const char *fetchAtrs() {
     for (size_t i = 0; i < dwReaders - 1; ++i) {
         const char *atr = getAtrFromReader(hContext, &mszReaders[i]);
         if (atr) {
-            atrs = (char *)realloc(atrs, strlen(atr) + strlen(atrs));
+            atrs = (char *)realloc(atrs, strlen(atr) + 1 + strlen(atrs) + 1);
             strcat(atrs, atr);
             atrCount++;
         }
