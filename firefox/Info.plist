@@ -43,7 +43,7 @@
 	<key>NSPrincipalClass</key>
 	<string></string>
 	<key>WebPluginDescription</key>
-	<string>Allows digital signing with Estonian ID cards</string>
+	<string>Allows digital signing with Estonian, Finnish and Latvian ID cards</string>
 	<key>WebPluginMIMETypes</key>
 	<dict>
 		<key>application/x-digidoc</key>
@@ -53,6 +53,6 @@
 		</dict>
 	</dict>
 	<key>WebPluginName</key>
-	<string>EstEID Firefox plug-in</string>
+	<string>Firefox Token Signing</string>
 </dict>
 </plist>
