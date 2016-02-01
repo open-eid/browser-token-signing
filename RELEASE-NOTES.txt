@@ -1,3 +1,23 @@
+Esteid-plugin version 3.12.1 release notes
+--------------------------------------
+Changes compared to ver 3.11.0
+
+- Improved Esteid-plugin for Internet Explorer
+	- More generic pkcs11 card manager for IE, moved certificate match check from signer to card manager and support having multiple cards connected when signing with pkcs11.
+	- Fixed transparent PIN dialog issue
+	- Fixed wrong private key handle used for signing with LT card
+	- Added Custom Dialog and using PKCS11 for LT cards to bypass LT middleware PIN cache issues. It uses the selected certificate to determine if it's a LT card
+	- Use WIX visual studio integration and cleanup
+
+- Improved Esteid-plugin for Mozilla Firefox
+	- Fixed random Firefox crash in OSX
+	- Fixed PIN attempts remaining counter not decreasing with Lithuanian and Finnish tokens
+	- Added Token Support for Latvian and Finnish eID on OSX and Token Support for Lithuanian, Latvian and Finnish eID on Linux. Note: you need to have middleware for the eID that you are using installed (Finland, Estonia, Latvia or Lithuania). No other configuration should be necessary.
+
+List on known issues: https://github.com/open-eid/browser-token-signing/wiki/Known-issues
+List of supported tokens: hhttps://github.com/open-eid/browser-token-signing/wiki/Token-Support
+
+
 Esteid-plugin version 3.11.0 release notes
 --------------------------------------
 Changes compared to ver 3.9.1
