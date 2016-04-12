@@ -19,9 +19,10 @@
 #pragma once
 
 #include <string>
+#include <vector>
 #include "cert_dialog_win.h"
 
 class CertificateSelector {
 public:
-	virtual PCCERT_CONTEXT getCert() = 0;
+	virtual std::vector<unsigned char> getCert() = 0;
 };

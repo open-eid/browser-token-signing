@@ -23,5 +23,5 @@
 class NativeCertificateSelector : public CertificateSelector {
 public:
 	NativeCertificateSelector() : CertificateSelector(){}
-	PCCERT_CONTEXT getCert();
+	virtual std::vector<unsigned char> getCert();
 };

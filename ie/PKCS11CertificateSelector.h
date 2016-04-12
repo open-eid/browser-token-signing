@@ -30,7 +30,7 @@ public:
 		driverPath = _driverPath;
 		initialize();
 	}
-	PCCERT_CONTEXT getCert();
+	virtual std::vector<unsigned char> getCert();
 
 private:
 	void initialize();

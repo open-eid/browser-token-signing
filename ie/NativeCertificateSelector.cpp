@@ -7,7 +7,7 @@ extern "C" {
 
 using namespace std;
 
-PCCERT_CONTEXT NativeCertificateSelector::getCert() {
+std::vector<unsigned char> NativeCertificateSelector::getCert() {
 	LOG_LOCATION;
 	PCCERT_CONTEXT pCertContext = NULL;
 	HCERTSTORE hCertStore = NULL;
@@ -68,52 +68,12 @@ PCCERT_CONTEXT NativeCertificateSelector::getCert() {
 		throw UserCancelledException();
 	}
 #endif
+	vector<unsigned char> certData(pCertContext->pbCertEncoded, pCertContext->pbCertEncoded + pCertContext->cbCertEncoded);
+	CertFreeCertificateContext(pCertContext);
 	EstEID_log("Pointer to CERT_STORE 0x%08X", hCertStore);
 	if (hCertStore) {
 		CertCloseStore(hCertStore, CERT_CLOSE_STORE_FORCE_FLAG);
 	}
-	//vector<unsigned char> data(pCertContext->pbCertEncoded, pCertContext->pbCertEncoded + pCertContext->cbCertEncoded);
-	return pCertContext;
+	return certData;
 	
-	//return pCertContext;
-	/*
-	HCERTSTORE store = CertOpenSystemStore(0, L"MY");
-	if (!store)
-	{
-		throw TechnicalException("Failed to open Cert Store");
-	}
-
-	PCCERT_CONTEXT pCertContextForEnumeration = nullptr;
-	int certificatesCount = 0;
-	while (pCertContextForEnumeration = CertEnumCertificatesInStore(store, pCertContextForEnumeration)) {
-		if (isValidForSigning(pCertContextForEnumeration)) {
-			certificatesCount++;
-		}
-	}
-	if (pCertContextForEnumeration){
-		CertFreeCertificateContext(pCertContextForEnumeration);
-	}
-	if (certificatesCount < 1) {
-		CertCloseStore(store, 0);
-		throw NoCertificatesException();
-	}
-
-	CRYPTUI_SELECTCERTIFICATE_STRUCT pcsc = { sizeof(pcsc) };
-	pcsc.pFilterCallback = filter_proc;
-	pcsc.pvCallbackData = nullptr;
-	pcsc.cDisplayStores = 1;
-	pcsc.rghDisplayStores = &store;
-	PCCERT_CONTEXT cert_context = CryptUIDlgSelectCertificate(&pcsc);
-
-	if (!cert_context)
-	{
-		CertCloseStore(store, 0);
-		throw UserCancelledException();
-	}
-
-	vector<unsigned char> data(cert_context->pbCertEncoded, cert_context->pbCertEncoded + cert_context->cbCertEncoded);
-	CertFreeCertificateContext(cert_context);
-	CertCloseStore(store, 0);
-	return BinaryUtils::bin2hex(data);
-	*/
 }

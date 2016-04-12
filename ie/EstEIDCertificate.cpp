@@ -35,7 +35,8 @@ STDMETHODIMP CEstEIDCertificate::get_id(BSTR *id){
 }
 
 void CEstEIDCertificate::readFromCertContext() {
-	PCCERT_CONTEXT pCertContext = CertificateSelectorFactory::createCertificateSelector()->getCert();
+	vector<unsigned char> signCert = CertificateSelectorFactory::createCertificateSelector()->getCert();
+	PCCERT_CONTEXT pCertContext = CertCreateCertificateContext(X509_ASN_ENCODING | PKCS_7_ASN_ENCODING, signCert.data(), signCert.size());
 	loadCertContexts(pCertContext);
 	if (pCertContext){
 		CertFreeCertificateContext(pCertContext);
