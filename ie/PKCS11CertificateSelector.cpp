@@ -70,7 +70,7 @@ void PKCS11CertificateSelector::addCertificateToMemoryStore(std::vector<unsigned
 	}
 }
 
-PCCERT_CONTEXT PKCS11CertificateSelector::getCert() {
+vector<unsigned char> PKCS11CertificateSelector::getCert() {
 	CRYPTUI_SELECTCERTIFICATE_STRUCT pcsc = { sizeof(pcsc) };
 	pcsc.pFilterCallback = nullptr; //already filtered in PKCS11CardManager
 	pcsc.pvCallbackData = nullptr;
@@ -82,7 +82,8 @@ PCCERT_CONTEXT PKCS11CertificateSelector::getCert() {
 		CertCloseStore(hMemoryStore, 0);
 		throw UserCancelledException();
 	}
-	//vector<unsigned char> data(cert_context->pbCertEncoded, cert_context->pbCertEncoded + cert_context->cbCertEncoded);
+	vector<unsigned char> certData(cert_context->pbCertEncoded, cert_context->pbCertEncoded + cert_context->cbCertEncoded);
+	CertFreeCertificateContext(cert_context);
 	CertCloseStore(hMemoryStore, 0);
-	return cert_context;
+	return certData;
 }
