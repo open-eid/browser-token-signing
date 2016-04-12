@@ -277,10 +277,11 @@
     </ResourceCompile>
     <Link>
       <RegisterOutput>true</RegisterOutput>
-      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Uafxcwd.lib;Libcmtd.lib;Ncrypt.lib;Cryptui.lib;crypt32.lib;winscard.lib</AdditionalDependencies>
       <ModuleDefinitionFile>.\esteid-plugin-ie.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
+      <IgnoreSpecificDefaultLibraries>Uafxcwd.lib;Libcmtd.lib</IgnoreSpecificDefaultLibraries>
     </Link>
     <Manifest>
       <TypeLibraryFile>.\Debug\esteidpluginie.tlb</TypeLibraryFile>
@@ -313,7 +314,7 @@
     </ResourceCompile>
     <Link>
       <RegisterOutput>true</RegisterOutput>
-      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Uafxcwd.lib;Libcmtd.lib;Ncrypt.lib;Cryptui.lib;crypt32.lib;winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>.\esteid-plugin-ie.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -349,7 +350,7 @@
     </ResourceCompile>
     <Link>
       <RegisterOutput>true</RegisterOutput>
-      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Uafxcwd.lib;Libcmtd.lib;Ncrypt.lib;Cryptui.lib;crypt32.lib;winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>.\esteid-plugin-ie.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -384,10 +385,11 @@
     </ResourceCompile>
     <Link>
       <RegisterOutput>true</RegisterOutput>
-      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Uafxcwd.lib;Libcmtd.lib;Ncrypt.lib;Cryptui.lib;crypt32.lib;winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>.\esteid-plugin-ie.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
+      <IgnoreSpecificDefaultLibraries>Uafxcwd.lib;Libcmtd.lib</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug HTTP|x64'">
@@ -415,7 +417,7 @@
     </ResourceCompile>
     <Link>
       <RegisterOutput>true</RegisterOutput>
-      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Uafxcwd.lib;Libcmtd.lib;Ncrypt.lib;Cryptui.lib;crypt32.lib;winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>.\esteid-plugin-ie.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -446,7 +448,7 @@
     </ResourceCompile>
     <Link>
       <RegisterOutput>true</RegisterOutput>
-      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Uafxcwd.lib;Libcmtd.lib;Ncrypt.lib;Cryptui.lib;crypt32.lib;winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>.\esteid-plugin-ie.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -478,10 +480,11 @@
     </ResourceCompile>
     <Link>
       <RegisterOutput>true</RegisterOutput>
-      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Uafxcw.lib;Libcmt.lib;Ncrypt.lib;Cryptui.lib;crypt32.lib;Winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>.\esteid-plugin-ie.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
+      <IgnoreSpecificDefaultLibraries>Uafxcw.lib;Libcmtd.lib</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release HTTP|Win32'">
@@ -510,7 +513,7 @@
     </ResourceCompile>
     <Link>
       <RegisterOutput>true</RegisterOutput>
-      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Uafxcw.lib;Libcmt.lib;Ncrypt.lib;Cryptui.lib;crypt32.lib;Winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>.\esteid-plugin-ie.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -542,7 +545,7 @@
     </ResourceCompile>
     <Link>
       <RegisterOutput>true</RegisterOutput>
-      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Uafxcw.lib;Libcmt.lib;Ncrypt.lib;Cryptui.lib;crypt32.lib;Winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>.\esteid-plugin-ie.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -573,10 +576,11 @@
     </ResourceCompile>
     <Link>
       <RegisterOutput>true</RegisterOutput>
-      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Uafxcw.lib;Libcmt.lib;Ncrypt.lib;Cryptui.lib;crypt32.lib;Winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>.\esteid-plugin-ie.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
+      <IgnoreSpecificDefaultLibraries>Uafxcw.lib;Libcmtd.lib</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release HTTP|x64'">
@@ -604,7 +608,7 @@
     </ResourceCompile>
     <Link>
       <RegisterOutput>true</RegisterOutput>
-      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Uafxcw.lib;Libcmt.lib;Ncrypt.lib;Cryptui.lib;crypt32.lib;Winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>.\esteid-plugin-ie.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -635,13 +639,15 @@
     </ResourceCompile>
     <Link>
       <RegisterOutput>true</RegisterOutput>
-      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Uafxcw.lib;Libcmt.lib;Ncrypt.lib;Cryptui.lib;crypt32.lib;Winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>.\esteid-plugin-ie.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AtrFetcher.cpp" />
+    <ClCompile Include="CertificateSelectorFactory.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="esteid-plugin-ie.cpp" />
     <ClCompile Include="..\common\esteid_log.c" />
@@ -652,7 +658,9 @@
     <ClCompile Include="esteidpluginie_i.c" />
     <ClCompile Include="BinaryUtils.cpp" />
     <ClCompile Include="CngCapiSigner.cpp" />
+    <ClCompile Include="NativeCertificateSelector.cpp" />
     <ClCompile Include="PinDialog.cpp" />
+    <ClCompile Include="PKCS11CertificateSelector.cpp" />
     <ClCompile Include="PKCS11Signer.cpp" />
     <ClCompile Include="SignerFactory.cpp" />
   </ItemGroup>
@@ -668,7 +676,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\esteid_map.h" />
+    <ClInclude Include="AtrFetcher.h" />
     <ClInclude Include="BinaryUtils.h" />
+    <ClInclude Include="CertificateSelector.h" />
+    <ClInclude Include="CertificateSelectorFactory.h" />
     <ClInclude Include="CngCapiSigner.h" />
     <ClInclude Include="dllmain.h" />
     <ClInclude Include="..\common\esteid_error.h" />
@@ -678,8 +689,11 @@
     <ClInclude Include="EstEIDIEPluginBHO.h" />
     <ClInclude Include="..\common\cert_dialog_win.h" />
     <ClInclude Include="HostExceptions.h" />
+    <ClInclude Include="NativeCertificateSelector.h" />
     <ClInclude Include="PinDialog.h" />
     <ClInclude Include="PKCS11CardManager.h" />
+    <ClInclude Include="PKCS11CertificateSelector.h" />
+    <ClInclude Include="PKCS11ModulePath.h" />
     <ClInclude Include="PKCS11Signer.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Signer.h" />

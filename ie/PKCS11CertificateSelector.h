@@ -1,5 +1,5 @@
 /*
-* Estonian ID card plugin for web browsers
+* Chrome Token Signing Native Host
 *
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -18,29 +18,26 @@
 
 #pragma once
 
-#include "Signer.h"
+#include "CertificateSelector.h"
 #include "PKCS11CardManager.h"
-#include "PinDialog.h"
 #include <future>
 #include <string>
+#include <vector>
 
-using namespace std;
-
-class Pkcs11Signer : public Signer {
+class PKCS11CertificateSelector : public CertificateSelector {
 public:
-	Pkcs11Signer(const string &_hash, char *_certId) : Signer(_hash, _certId){}
-	void initialize();
-	string sign();
-	void setPkcs11ModulePath(string &path);
+	PKCS11CertificateSelector(const std::string &_driverPath) : CertificateSelector(){
+		driverPath = _driverPath;
+		initialize();
+	}
+	PCCERT_CONTEXT getCert();
+
 private:
-	string pkcs11ModulePath;
-	int pinTriesLeft;
-	CPinDialog * dialog;
-	unique_ptr<PKCS11CardManager> cardManager;
-	unique_ptr<PKCS11CardManager> getCardManager();
+	void initialize();
+	void fetchAllSigningCertificates();
+	void addCertificateToMemoryStore(std::vector<unsigned char> signCert);
 	PKCS11CardManager* createCardManager();
-	void validateHashLength();
-	string askPinAndSignHash();
-	char* askPin();
-	void handleWrongPinEntry();
+
+	HCERTSTORE  hMemoryStore;
+	std::string driverPath;
 };

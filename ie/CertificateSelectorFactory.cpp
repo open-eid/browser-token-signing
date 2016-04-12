@@ -1,5 +1,5 @@
 /*
-* Estonian ID card plugin for web browsers
+* Chrome Token Signing Native Host
 *
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -16,31 +16,22 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#pragma once
+#include "CertificateSelectorFactory.h"
+#include "NativeCertificateSelector.h"
+#include "PKCS11CertificateSelector.h"
+#include "AtrFetcher.h"
+#include "PKCS11ModulePath.h"
 
-#include "Signer.h"
-#include "PKCS11CardManager.h"
-#include "PinDialog.h"
-#include <future>
-#include <string>
+//#include <string>
 
-using namespace std;
+CertificateSelector * CertificateSelectorFactory::createCertificateSelector(){
+	AtrFetcher * atrFetcher = new AtrFetcher();
+	std::vector<std::string> atrs = atrFetcher->fetchAtr();
 
-class Pkcs11Signer : public Signer {
-public:
-	Pkcs11Signer(const string &_hash, char *_certId) : Signer(_hash, _certId){}
-	void initialize();
-	string sign();
-	void setPkcs11ModulePath(string &path);
-private:
-	string pkcs11ModulePath;
-	int pinTriesLeft;
-	CPinDialog * dialog;
-	unique_ptr<PKCS11CardManager> cardManager;
-	unique_ptr<PKCS11CardManager> getCardManager();
-	PKCS11CardManager* createCardManager();
-	void validateHashLength();
-	string askPinAndSignHash();
-	char* askPin();
-	void handleWrongPinEntry();
-};
+	for (int i = 0; i < atrs.size(); i++) {
+		if (PKCS11ModulePath::isKnownAtr(atrs[i])) {
+			return new PKCS11CertificateSelector(PKCS11ModulePath::getModulePath());
+		}
+	}
+	return new NativeCertificateSelector();
+}
