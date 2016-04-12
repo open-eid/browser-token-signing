@@ -21,11 +21,25 @@
 #include "SignerFactory.h"
 #include "PKCS11Signer.h"
 #include "CngCapiSigner.h"
+#include "AtrFetcher.h"
+#include "PKCS11ModulePath.h"
 extern "C" {
 #include "esteid_log.h"
 }
 
 Signer * SignerFactory::createSigner(const string &hash, char *certId) {
+	
+	AtrFetcher * atrFetcher = new AtrFetcher();
+	std::vector<std::string> atrs = atrFetcher->fetchAtr();
+	for (int i = 0; i < atrs.size(); i++) {
+		if (PKCS11ModulePath::isKnownAtr(atrs[i])) {
+			Pkcs11Signer *signer = new Pkcs11Signer(hash, certId);
+			signer->setPkcs11ModulePath(PKCS11ModulePath::getModulePath());
+			signer->initialize();
+			return signer;
+		}
+	}
+	
 	PCCERT_CONTEXT cert = findCertificateById(certId);
 	if (!isLithuanianCertificate(cert)) {
 		return new CngCapiSigner(hash, certId, cert);
@@ -33,7 +47,7 @@ Signer * SignerFactory::createSigner(const string &hash, char *certId) {
 	EstEID_log("certificate issuer C=LT, using PKCS11 Signer with custom dialog");
 	vector<unsigned char> data(cert->pbCertEncoded, cert->pbCertEncoded + cert->cbCertEncoded);
 	CertFreeCertificateContext(cert);
-	Pkcs11Signer *signer = new Pkcs11Signer(hash, certId, BinaryUtils::bin2hex(data));
+	Pkcs11Signer *signer = new Pkcs11Signer(hash, certId);
 	signer->setPkcs11ModulePath(getLithuanianPKCS11ModulePath());
 	signer->initialize();
 	return signer;
