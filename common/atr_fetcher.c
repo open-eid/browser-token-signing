@@ -59,7 +59,7 @@ char *getAtrFromReader(SCARDCONTEXT hContext, const char *readerName) {
     return atr;
 }
 
-const char *fetchAtrs() {
+char *fetchAtrs() {
     LONG rv;
     SCARDCONTEXT hContext;
     LPTSTR mszReaders;

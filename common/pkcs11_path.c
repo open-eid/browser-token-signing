@@ -89,7 +89,7 @@ void setPathCountry(const char *path) {
 const char *getPkcs11ModulePath() {
     LOG_LOCATION
     EstEID_Map atrToDriverMap = createMap();
-    const char *atrs = fetchAtrs();
+    char *atrs = fetchAtrs();
 
     if (!atrs) {
         EstEID_log("No ATRs found, using default driver path %s", estPath);
@@ -104,11 +104,13 @@ const char *getPkcs11ModulePath() {
             //use the first match found
             EstEID_log("driver path = %s", path);
             setPathCountry(path);
+            free(atrs);
             return path;
         }
         i+= strlen(&atrs[i]);
     }
     EstEID_log("no driver for ATR found, using default driver path %s", estPath);
     setPathCountry(estPath);
+    free(atrs);
     return estPath;
 }
