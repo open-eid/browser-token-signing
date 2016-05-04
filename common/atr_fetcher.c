@@ -23,7 +23,7 @@
 #include "esteid_log.h"
 #include "string.h"
 
-const char *bin2hex(const BYTE *bin, const int binLength) {
+char *bin2hex(const BYTE *bin, const int binLength) {
     int j;
     char *hex = (char *)malloc(binLength * 2 + 1);
     for (j = 0; j < binLength; j++) sprintf(hex + (j * 2), "%02X", (unsigned char)bin[j]);
@@ -31,7 +31,7 @@ const char *bin2hex(const BYTE *bin, const int binLength) {
     return hex;
 }
 
-const char *getAtrFromReader(SCARDCONTEXT hContext, const char *readerName) {
+char *getAtrFromReader(SCARDCONTEXT hContext, const char *readerName) {
     EstEID_log("finding ATR for reader: %s", readerName);
     
     SCARDHANDLE hCard;
@@ -53,7 +53,7 @@ const char *getAtrFromReader(SCARDCONTEXT hContext, const char *readerName) {
         EstEID_log("SCardStatus ERROR: 0x%08X", rv);
         return NULL;
     }
-    const char * atr = bin2hex(pbAtr, dwAtrLen);
+    char *atr = bin2hex(pbAtr, dwAtrLen);
     EstEID_log("ATR = %s", atr);
     SCardDisconnect(hCard, SCARD_LEAVE_CARD);
     return atr;
@@ -92,10 +92,11 @@ const char *fetchAtrs() {
     char *atrs;
     atrs = calloc(50, sizeof(char));
     for (size_t i = 0; i < dwReaders - 1; ++i) {
-        const char *atr = getAtrFromReader(hContext, &mszReaders[i]);
+        char *atr = getAtrFromReader(hContext, &mszReaders[i]);
         if (atr) {
             atrs = (char *)realloc(atrs, strlen(atr) + 1 + strlen(atrs) + 1);
             strcat(atrs, atr);
+            free(atr);
             atrCount++;
         }
         i+= strlen(&mszReaders[i]);
