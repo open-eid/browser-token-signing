@@ -65,7 +65,10 @@ char *library_error() {
 }
 #else
 #include <dlfcn.h>
+
+/* Path returned from getPkcs11ModulePath() is leaked here! */
 #define LOAD_LIBRARY void *handle = dlopen(getPkcs11ModulePath(), RTLD_NOW)
+
 #define GET_FUNCTION_PTR dlsym
 char *library_error() {
 	return dlerror();

@@ -100,17 +100,30 @@ const char *getPkcs11ModulePath() {
     LOG_LOCATION
     for (size_t i = 0; i < strlen(atrs) - 1; ++i) {
         const char *path = EstEID_mapGet(atrToDriverMap, &atrs[i]);
+
         if (path) {
             //use the first match found
             EstEID_log("driver path = %s", path);
             setPathCountry(path);
+            const char *path_copy_to_return = strdup(path);
+
+            EstEID_mapFree(atrToDriverMap);
+            atrToDriverMap = NULL;
+            path = NULL;
             free(atrs);
-            return path;
+            atrs = NULL;
+
+            return path_copy_to_return;
         }
         i+= strlen(&atrs[i]);
     }
     EstEID_log("no driver for ATR found, using default driver path %s", estPath);
     setPathCountry(estPath);
+
+    EstEID_mapFree(atrToDriverMap);
+    atrToDriverMap = NULL;
     free(atrs);
+    atrs = NULL;
+
     return estPath;
 }
