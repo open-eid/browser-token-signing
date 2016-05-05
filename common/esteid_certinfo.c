@@ -297,7 +297,7 @@ int EstEID_loadCertEntries(EstEID_Map cert, char *prefix, struct X509_name_st *x
 
 		if (strlen(prefix) > 1023) {
 			strncpy(name, prefix, 1023);
-			name[1023] = '\n';
+			name[1023] = '\0';
 		}
 		else {
 			strcpy(name, prefix);
