@@ -295,7 +295,13 @@ int EstEID_loadCertEntries(EstEID_Map cert, char *prefix, struct X509_name_st *x
 		char name[1024];
 		X509_NAME_ENTRY *entry = X509_NAME_get_entry(x509Name, i);
 
-		strcpy(name, prefix);
+		if (strlen(prefix) > 1023) {
+			strncpy(name, prefix, 1023);
+			name[1023] = '\n';
+		}
+		else {
+			strcpy(name, prefix);
+		}
 		OBJ_obj2txt(name + strlen(prefix), sizeof(name) - strlen(prefix), entry->object, 0);
 
 		ASN1_STRING_to_UTF8((unsigned char **)&value, entry->value);		
