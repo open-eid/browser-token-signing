@@ -448,13 +448,13 @@ int EstEID_loadCertInfoEntries(EstEID_Certs *certs, int index) {
 	return SUCCESS;
 }
 
-EstEID_Map EstEID_createCertMap(CK_TOKEN_INFO tokenInfo) {
-	char *label = EstEID_createString(tokenInfo.label, sizeof(tokenInfo.label));	
+EstEID_Map EstEID_createCertMap(CK_TOKEN_INFO *tokenInfo) {
+	char *label = EstEID_createString(tokenInfo->label, sizeof(tokenInfo->label));
 	EstEID_Map cert = EstEID_mapPutNoAlloc(NULL, strdup("label"), label);
 
 	char pinLen[8];
 	memset(pinLen, 0x0, 8);
-	sprintf(pinLen, "%lu", tokenInfo.ulMinPinLen);
+	sprintf(pinLen, "%lu", tokenInfo->ulMinPinLen);
 	EstEID_mapPut(cert, "minPinLen", pinLen);
 
 	return cert;
@@ -478,7 +478,7 @@ int EstEID_loadCertInfo(EstEID_Certs *certs, int index) {
 
 	FAIL_IF(EstEID_CK_failure("C_GetTokenInfo", fl->C_GetTokenInfo(slotID, &tokenInfo)));
 
-	certs->certs[index] = EstEID_createCertMap(tokenInfo);
+	certs->certs[index] = EstEID_createCertMap(&tokenInfo);
 
 	FAIL_UNLESS(EstEID_loadCertInfoEntries(certs, index));
 
