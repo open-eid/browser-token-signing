@@ -109,10 +109,9 @@ char *getLanguageFromOptions(PluginInstance *obj, NPVariant options) {
 		EstEID_log("returning language '%s'", language);
 		return language;
 	}
-	EstEID_log("unable to read language from options, returning empty string");
-	char *language = (char *)malloc(sizeof(char));
-	language[0] = '\0';
-	return language;
+	EstEID_log("unable to read language from options");
+	
+	return NULL;
 }
 
 bool doSign(PluginInstance *obj, NPVariant *args, unsigned argCount, NPVariant *result) {
@@ -127,8 +126,14 @@ bool doSign(PluginInstance *obj, NPVariant *args, unsigned argCount, NPVariant *
 	
 	if(argCount > 2 && NPVARIANT_IS_OBJECT(args[2])){
 		NPUTF8* optionsLanguage = getLanguageFromOptions(obj, args[2]);
-		strncpy(pluginLanguage, optionsLanguage, 2);
-		free(optionsLanguage);
+
+		if (NULL != optionsLanguage) {
+			strncpy(pluginLanguage, optionsLanguage, 2);
+			free(optionsLanguage);
+		}
+		else {
+			strcpy(pluginLanguage, "");
+		}
 	}
 	EstEID_setLocale(pluginLanguage);
 
