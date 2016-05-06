@@ -395,14 +395,12 @@ bool doSign(PluginInstance *obj, NPVariant *args, unsigned argCount, NPVariant *
 	FAIL_IF_NOT_ALLOWED_SITE;
 	
 	if(argCount > 2 && NPVARIANT_IS_OBJECT(args[2])){
+		pluginLanguage[0] = '\0';
 		NPUTF8* optionsLanguage = getLanguageFromOptions(obj, args[2]);
 
 		if (NULL != optionsLanguage) {
 			strncpy(pluginLanguage, optionsLanguage, 2);
 			free(optionsLanguage);
-		}
-		else {
-			strcpy(pluginLanguage, "");
 		}
 	}
 	certId = createStringFromNPVariant(&args[0]);

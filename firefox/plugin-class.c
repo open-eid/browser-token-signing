@@ -125,14 +125,12 @@ bool doSign(PluginInstance *obj, NPVariant *args, unsigned argCount, NPVariant *
 	}
 	
 	if(argCount > 2 && NPVARIANT_IS_OBJECT(args[2])){
+		pluginLanguage[0] = '\0';
 		NPUTF8* optionsLanguage = getLanguageFromOptions(obj, args[2]);
 
 		if (NULL != optionsLanguage) {
 			strncpy(pluginLanguage, optionsLanguage, 2);
 			free(optionsLanguage);
-		}
-		else {
-			strcpy(pluginLanguage, "");
 		}
 	}
 	EstEID_setLocale(pluginLanguage);
