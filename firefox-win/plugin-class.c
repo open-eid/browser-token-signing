@@ -142,8 +142,9 @@ char *getLanguageFromOptions(PluginInstance *obj, NPVariant options) {
 		EstEID_log("returning language '%s'", language);
 		return language;
 	}
-	EstEID_log("unable to read language from options, returning empty string");
-	return "";
+	EstEID_log("unable to read language from options");
+
+	return NULL;
 }
 
 BOOL isCNGInstalled() {
@@ -394,7 +395,13 @@ bool doSign(PluginInstance *obj, NPVariant *args, unsigned argCount, NPVariant *
 	FAIL_IF_NOT_ALLOWED_SITE;
 	
 	if(argCount > 2 && NPVARIANT_IS_OBJECT(args[2])){
-		strncpy(pluginLanguage, getLanguageFromOptions(obj, args[2]), 2);
+		pluginLanguage[0] = '\0';
+		NPUTF8* optionsLanguage = getLanguageFromOptions(obj, args[2]);
+
+		if (NULL != optionsLanguage) {
+			strncpy(pluginLanguage, optionsLanguage, 2);
+			free(optionsLanguage);
+		}
 	}
 	certId = createStringFromNPVariant(&args[0]);
 	if (obj->certContext == NULL) {

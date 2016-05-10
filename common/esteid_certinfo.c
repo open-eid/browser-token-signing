@@ -65,7 +65,10 @@ char *library_error() {
 }
 #else
 #include <dlfcn.h>
+
+/* Path returned from getPkcs11ModulePath() is leaked here! */
 #define LOAD_LIBRARY void *handle = dlopen(getPkcs11ModulePath(), RTLD_NOW)
+
 #define GET_FUNCTION_PTR dlsym
 char *library_error() {
 	return dlerror();
@@ -292,7 +295,13 @@ int EstEID_loadCertEntries(EstEID_Map cert, char *prefix, struct X509_name_st *x
 		char name[1024];
 		X509_NAME_ENTRY *entry = X509_NAME_get_entry(x509Name, i);
 
-		strcpy(name, prefix);
+		if (strlen(prefix) > 1023) {
+			strncpy(name, prefix, 1023);
+			name[1023] = '\0';
+		}
+		else {
+			strcpy(name, prefix);
+		}
 		OBJ_obj2txt(name + strlen(prefix), sizeof(name) - strlen(prefix), entry->object, 0);
 
 		ASN1_STRING_to_UTF8((unsigned char **)&value, entry->value);		
@@ -439,13 +448,13 @@ int EstEID_loadCertInfoEntries(EstEID_Certs *certs, int index) {
 	return SUCCESS;
 }
 
-EstEID_Map EstEID_createCertMap(CK_TOKEN_INFO tokenInfo) {
-	char *label = EstEID_createString(tokenInfo.label, sizeof(tokenInfo.label));	
+EstEID_Map EstEID_createCertMap(CK_TOKEN_INFO *tokenInfo) {
+	char *label = EstEID_createString(tokenInfo->label, sizeof(tokenInfo->label));
 	EstEID_Map cert = EstEID_mapPutNoAlloc(NULL, strdup("label"), label);
 
 	char pinLen[8];
 	memset(pinLen, 0x0, 8);
-	sprintf(pinLen, "%lu", tokenInfo.ulMinPinLen);
+	sprintf(pinLen, "%lu", tokenInfo->ulMinPinLen);
 	EstEID_mapPut(cert, "minPinLen", pinLen);
 
 	return cert;
@@ -469,7 +478,7 @@ int EstEID_loadCertInfo(EstEID_Certs *certs, int index) {
 
 	FAIL_IF(EstEID_CK_failure("C_GetTokenInfo", fl->C_GetTokenInfo(slotID, &tokenInfo)));
 
-	certs->certs[index] = EstEID_createCertMap(tokenInfo);
+	certs->certs[index] = EstEID_createCertMap(&tokenInfo);
 
 	FAIL_UNLESS(EstEID_loadCertInfoEntries(certs, index));
 

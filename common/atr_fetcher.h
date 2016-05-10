@@ -32,7 +32,7 @@
 #include <winscard.h>
 #endif
 
-const char *fetchAtrs();
+char *fetchAtrs();
 
 
 #endif /* atr_fetcher_h */

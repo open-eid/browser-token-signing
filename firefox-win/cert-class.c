@@ -61,7 +61,7 @@ bool certSetProperty(CertInstance *obj, NPIdentifier name, const NPVariant *vari
 bool certHasProperty(NPClass *theClass, NPIdentifier name) {
 	FAIL_IF_NOT_ALLOWED_SITE
 	static char const certProperties[][17u] = { "id", "cert", "CN", "issuerCN", "keyUsage", "validFrom", "validTo", "certSerialNumber", "certificateAsPEM", "certificateAsHex" };
-	for (unsigned i = 0u; i < sizeof(certProperties) / sizeof(char *); i++) {
+	for (unsigned i = 0u; i < sizeof(certProperties)/sizeof(certProperties[0]); i++) {
 		if (isSameIdentifier(name, certProperties[i])) return true;
 	}
 	return false;
