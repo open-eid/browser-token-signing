@@ -94,6 +94,7 @@ const char *getPkcs11ModulePath() {
     if (!atrs) {
         EstEID_log("No ATRs found, using default driver path %s", estPath);
         setPathCountry(estPath);
+        EstEID_mapFree(atrToDriverMap);
         return estPath;
     }
     
