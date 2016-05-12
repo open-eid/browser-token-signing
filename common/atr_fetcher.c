@@ -106,5 +106,11 @@ char *fetchAtrs() {
     
     free(mszReaders);
     SCardReleaseContext(hContext);
-    return atrCount > 0 ? atrs : NULL;
+
+    if (0 == atrCount) {
+        free(atrs);
+        atrs = NULL;
+    }
+
+    return atrs;
 }
