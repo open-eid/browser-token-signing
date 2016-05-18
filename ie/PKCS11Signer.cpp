@@ -41,7 +41,17 @@ unique_ptr<PKCS11CardManager> Pkcs11Signer::getCardManager() {
 	try {
 		unique_ptr<PKCS11CardManager> manager;
 		for (auto &token : createCardManager()->getAvailableTokens()) {
-			manager.reset(createCardManager()->getManagerForReader(token));
+			try{
+				manager.reset(createCardManager()->getManagerForReader(token));
+			}
+			catch (PKCS11TokenNotPresent &e) {
+				EstEID_log("%s", e.what());
+				continue;
+			}
+			catch (PKCS11TokenNotRecognized &ex) {
+				EstEID_log("%s", ex.what());
+				continue;
+			}
 			std::string signCertMD5Hash;
 			signCertMD5Hash = CEstEIDHelper::calculateMD5Hash((char *)&(manager->getSignCert())[0]);
 			if (strcmp(signCertMD5Hash.c_str(), getCertId()) == 0) {
