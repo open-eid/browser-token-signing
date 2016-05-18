@@ -39,11 +39,27 @@ void PKCS11CertificateSelector::initialize() {
 void PKCS11CertificateSelector::fetchAllSigningCertificates() {
 	try {
 		unique_ptr<PKCS11CardManager> manager;
-		for (auto &token : createCardManager()->getAvailableTokens()) {
-			manager.reset(createCardManager()->getManagerForReader(token));
-			if (manager -> hasSignCert()) {
+		bool certificateAddedToMemoryStore = false;
+		vector<CK_SLOT_ID> foundTokens = createCardManager()->getAvailableTokens();
+		for (auto &token : foundTokens) {
+			try {
+				manager.reset(createCardManager()->getManagerForReader(token));
+			}
+			catch (PKCS11TokenNotRecognized &ex) {
+				EstEID_log("%s", ex.what());
+				continue;
+			}
+			catch (PKCS11TokenNotPresent &ex) {
+				EstEID_log("%s", ex.what());
+				continue;
+			}
+			if (manager->hasSignCert()) {
 				addCertificateToMemoryStore(manager->getSignCert());
-			}			
+				certificateAddedToMemoryStore = true;
+			}
+		}
+		if (foundTokens.size() > 0 && !certificateAddedToMemoryStore) {
+			throw PKCS11TokenNotRecognized();
 		}
 	}
 	catch (const std::runtime_error &a) {
