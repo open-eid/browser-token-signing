@@ -1,7 +1,7 @@
 BUILD_NUMBER ?= 0
 include VERSION.mk
 
-SIGNER ?= ET847QJV9F # This is the default, Riigi Infosüsteemi Amet
+SIGNER ?= Riigi Infosüsteemi Amet
 
 PROJ = xcodebuild -project esteid-plugin.xcodeproj VERSION=$(VERSION) BUILD_NUMBER=$(BUILD_NUMBER)
 
@@ -21,7 +21,7 @@ clean:
 	git clean -dfx
 
 codesign: $(TARGET)
-	codesign -f -s $(SIGNER) "$(TARGET)"
+	codesign -f -s "$(SIGNER)" "$(TARGET)"
 
 $(PKG): $(TARGET)
 	pkgbuild --version $(VERSION) \
@@ -37,7 +37,7 @@ signed: codesign
 		--identifier ee.ria.firefox-token-signing \
 		--root $(TMPROOT) \
 		--install-location / \
-		--sign $(SIGNER) \
+		--sign "$(SIGNER)" \
 		$(PKG)
 
 
