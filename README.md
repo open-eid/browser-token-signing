@@ -36,20 +36,16 @@
         
 ### OSX
 
-1. Fetch the source
+- Fetch the source
 
         git clone --recursive https://github.com/open-eid/browser-token-signing
         cd browser-token-signing
 
-2. Build
+- Build a installable package firefox-token-signing.pkg
 
-        xcodebuild -project esteid-plugin.xcodeproj -target esteidfirefoxplugin
+        make
 
-3. Install
-
-        xcodebuild -project esteid-plugin.xcodeproj -target esteidfirefoxplugin install DSTROOT=/
-
-4. Execute
+- Execute
 
         open /Application/Safari.app
 
