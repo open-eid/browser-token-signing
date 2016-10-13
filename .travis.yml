@@ -1,8 +1,10 @@
-before_install:
-- sudo apt-get update -qq;
-- sudo apt-get install -y libgtk2.0-dev libssl-dev libpcsclite-dev;
+sudo: false
+language: c
 script:
-- make plugin
+- make
+os:
+- linux
+- osx
 
 env:
   global:
@@ -11,10 +13,14 @@ env:
    - secure: "ZHu8ewM8g4loEtBwOvaVUtGFeDmoI3SLJKrRIWAJrzxDwQf8svjWQKuL9mMV3oAEjZ/issOk+KfoFTa6+2spS6U1uB6eIS/cg+nWp2VcW9DTxR63Mr3NpBgqYsMraXw3rwzCGY3I5jv/LfuSf9OKKKAW4JaLeIXuodze1yLA/yc="
 
 addons:
+  apt:
+    packages:
+    - libgtk2.0-dev
+    - libssl-dev
+    - libpcsclite-dev
   coverity_scan:
     project:
       name: "open-eid/browser-token-signing"
-      description: "Build submitted via Travis CI"
     notification_email: raul@metsma.ee
     build_command: make plugin
     branch_pattern: coverity_scan
