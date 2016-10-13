@@ -14,11 +14,14 @@ D_FLAGS = -DXP_UNIX -DMOZ_X11 -DVERSION=\"$(VERSION)\"
 PLUGIN_HEADERS = firefox/plugin.h firefox/plugin-class.h firefox/cert-class.h
 PLUGIN_SOURCES = firefox/plugin.c firefox/plugin-class.c firefox/cert-class.c firefox/dialogs-gtk.c
 
+build: plugin
+plugin: $(OUT)
+
 clean:
 	rm -f test
 	rm -f $(OUT)
 
-plugin: $(COMMON_HEADERS) $(COMMON_SOURCES) $(PLUGIN_HEADERS) $(PLUGIN_SOURCES)
+$(OUT): $(COMMON_HEADERS) $(COMMON_SOURCES) $(PLUGIN_HEADERS) $(PLUGIN_SOURCES)
 	$(CC) $(C_FLAGS) -fPIC -shared -o $(OUT) $(PLUGIN_SOURCES) $(COMMON_SOURCES) $(I_FLAGS) $(L_FLAGS) $(D_FLAGS) $(MODE_FLAG) -DPKCS11_DRIVER=\"$(PKCS11_DRIVER)\"
 
 pluginlt: $(COMMON_HEADERS) $(COMMON_SOURCES) $(PLUGIN_HEADERS) $(PLUGIN_SOURCES)
