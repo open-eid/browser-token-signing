@@ -16,8 +16,8 @@
 		124E7F1D11F6E0EF00AED77F /* plugin.c in Sources */ = {isa = PBXBuildFile; fileRef = 124E7F1B11F6E0EF00AED77F /* plugin.c */; };
 		12910C90122B8A5A002722A4 /* dialogs.m in Sources */ = {isa = PBXBuildFile; fileRef = 12910C8F122B8A5A002722A4 /* dialogs.m */; };
 		12910C96122B8A77002722A4 /* dialogs-cocoa.m in Sources */ = {isa = PBXBuildFile; fileRef = 12910C94122B8A77002722A4 /* dialogs-cocoa.m */; };
-		4E8895EB1A8C1792006332A7 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E8895EA1A8C1792006332A7 /* libcrypto.dylib */; };
 		4ECC1BC5163B0A7D0079E4AC /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F642D75C1238CB0800CBFD02 /* Security.framework */; };
+		5B0C569A1DAE1A1400A022F5 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B0C56981DAE18C500A022F5 /* libcrypto.a */; settings = {ATTRIBUTES = (Required, ); }; };
 		9DFA12241C3CDDD10056CFC2 /* atr_fetcher.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DFA12221C3CDDD10056CFC2 /* atr_fetcher.c */; };
 		9DFA12261C3CE2240056CFC2 /* PCSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DFA12251C3CE2240056CFC2 /* PCSC.framework */; };
 		9DFA12291C3D0CA80056CFC2 /* pkcs11_path.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DFA12271C3D0CA80056CFC2 /* pkcs11_path.c */; };
@@ -63,7 +63,8 @@
 		12910C8F122B8A5A002722A4 /* dialogs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = dialogs.m; sourceTree = "<group>"; };
 		12910C93122B8A77002722A4 /* dialogs-cocoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "dialogs-cocoa.h"; sourceTree = "<group>"; };
 		12910C94122B8A77002722A4 /* dialogs-cocoa.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "dialogs-cocoa.m"; sourceTree = "<group>"; };
-		4E8895EA1A8C1792006332A7 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = usr/lib/libcrypto.dylib; sourceTree = SDKROOT; };
+		5B0C56961DAE17CB00A022F5 /* openssl */ = {isa = PBXFileReference; lastKnownFileType = folder; name = openssl; path = ../target; sourceTree = "<group>"; };
+		5B0C56981DAE18C500A022F5 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../target/lib/libcrypto.a; sourceTree = "<group>"; };
 		9DFA12221C3CDDD10056CFC2 /* atr_fetcher.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = atr_fetcher.c; sourceTree = "<group>"; };
 		9DFA12231C3CDDD10056CFC2 /* atr_fetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = atr_fetcher.h; sourceTree = "<group>"; };
 		9DFA12251C3CE2240056CFC2 /* PCSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PCSC.framework; path = System/Library/Frameworks/PCSC.framework; sourceTree = SDKROOT; };
@@ -110,8 +111,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B0C569A1DAE1A1400A022F5 /* libcrypto.a in Frameworks */,
 				9DFA12261C3CE2240056CFC2 /* PCSC.framework in Frameworks */,
-				4E8895EB1A8C1792006332A7 /* libcrypto.dylib in Frameworks */,
 				124E7EEE11F6DF5B00AED77F /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -231,8 +232,9 @@
 		2E58F364FFB232C311CA0CBA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5B0C56981DAE18C500A022F5 /* libcrypto.a */,
+				5B0C56961DAE17CB00A022F5 /* openssl */,
 				9DFA12251C3CE2240056CFC2 /* PCSC.framework */,
-				4E8895EA1A8C1792006332A7 /* libcrypto.dylib */,
 				124E7EED11F6DF5B00AED77F /* Cocoa.framework */,
 				F642D75C1238CB0800CBFD02 /* Security.framework */,
 			);
@@ -397,6 +399,8 @@
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/include";
 				INFOPLIST_FILE = firefox/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Internet Plug-Ins/";
+				LIBRARY_SEARCH_PATHS = "$(OPENSSL)/lib";
+				OPENSSL = ../target;
 				PRODUCT_BUNDLE_IDENTIFIER = "ee.ria.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = esteidfirefoxplugin;
 				WRAPPER_EXTENSION = bundle;
@@ -411,6 +415,8 @@
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/include";
 				INFOPLIST_FILE = firefox/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Internet Plug-Ins/";
+				LIBRARY_SEARCH_PATHS = "$(OPENSSL)/lib";
+				OPENSSL = ../target;
 				PRODUCT_BUNDLE_IDENTIFIER = "ee.ria.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = esteidfirefoxplugin;
 				WRAPPER_EXTENSION = bundle;
@@ -430,7 +436,7 @@
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				PKCS11_DRIVER = "/Library/EstonianIDCard/lib/esteid-pkcs11.so";
 				SDKROOT = macosx;
@@ -451,7 +457,7 @@
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PKCS11_DRIVER = "/Library/EstonianIDCard/lib/esteid-pkcs11.so";
 				SDKROOT = macosx;
 				VERSION = 3.12.1;
