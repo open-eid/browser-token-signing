@@ -396,7 +396,10 @@
 					"VERSION=\\\"$(VERSION)\\\"",
 					DEVELOPMENT_MODE,
 				);
-				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/include";
+				HEADER_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/include",
+					"$(OPENSSL)/include",
+				);
 				INFOPLIST_FILE = firefox/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Internet Plug-Ins/";
 				LIBRARY_SEARCH_PATHS = "$(OPENSSL)/lib";
@@ -412,7 +415,10 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/include";
+				HEADER_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/include",
+					"$(OPENSSL)/include",
+				);
 				INFOPLIST_FILE = firefox/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Internet Plug-Ins/";
 				LIBRARY_SEARCH_PATHS = "$(OPENSSL)/lib";
