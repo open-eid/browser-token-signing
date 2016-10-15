@@ -6,22 +6,24 @@ SIGNER ?= Riigi Infosüsteemi Amet
 PROJ = xcodebuild -project esteid-plugin.xcodeproj VERSION=$(VERSION) BUILD_NUMBER=$(BUILD_NUMBER)
 
 TMPROOT = $(PWD)/tmp
-TARGET = $(TMPROOT)/Library/Internet Plug-Ins/esteidfirefoxplugin.bundle
+TARGET = $(TMPROOT)/Library/Internet\ Plug-Ins/esteidfirefoxplugin.bundle
 PKG = firefox-token-signing.pkg
+
+OPENSSL ?= $(PWD)/target
 
 build: default
 
 default: pkg
 
-$(TARGET):
-	$(PROJ) DSTROOT=$(TMPROOT) install
+$(TARGET): $(OPENSSL)
+	$(PROJ) DSTROOT=$(TMPROOT) OPENSSL=$(OPENSSL) install
 
 clean:
 	rm -rf $(TMPROOT)
 	git clean -dfx
 
 codesign: $(TARGET)
-	codesign -f -s "$(SIGNER)" "$(TARGET)"
+	codesign -f -s "$(SIGNER)" $(TARGET)
 
 $(PKG): $(TARGET)
 	pkgbuild --version $(VERSION) \
@@ -40,4 +42,11 @@ signed: codesign
 		--sign "$(SIGNER)" \
 		$(PKG)
 
-
+# FIXME: needs universal
+$(OPENSSL):
+	test -e openssl || git clone --depth=1 https://github.com/openssl/openssl.git -b OpenSSL_1_0_2-stable
+	(cd openssl \
+	&& KERNEL_BITS=64 ./config --prefix=$(OPENSSL) -mmacosx-version-min=10.9 no-shared no-ssl2 no-idea no-dtls no-psk no-srp no-apps \
+	&& make depend \
+	&& make \
+	&& make install_sw)
