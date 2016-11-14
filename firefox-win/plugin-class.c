@@ -93,6 +93,7 @@ bool pluginHasProperty(NPClass *theClass, NPIdentifier name) {
 }
 
 void *getNativeWindowHandle(PluginInstance *obj) {
+	EstEID_log("getting native window handle obj->nativeWindowHandle style");
 	void *nativeWindowHandle = obj->nativeWindowHandle;
 	EstEID_log("_WIN32 detected, forcing nativeWindowHandle query from browser");
 	nativeWindowHandle = 0;
@@ -609,12 +610,16 @@ bool selectCertificate(PluginInstance *obj, PCCERT_CONTEXT *certContext) {
 		EstEID_log("CertOpenStore failed");
 		return false;
 	}
-	sel.hwndParent = (HWND)getNativeWindowHandle(obj);
+	//sel.hwndParent = (HWND)getNativeWindowHandle(obj);
+	sel.hwndParent = 0;
 	sel.pvCallbackData = &counter;
+	//sel.dwFlags = CRYPTUI_SELECTCERT_LEGACY;
 	sel.pFilterCallback = filter_proc;
 	sel.rghDisplayStores = &cert_store;
 	sel.cDisplayStores = 1;
 	
+	EstEID_log("pre sel.hwndParent = %i", sel.hwndParent);
+
 	PCCERT_CONTEXT cert_context = CryptUIDlgSelectCertificate(&sel);
 	
 	EstEID_log("sel.pvCallbackData = %i", counter);
