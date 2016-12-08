@@ -4,6 +4,8 @@
 *.opensdf
 ie/dlldata.c
 ie/esteidpluginie_i.h
+ie/esteidpluginie_i.c
+ie/esteidpluginie_p.c
 *.ipch
 plugin-win.res
 *.exp

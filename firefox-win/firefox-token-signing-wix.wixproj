@@ -20,7 +20,7 @@
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <DefineConstants>Debug;VERSION=$(MAJOR_VERSION).$(MINOR_VERSION).$(RELEASE_VERSION).$(BUILD_NUMBER)</DefineConstants>
-    <WixVariables>WixUILicenseRtf=LICENSE.LGPL.rtf;WixUIDialogBmp=dlgbmp.bmp</WixVariables>
+    <WixVariables>WixUILicenseRtf=$(SolutionDir)media/LICENSE.LGPL.rtf;WixUIDialogBmp=$(SolutionDir)media/dlgbmp.bmp</WixVariables>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <OutputPath>$(SolutionDir)\$(Configuration)\</OutputPath>
