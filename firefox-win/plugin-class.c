@@ -610,10 +610,9 @@ bool selectCertificate(PluginInstance *obj, PCCERT_CONTEXT *certContext) {
 		EstEID_log("CertOpenStore failed");
 		return false;
 	}
-	//sel.hwndParent = (HWND)getNativeWindowHandle(obj);
+	
 	sel.hwndParent = 0;
 	sel.pvCallbackData = &counter;
-	//sel.dwFlags = CRYPTUI_SELECTCERT_LEGACY;
 	sel.pFilterCallback = filter_proc;
 	sel.rghDisplayStores = &cert_store;
 	sel.cDisplayStores = 1;
