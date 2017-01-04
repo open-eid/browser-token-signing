@@ -1,7 +1,12 @@
-sudo: false
+sudo: true
 language: c
 script:
-- make
+- if [ "${TRAVIS_OS_NAME}" = "osx" ]; then
+    sudo ln -s /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift-migrator/sdk/MacOSX.sdk/usr/include/openssl /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/include;
+    make OPENSSL=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr;
+  else
+    make;
+  fi
 os:
 - linux
 - osx
