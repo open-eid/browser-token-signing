@@ -23,7 +23,7 @@ clean:
 	git clean -dfx
 
 codesign: $(TARGET)
-	codesign -f -s "$(SIGNER)" $(TARGET)
+	codesign -f -s "Developer ID Application: $(SIGNER)" $(TARGET)
 
 $(PKG): $(TARGET)
 	pkgbuild --version $(VERSION) \
@@ -39,7 +39,7 @@ signed: codesign
 		--identifier ee.ria.firefox-token-signing \
 		--root $(TMPROOT) \
 		--install-location / \
-		--sign "$(SIGNER)" \
+		--sign "Developer ID Installer: $(SIGNER)" \
 		$(PKG)
 
 # FIXME: needs universal
