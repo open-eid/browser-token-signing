@@ -16,46 +16,14 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+#pragma once
 
 #include <string>
 #include <vector>
 
-#include <winscard.h>
-
-
-#define MAX_ATR_SIZE 33	/**< Maximum ATR size */
-
-
-class CardReader {
-public:
-    CardReader(const std::wstring &_name, SCARDCONTEXT _context) : name(_name), context(_context){}
-    void connect();
-    void populateAtr();
-    void release();
-    std::wstring getName();
-    std::string getAtr();
+class PKCS11Path {
 private:
-    std::wstring name;
-    std::string atr;
-    SCARDHANDLE cardHandle;
-    SCARDCONTEXT context;
-    DWORD activeProtocol;
-};
-
-class AtrFetcher {
+	static std::vector<std::string> atrList();
 public:
-    std::vector<std::string> fetchAtr();
-private:
-    void populate();
-    void establishContext();
-    void listReaders();
-    void populateAtrs();
-    void release();
-    
-    std::vector<std::string> atrs;
-    LONG error;
-    SCARDCONTEXT hContext;
-    SCARDHANDLE hCard;
-    std::vector<CardReader*> readerList;
+	static std::string getPkcs11ModulePath();
 };
-

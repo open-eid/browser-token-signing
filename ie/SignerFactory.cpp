@@ -21,60 +21,23 @@
 #include "SignerFactory.h"
 #include "PKCS11Signer.h"
 #include "CngCapiSigner.h"
-#include "AtrFetcher.h"
-#include "PKCS11ModulePath.h"
+#include "PKCS11Path.h"
 extern "C" {
 #include "esteid_log.h"
 }
 
 Signer * SignerFactory::createSigner(const string &hash, char *certId) {
 	
-	AtrFetcher * atrFetcher = new AtrFetcher();
-	std::vector<std::string> atrs = atrFetcher->fetchAtr();
-	for (int i = 0; i < atrs.size(); i++) {
-		if (PKCS11ModulePath::isKnownAtr(atrs[i])) {
-			Pkcs11Signer *signer = new Pkcs11Signer(hash, certId);
-			signer->setPkcs11ModulePath(PKCS11ModulePath::getModulePath());
-			signer->initialize();
-			return signer;
-		}
+	std::string pkcs11 = PKCS11Path::getPkcs11ModulePath();
+	if (!pkcs11.empty()) {
+		Pkcs11Signer *signer = new Pkcs11Signer(hash, certId);
+		signer->setPkcs11ModulePath(pkcs11);
+		signer->initialize();
+		return signer;
 	}
 	
 	PCCERT_CONTEXT cert = findCertificateById(certId);
-	if (!isLithuanianCertificate(cert)) {
-		return new CngCapiSigner(hash, certId, cert);
-	}
-	EstEID_log("certificate issuer C=LT, using PKCS11 Signer with custom dialog");
-	vector<unsigned char> data(cert->pbCertEncoded, cert->pbCertEncoded + cert->cbCertEncoded);
-	CertFreeCertificateContext(cert);
-	Pkcs11Signer *signer = new Pkcs11Signer(hash, certId);
-	signer->setPkcs11ModulePath(getLithuanianPKCS11ModulePath());
-	signer->initialize();
-	return signer;
-}
-
-bool SignerFactory::isLithuanianCertificate(PCCERT_CONTEXT certContext) {
-	DWORD cbSize;
-	LPTSTR issuerLpstr;
-	cbSize = CertNameToStr(certContext->dwCertEncodingType, &(certContext->pCertInfo->Issuer), CERT_X500_NAME_STR, NULL, 0);
-	if (cbSize == 1) {
-		EstEID_log("Issuer is an empty String");
-		return false;
-	}
-	if (!(issuerLpstr = (LPTSTR)malloc(cbSize * sizeof(TCHAR)))) {
-		EstEID_log("Memory allocation failed");
-		return false;
-	}
-	cbSize = CertNameToStr(certContext->dwCertEncodingType, &(certContext->pCertInfo->Issuer), CERT_X500_NAME_STR, issuerLpstr, cbSize);
-
-	int sizeNeeded = WideCharToMultiByte(CP_UTF8, 0, issuerLpstr, -1, NULL, 0, NULL, NULL);
-	char* encodedStr = new char[sizeNeeded];
-	WideCharToMultiByte(CP_UTF8, 0, issuerLpstr, -1, encodedStr, sizeNeeded, NULL, NULL);
-	free(issuerLpstr);
-	EstEID_log("Certificate issuer: %s", encodedStr);
-
-	string issuerString = string(encodedStr);
-	return issuerString.find("C=LT") != string::npos;
+	return new CngCapiSigner(hash, certId, cert);
 }
 
 bool SignerFactory::certificateMatchesId(PCCERT_CONTEXT certContext, char *certId) {
@@ -108,13 +71,4 @@ PCCERT_CONTEXT SignerFactory::findCertificateById(char *certId) {
 	}
 	CertCloseStore(cert_store, 0);
 	throw NoCertificatesException();
-}
-
-string SignerFactory::getLithuanianPKCS11ModulePath() {
-	wchar_t* ppszPath = 0;
-	SHGetKnownFolderPath(FOLDERID_ProgramFilesX86, 0, NULL, &ppszPath);
-	wstring programFilesX86(ppszPath);
-	wstring path = programFilesX86 + L"\\CryptoTech\\CryptoCard\\CCPkiP11.dll";
-	CoTaskMemFree(static_cast<void*>(ppszPath));
-	return string(CW2A(path.c_str()));
 }

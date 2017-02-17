@@ -31,8 +31,6 @@ class SignerFactory {
 public:
 	static Signer * createSigner(const string &_hash, char *_certId);
 private:
-	static bool isLithuanianCertificate(PCCERT_CONTEXT certContext);
 	static bool certificateMatchesId(PCCERT_CONTEXT certContext, char *certId);
 	static PCCERT_CONTEXT findCertificateById(char *certId);
-	static string getLithuanianPKCS11ModulePath();
 };
