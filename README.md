@@ -3,6 +3,8 @@
  * License: LGPL 2.1
  * &copy; Estonian Information System Authority
 
+Warning: Firefox 52 removed NPAPI support and added Chrome Extensions support since version 50 which is implemented in [chrome-token-signing](/open-eid/chrome-token-signing)
+
 ## Documentation
 
  - https://github.com/open-eid/browser-token-signing/wiki
