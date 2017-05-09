@@ -39,11 +39,11 @@
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
   <PropertyGroup>
-    <PostBuildEvent>IF "$(SIGNCERT)" NEQ "" signtool.exe sign /a /v /s MY /n "$(SIGNCERT)" /fd SHA256 /du http://installer.id.ee /t http://timestamp.verisign.com/scripts/timstamp.dll !(TargetPath)</PostBuildEvent>
+    <PostBuildEvent>IF "$(SIGNCERT)" NEQ "" signtool.exe sign /a /v /s MY /n "$(SIGNCERT)" /fd SHA256 /du http://installer.id.ee /tr http://sha256timestamp.ws.symantec.com/sha256/timestamp /td SHA256 !(TargetPath)</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>IF "$(SIGNCERT)" NEQ "" signtool.exe sign /a /v /s MY /n "$(SIGNCERT)" /fd SHA256 /du http://installer.id.ee /t http://timestamp.verisign.com/scripts/timstamp.dll $(SolutionDir)\Release\npesteid-firefox-plugin.dll
-IF "$(SIGNCERT)" NEQ "" (IF EXIST $(SolutionDir)\x64\Release\npesteid-firefox-plugin.dll signtool.exe sign /a /v /s MY /n "$(SIGNCERT)" /fd SHA256 /du http://installer.id.ee /t http://timestamp.verisign.com/scripts/timstamp.dll $(SolutionDir)\x64\Release\npesteid-firefox-plugin.dll)</PreBuildEvent>
+    <PreBuildEvent>IF "$(SIGNCERT)" NEQ "" signtool.exe sign /a /v /s MY /n "$(SIGNCERT)" /fd SHA256 /du http://installer.id.ee /tr http://sha256timestamp.ws.symantec.com/sha256/timestamp /td SHA256 $(SolutionDir)\Release\npesteid-firefox-plugin.dll
+IF "$(SIGNCERT)" NEQ "" (IF EXIST $(SolutionDir)\x64\Release\npesteid-firefox-plugin.dll signtool.exe sign /a /v /s MY /n "$(SIGNCERT)" /fd SHA256 /du http://installer.id.ee /tr http://sha256timestamp.ws.symantec.com/sha256/timestamp /td SHA256 $(SolutionDir)\x64\Release\npesteid-firefox-plugin.dll)</PreBuildEvent>
   </PropertyGroup>
   <!--
 	To modify your build process, add your task inside one of the targets below and uncomment it.
