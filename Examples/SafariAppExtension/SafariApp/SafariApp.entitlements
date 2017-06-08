@@ -8,5 +8,7 @@
 	<array>
 		<string>ee.ria.SafariApp.shared</string>
 	</array>
+	<key>com.apple.security.smartcard</key>
+	<true/>
 </dict>
 </plist>

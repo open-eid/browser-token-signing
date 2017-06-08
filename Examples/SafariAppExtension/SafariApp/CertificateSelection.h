@@ -1,5 +1,5 @@
 /*
- * Safari Token Signing
+ * Chrome Token Signing Native Host
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -16,14 +16,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#import <SafariServices/SafariServices.h>
+#import <Cocoa/Cocoa.h>
 
-@interface SafariExtensionViewController : SFSafariExtensionViewController
+@interface CertificateSelection : NSObject
 
-+ (SafariExtensionViewController *)sharedController;
-
-@property (strong) NSDictionary *digest;
-@property (strong) NSDictionary *cert;
-@property (strong) NSDictionary *signature;
++ (NSDictionary *)show:(bool)forSigning;
 
 @end
