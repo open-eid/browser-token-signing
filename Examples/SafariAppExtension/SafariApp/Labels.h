@@ -1,5 +1,5 @@
 /*
- * Safari Token Signing
+ * Chrome Token Signing Native Host
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -16,10 +16,23 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#import <Cocoa/Cocoa.h>
+#pragma once
 
-@interface ViewController : NSViewController
+#include <string>
 
+class Labels {
+private:
+	int selectedLanguage;
+    Labels();
 
-@end
+public:
+#ifdef _WIN32
+	typedef std::wstring lstring;
+#else
+	typedef std::string lstring;
+#endif
 
+    static Labels l10n;
+	void setLanguage(const std::string &language);
+	lstring get(const std::string &labelKey) const;
+};

@@ -7,24 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4E1A1AFB1D21B76000CEB83E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1A1AFA1D21B76000CEB83E /* AppDelegate.m */; };
+		4E1A1AFB1D21B76000CEB83E /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4E1A1AFA1D21B76000CEB83E /* AppDelegate.mm */; };
 		4E1A1AFE1D21B76000CEB83E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1A1AFD1D21B76000CEB83E /* main.m */; };
-		4E1A1B011D21B76000CEB83E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1A1B001D21B76000CEB83E /* ViewController.m */; };
 		4E1A1B031D21B76000CEB83E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E1A1B021D21B76000CEB83E /* Assets.xcassets */; };
 		4E1A1B061D21B76000CEB83E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E1A1B041D21B76000CEB83E /* Main.storyboard */; };
-		4E1A1B141D21B77800CEB83E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E1A1B131D21B77800CEB83E /* Cocoa.framework */; };
 		4E1A1B1A1D21B77800CEB83E /* SafariExtensionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1A1B191D21B77800CEB83E /* SafariExtensionHandler.m */; };
-		4E1A1B1D1D21B77800CEB83E /* SafariExtensionViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4E1A1B1C1D21B77800CEB83E /* SafariExtensionViewController.mm */; };
-		4E1A1B201D21B77800CEB83E /* SafariExtensionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4E1A1B1E1D21B77800CEB83E /* SafariExtensionViewController.xib */; };
 		4E1A1B231D21B77800CEB83E /* script.js in Resources */ = {isa = PBXBuildFile; fileRef = 4E1A1B221D21B77800CEB83E /* script.js */; };
-		4E1A1B251D21B77800CEB83E /* ToolbarItemIcon.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 4E1A1B241D21B77800CEB83E /* ToolbarItemIcon.pdf */; };
 		4E1A1B281D21B77800CEB83E /* SafariExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 4E1A1B111D21B77800CEB83E /* SafariExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		4E1A1B3C1D22403400CEB83E /* BinaryUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E1A1B391D22403400CEB83E /* BinaryUtils.cpp */; };
-		4E1A1B401D22408300CEB83E /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E1A1B3E1D22408300CEB83E /* Logger.cpp */; };
-		4E1A1B471D22414D00CEB83E /* PKCS11Path.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E1A1B441D22414D00CEB83E /* PKCS11Path.cpp */; };
-		4E1A1B4A1D22416000CEB83E /* AtrFetcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E1A1B481D22416000CEB83E /* AtrFetcher.cpp */; };
-		4E1A1B4C1D2241F900CEB83E /* libcrypto.35.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E1A1B4B1D2241F900CEB83E /* libcrypto.35.tbd */; };
-		4E1A1B4E1D22420700CEB83E /* PCSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E1A1B4D1D22420700CEB83E /* PCSC.framework */; };
+		4E7B33DB1EF948BB00811030 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E7B33DA1EF948BB00811030 /* SafariServices.framework */; };
+		4E8800061EEAAAAC00747AA8 /* CertificateSelection.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4E8800041EEAAAAC00747AA8 /* CertificateSelection.mm */; };
+		4E8800071EEAAAAC00747AA8 /* CertificateSelection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4E8800051EEAAAAC00747AA8 /* CertificateSelection.xib */; };
+		4E88000C1EEAAAB800747AA8 /* PINDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4E8800091EEAAAB800747AA8 /* PINDialog.mm */; };
+		4E88000D1EEAAAB800747AA8 /* PINDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4E88000A1EEAAAB800747AA8 /* PINDialog.xib */; };
+		4E88000E1EEAAAB800747AA8 /* PINPadDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4E88000B1EEAAAB800747AA8 /* PINPadDialog.xib */; };
+		4E8800111EEAAAD400747AA8 /* BinaryUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E88000F1EEAAAD400747AA8 /* BinaryUtils.cpp */; };
+		4E8800161EEAAB1700747AA8 /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E8800141EEAAB1700747AA8 /* Logger.cpp */; };
+		4E8800191EEAAC2900747AA8 /* Labels.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E8800171EEAAC2900747AA8 /* Labels.cpp */; };
+		4E88001C1EEAAC5300747AA8 /* PKCS11Path.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E88001A1EEAAC5300747AA8 /* PKCS11Path.cpp */; };
+		4E8800201EEAACBA00747AA8 /* PCSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E88001F1EEAACB900747AA8 /* PCSC.framework */; };
+		4E8C22821EEF370100230620 /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E8C22811EEF370100230620 /* SecurityInterface.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,37 +54,37 @@
 
 /* Begin PBXFileReference section */
 		4E1A1AF61D21B76000CEB83E /* SafariApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SafariApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		4E1A1AF91D21B76000CEB83E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		4E1A1AFA1D21B76000CEB83E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		4E1A1AFA1D21B76000CEB83E /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		4E1A1AFD1D21B76000CEB83E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		4E1A1AFF1D21B76000CEB83E /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		4E1A1B001D21B76000CEB83E /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		4E1A1B021D21B76000CEB83E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4E1A1B051D21B76000CEB83E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4E1A1B071D21B76000CEB83E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4E1A1B111D21B77800CEB83E /* SafariExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SafariExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		4E1A1B131D21B77800CEB83E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4E1A1B171D21B77800CEB83E /* SafariExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = SafariExtension.entitlements; sourceTree = "<group>"; };
-		4E1A1B181D21B77800CEB83E /* SafariExtensionHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SafariExtensionHandler.h; sourceTree = "<group>"; };
 		4E1A1B191D21B77800CEB83E /* SafariExtensionHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SafariExtensionHandler.m; sourceTree = "<group>"; };
-		4E1A1B1B1D21B77800CEB83E /* SafariExtensionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SafariExtensionViewController.h; sourceTree = "<group>"; };
-		4E1A1B1C1D21B77800CEB83E /* SafariExtensionViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = SafariExtensionViewController.mm; sourceTree = "<group>"; };
-		4E1A1B1F1D21B77800CEB83E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SafariExtensionViewController.xib; sourceTree = "<group>"; };
 		4E1A1B211D21B77800CEB83E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4E1A1B221D21B77800CEB83E /* script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = script.js; sourceTree = "<group>"; };
-		4E1A1B241D21B77800CEB83E /* ToolbarItemIcon.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = ToolbarItemIcon.pdf; sourceTree = "<group>"; };
-		4E1A1B391D22403400CEB83E /* BinaryUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BinaryUtils.cpp; sourceTree = "<group>"; };
-		4E1A1B3A1D22403400CEB83E /* BinaryUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BinaryUtils.h; sourceTree = "<group>"; };
-		4E1A1B3B1D22403400CEB83E /* PKCS11CardManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKCS11CardManager.h; sourceTree = "<group>"; };
-		4E1A1B3D1D22405300CEB83E /* pkcs11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pkcs11.h; sourceTree = "<group>"; };
-		4E1A1B3E1D22408300CEB83E /* Logger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Logger.cpp; sourceTree = "<group>"; };
-		4E1A1B3F1D22408300CEB83E /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
-		4E1A1B441D22414D00CEB83E /* PKCS11Path.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PKCS11Path.cpp; sourceTree = "<group>"; };
-		4E1A1B451D22414D00CEB83E /* PKCS11Path.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKCS11Path.h; sourceTree = "<group>"; };
-		4E1A1B481D22416000CEB83E /* AtrFetcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AtrFetcher.cpp; sourceTree = "<group>"; };
-		4E1A1B491D22416000CEB83E /* AtrFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtrFetcher.h; sourceTree = "<group>"; };
-		4E1A1B4B1D2241F900CEB83E /* libcrypto.35.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcrypto.35.tbd; path = usr/lib/libcrypto.35.tbd; sourceTree = SDKROOT; };
-		4E1A1B4D1D22420700CEB83E /* PCSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PCSC.framework; path = System/Library/Frameworks/PCSC.framework; sourceTree = SDKROOT; };
+		4E6C38E11EEEB40D00D891B3 /* SafariApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SafariApp.entitlements; sourceTree = "<group>"; };
+		4E7B33DA1EF948BB00811030 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
+		4E8800031EEAAAAC00747AA8 /* CertificateSelection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CertificateSelection.h; sourceTree = "<group>"; };
+		4E8800041EEAAAAC00747AA8 /* CertificateSelection.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CertificateSelection.mm; sourceTree = "<group>"; };
+		4E8800051EEAAAAC00747AA8 /* CertificateSelection.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CertificateSelection.xib; sourceTree = "<group>"; };
+		4E8800081EEAAAB800747AA8 /* PINDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PINDialog.h; sourceTree = "<group>"; };
+		4E8800091EEAAAB800747AA8 /* PINDialog.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PINDialog.mm; sourceTree = "<group>"; };
+		4E88000A1EEAAAB800747AA8 /* PINDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PINDialog.xib; sourceTree = "<group>"; };
+		4E88000B1EEAAAB800747AA8 /* PINPadDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PINPadDialog.xib; sourceTree = "<group>"; };
+		4E88000F1EEAAAD400747AA8 /* BinaryUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BinaryUtils.cpp; sourceTree = "<group>"; };
+		4E8800101EEAAAD400747AA8 /* BinaryUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BinaryUtils.h; sourceTree = "<group>"; };
+		4E8800121EEAAB0900747AA8 /* pkcs11.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pkcs11.h; sourceTree = "<group>"; };
+		4E8800131EEAAB0900747AA8 /* PKCS11CardManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PKCS11CardManager.h; sourceTree = "<group>"; };
+		4E8800141EEAAB1700747AA8 /* Logger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Logger.cpp; sourceTree = "<group>"; };
+		4E8800151EEAAB1700747AA8 /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
+		4E8800171EEAAC2900747AA8 /* Labels.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Labels.cpp; sourceTree = "<group>"; };
+		4E8800181EEAAC2900747AA8 /* Labels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Labels.h; sourceTree = "<group>"; };
+		4E88001A1EEAAC5300747AA8 /* PKCS11Path.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PKCS11Path.cpp; sourceTree = "<group>"; };
+		4E88001B1EEAAC5300747AA8 /* PKCS11Path.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKCS11Path.h; sourceTree = "<group>"; };
+		4E88001F1EEAACB900747AA8 /* PCSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PCSC.framework; path = System/Library/Frameworks/PCSC.framework; sourceTree = SDKROOT; };
+		4E8C22811EEF370100230620 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = System/Library/Frameworks/SecurityInterface.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +92,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E7B33DB1EF948BB00811030 /* SafariServices.framework in Frameworks */,
+				4E8C22821EEF370100230620 /* SecurityInterface.framework in Frameworks */,
+				4E8800201EEAACBA00747AA8 /* PCSC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,9 +102,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4E1A1B4E1D22420700CEB83E /* PCSC.framework in Frameworks */,
-				4E1A1B4C1D2241F900CEB83E /* libcrypto.35.tbd in Frameworks */,
-				4E1A1B141D21B77800CEB83E /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,13 +130,26 @@
 		4E1A1AF81D21B76000CEB83E /* SafariApp */ = {
 			isa = PBXGroup;
 			children = (
-				4E1A1AF91D21B76000CEB83E /* AppDelegate.h */,
-				4E1A1AFA1D21B76000CEB83E /* AppDelegate.m */,
-				4E1A1AFF1D21B76000CEB83E /* ViewController.h */,
-				4E1A1B001D21B76000CEB83E /* ViewController.m */,
+				4E1A1AFA1D21B76000CEB83E /* AppDelegate.mm */,
+				4E8800101EEAAAD400747AA8 /* BinaryUtils.h */,
+				4E88000F1EEAAAD400747AA8 /* BinaryUtils.cpp */,
+				4E8800031EEAAAAC00747AA8 /* CertificateSelection.h */,
+				4E8800041EEAAAAC00747AA8 /* CertificateSelection.mm */,
+				4E8800051EEAAAAC00747AA8 /* CertificateSelection.xib */,
+				4E8800181EEAAC2900747AA8 /* Labels.h */,
+				4E8800171EEAAC2900747AA8 /* Labels.cpp */,
+				4E8800151EEAAB1700747AA8 /* Logger.h */,
+				4E8800141EEAAB1700747AA8 /* Logger.cpp */,
+				4E8800081EEAAAB800747AA8 /* PINDialog.h */,
+				4E8800091EEAAAB800747AA8 /* PINDialog.mm */,
+				4E88000A1EEAAAB800747AA8 /* PINDialog.xib */,
+				4E88000B1EEAAAB800747AA8 /* PINPadDialog.xib */,
+				4E8800121EEAAB0900747AA8 /* pkcs11.h */,
+				4E8800131EEAAB0900747AA8 /* PKCS11CardManager.h */,
+				4E88001B1EEAAC5300747AA8 /* PKCS11Path.h */,
+				4E88001A1EEAAC5300747AA8 /* PKCS11Path.cpp */,
 				4E1A1B021D21B76000CEB83E /* Assets.xcassets */,
 				4E1A1B041D21B76000CEB83E /* Main.storyboard */,
-				4E1A1B071D21B76000CEB83E /* Info.plist */,
 				4E1A1AFC1D21B76000CEB83E /* Supporting Files */,
 			);
 			path = SafariApp;
@@ -144,6 +158,8 @@
 		4E1A1AFC1D21B76000CEB83E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4E1A1B071D21B76000CEB83E /* Info.plist */,
+				4E6C38E11EEEB40D00D891B3 /* SafariApp.entitlements */,
 				4E1A1AFD1D21B76000CEB83E /* main.m */,
 			);
 			name = "Supporting Files";
@@ -152,9 +168,9 @@
 		4E1A1B121D21B77800CEB83E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4E1A1B4D1D22420700CEB83E /* PCSC.framework */,
-				4E1A1B4B1D2241F900CEB83E /* libcrypto.35.tbd */,
-				4E1A1B131D21B77800CEB83E /* Cocoa.framework */,
+				4E7B33DA1EF948BB00811030 /* SafariServices.framework */,
+				4E8C22811EEF370100230620 /* SecurityInterface.framework */,
+				4E88001F1EEAACB900747AA8 /* PCSC.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -162,24 +178,8 @@
 		4E1A1B151D21B77800CEB83E /* SafariExtension */ = {
 			isa = PBXGroup;
 			children = (
-				4E1A1B491D22416000CEB83E /* AtrFetcher.h */,
-				4E1A1B481D22416000CEB83E /* AtrFetcher.cpp */,
-				4E1A1B3A1D22403400CEB83E /* BinaryUtils.h */,
-				4E1A1B391D22403400CEB83E /* BinaryUtils.cpp */,
-				4E1A1B3F1D22408300CEB83E /* Logger.h */,
-				4E1A1B3E1D22408300CEB83E /* Logger.cpp */,
-				4E1A1B3D1D22405300CEB83E /* pkcs11.h */,
-				4E1A1B3B1D22403400CEB83E /* PKCS11CardManager.h */,
-				4E1A1B451D22414D00CEB83E /* PKCS11Path.h */,
-				4E1A1B441D22414D00CEB83E /* PKCS11Path.cpp */,
-				4E1A1B181D21B77800CEB83E /* SafariExtensionHandler.h */,
 				4E1A1B191D21B77800CEB83E /* SafariExtensionHandler.m */,
-				4E1A1B1B1D21B77800CEB83E /* SafariExtensionViewController.h */,
-				4E1A1B1C1D21B77800CEB83E /* SafariExtensionViewController.mm */,
-				4E1A1B1E1D21B77800CEB83E /* SafariExtensionViewController.xib */,
-				4E1A1B211D21B77800CEB83E /* Info.plist */,
 				4E1A1B221D21B77800CEB83E /* script.js */,
-				4E1A1B241D21B77800CEB83E /* ToolbarItemIcon.pdf */,
 				4E1A1B161D21B77800CEB83E /* Supporting Files */,
 			);
 			path = SafariExtension;
@@ -188,6 +188,7 @@
 		4E1A1B161D21B77800CEB83E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4E1A1B211D21B77800CEB83E /* Info.plist */,
 				4E1A1B171D21B77800CEB83E /* SafariExtension.entitlements */,
 			);
 			name = "Supporting Files";
@@ -238,20 +239,31 @@
 		4E1A1AEE1D21B76000CEB83E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0800;
-				ORGANIZATIONNAME = SK;
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = RIA;
 				TargetAttributes = {
 					4E1A1AF51D21B76000CEB83E = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = U56G4T24M6;
-						DevelopmentTeamName = "AS Sertifitseerimiskeskus";
+						DevelopmentTeam = ET847QJV9F;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.Mac = {
+								enabled = 1;
+							};
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
+						};
 					};
 					4E1A1B101D21B77800CEB83E = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = U56G4T24M6;
-						DevelopmentTeamName = "AS Sertifitseerimiskeskus";
+						DevelopmentTeam = ET847QJV9F;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.Mac = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -280,7 +292,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E1A1B031D21B76000CEB83E /* Assets.xcassets in Resources */,
+				4E88000D1EEAAAB800747AA8 /* PINDialog.xib in Resources */,
 				4E1A1B061D21B76000CEB83E /* Main.storyboard in Resources */,
+				4E88000E1EEAAAB800747AA8 /* PINPadDialog.xib in Resources */,
+				4E8800071EEAAAAC00747AA8 /* CertificateSelection.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,8 +303,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4E1A1B251D21B77800CEB83E /* ToolbarItemIcon.pdf in Resources */,
-				4E1A1B201D21B77800CEB83E /* SafariExtensionViewController.xib in Resources */,
 				4E1A1B231D21B77800CEB83E /* script.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -301,9 +314,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4E1A1B011D21B76000CEB83E /* ViewController.m in Sources */,
+				4E88000C1EEAAAB800747AA8 /* PINDialog.mm in Sources */,
+				4E8800161EEAAB1700747AA8 /* Logger.cpp in Sources */,
+				4E8800061EEAAAAC00747AA8 /* CertificateSelection.mm in Sources */,
 				4E1A1AFE1D21B76000CEB83E /* main.m in Sources */,
-				4E1A1AFB1D21B76000CEB83E /* AppDelegate.m in Sources */,
+				4E8800111EEAAAD400747AA8 /* BinaryUtils.cpp in Sources */,
+				4E8800191EEAAC2900747AA8 /* Labels.cpp in Sources */,
+				4E88001C1EEAAC5300747AA8 /* PKCS11Path.cpp in Sources */,
+				4E1A1AFB1D21B76000CEB83E /* AppDelegate.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,12 +329,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4E1A1B3C1D22403400CEB83E /* BinaryUtils.cpp in Sources */,
-				4E1A1B401D22408300CEB83E /* Logger.cpp in Sources */,
-				4E1A1B1D1D21B77800CEB83E /* SafariExtensionViewController.mm in Sources */,
 				4E1A1B1A1D21B77800CEB83E /* SafariExtensionHandler.m in Sources */,
-				4E1A1B471D22414D00CEB83E /* PKCS11Path.cpp in Sources */,
-				4E1A1B4A1D22416000CEB83E /* AtrFetcher.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,14 +352,6 @@
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		4E1A1B1E1D21B77800CEB83E /* SafariExtensionViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4E1A1B1F1D21B77800CEB83E /* Base */,
-			);
-			name = SafariExtensionViewController.xib;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -354,7 +359,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -365,11 +369,12 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -389,7 +394,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -399,7 +403,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -410,11 +413,12 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -428,7 +432,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -437,11 +440,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SafariApp/SafariApp.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = ET847QJV9F;
 				INFOPLIST_FILE = SafariApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ee.sk.SafariApp;
+				PRODUCT_BUNDLE_IDENTIFIER = ee.ria.SafariApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -450,11 +455,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SafariApp/SafariApp.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = ET847QJV9F;
 				INFOPLIST_FILE = SafariApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ee.sk.SafariApp;
+				PRODUCT_BUNDLE_IDENTIFIER = ee.ria.SafariApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -464,9 +471,9 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = SafariExtension/SafariExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
+				DEVELOPMENT_TEAM = ET847QJV9F;
 				INFOPLIST_FILE = SafariExtension/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ee.sk.SafariApp.SafariExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = ee.ria.SafariApp.SafariExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -477,9 +484,9 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = SafariExtension/SafariExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
+				DEVELOPMENT_TEAM = ET847QJV9F;
 				INFOPLIST_FILE = SafariExtension/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ee.sk.SafariApp.SafariExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = ee.ria.SafariApp.SafariExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};

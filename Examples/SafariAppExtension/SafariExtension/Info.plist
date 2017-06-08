@@ -37,17 +37,6 @@
 				<string>script.js</string>
 			</dict>
 		</array>
-		<key>SFSafariToolbarItem</key>
-		<dict>
-			<key>Action</key>
-			<string>Popover</string>
-			<key>Identifier</key>
-			<string>Button</string>
-			<key>Image</key>
-			<string>ToolbarItemIcon.pdf</string>
-			<key>Label</key>
-			<string>Your Button</string>
-		</dict>
 		<key>SFSafariWebsiteAccess</key>
 		<dict>
 			<key>Allowed Domains</key>
@@ -59,7 +48,7 @@
 		</dict>
 	</dict>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2016 SK. All rights reserved.</string>
+	<string>Copyright © 2017 RIA. All rights reserved.</string>
 	<key>NSHumanReadableDescription</key>
 	<string>This is a Safari Extension. You should tell us what your extension does here.</string>
 </dict>

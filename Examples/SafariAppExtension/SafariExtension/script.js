@@ -17,27 +17,106 @@
  */
 
 document.addEventListener("DOMContentLoaded", function(event) {
-    console.log("DOMContentLoaded");
+    // post messages from extension to page
     safari.self.addEventListener("message", function(event) {
         console.log(event.name);
         console.log(event.message);
-
-        if (event.name == "cert") {
-            var newElement = document.createElement("div");
-            newElement.innerHTML = event.message.cert;
-            document.body.insertBefore(newElement, document.body.firstChild);
-
-            var digest = document.getElementById("digest");
-            console.log("Digest content: ", digest.innerHTML);
-            safari.extension.dispatchMessage("digest", {
-                "digest": digest.innerHTML,
-                "algo": "SHA1"
-            });
-        } else if (event.name == "signature") {
-            var newElement = document.createElement("div");
-            newElement.innerHTML = event.message.signature;
-            document.body.insertBefore(newElement, document.body.firstChild);
-        }
+        window.postMessage(event.message, '*');
     });
-    safari.extension.dispatchMessage("cert");
 });
+
+// Forward the message from page.js to background.js
+window.addEventListener("message", function(event) {
+    // We only accept messages from ourselves
+    if (event.source !== window)
+        return;
+
+    // and forward to extension
+    if (event.data && event.data.src && (event.data.src === "page.js")) {
+        event.data["origin"] = location.origin;
+        safari.extension.dispatchMessage("message", event.data);
+    }
+}, false);
+
+
+// inject content of page.js to the DOM of every page
+// FIXME: maybe not ?
+var s = document.createElement('script');
+s.type = 'text/javascript';
+s.innerHTML='// Promises \n\
+var _eid_promises = {}; \n\
+// Turn the incoming message from extension \n\
+// into pending Promise resolving \n\
+window.addEventListener("message", function(event) { \n\
+    if(event.source !== window) return; \n\
+    if(event.data.src && (event.data.src === "background.js")) { \n\
+        console.log("Page received: "); \n\
+        console.log(event.data); \n\
+        // Get the promise \n\
+        if(event.data.nonce) { \n\
+            var p = _eid_promises[event.data.nonce]; \n\
+            // resolve \n\
+            if(event.data.result === "ok") { \n\
+                if(event.data.signature !== undefined) { \n\
+                    p.resolve({hex: event.data.signature}); \n\
+                } else if(event.data.version !== undefined) { \n\
+                    p.resolve(event.data.extension + "/" + event.data.version); \n\
+                } else if(event.data.cert !== undefined) { \n\
+                    p.resolve({hex: event.data.cert}); \n\
+                } else { \n\
+                    console.log("No idea how to handle message"); \n\
+                    console.log(event.data); \n\
+                } \n\
+            } else { \n\
+                // reject \n\
+                p.reject(new Error(event.data.result)); \n\
+            } \n\
+            delete _eid_promises[event.data.nonce]; \n\
+        } else { \n\
+            console.log("No nonce in event msg"); \n\
+        } \n\
+    } \n\
+}, false); \n\
+ \n\
+ \n\
+function TokenSigning() { \n\
+    function nonce() { \n\
+        var val = ""; \n\
+        var hex = "abcdefghijklmnopqrstuvwxyz0123456789"; \n\
+        for(var i = 0; i < 16; i++) val += hex.charAt(Math.floor(Math.random() * hex.length)); \n\
+        return val; \n\
+    } \n\
+ \n\
+    function messagePromise(msg) { \n\
+        return new Promise(function(resolve, reject) { \n\
+            // amend with necessary metadata \n\
+            msg["nonce"] = nonce(); \n\
+            msg["src"] = "page.js"; \n\
+            // send message \n\
+            window.postMessage(msg, "*"); \n\
+            // and store promise callbacks \n\
+            _eid_promises[msg.nonce] = { \n\
+                resolve: resolve, \n\
+                reject: reject \n\
+            }; \n\
+        }); \n\
+    } \n\
+    this.getCertificate = function(options) { \n\
+        var msg = {type: "CERT", lang: options.lang, filter: options.filter}; \n\
+        console.log("getCertificate()"); \n\
+        return messagePromise(msg); \n\
+    }; \n\
+    this.sign = function(cert, hash, options) { \n\
+        var msg = {type: "SIGN", cert: cert.hex, hash: hash.hex, hashtype: hash.type, lang: options.lang, info: options.info}; \n\
+        console.log("sign()"); \n\
+        return messagePromise(msg); \n\
+    }; \n\
+    this.getVersion = function() { \n\
+        console.log("getVersion()"); \n\
+        return messagePromise({ \n\
+            type: "VERSION" \n\
+        }); \n\
+    }; \n\
+}';
+
+(document.head || document.documentElement).appendChild(s);
