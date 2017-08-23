@@ -21,22 +21,23 @@
 
 #include "stdafx.h"
 #include "EstEIDIEPluginBHO.h"
-#include "esteid_error.h"
-#include "version.h"
-#include "SignerFactory.h"
-#include "HostExceptions.h"
-#include <string.h>
-extern "C" {
-#include "esteid_log.h"
-}
-#define FAIL_IF_SITE_IS_NOT_ALLOWED if(!isSiteAllowed()){return Error((this->errorMessage).c_str());}
 
-extern "C" {
-extern int EstEID_errorCode;
-}
+#include "BinaryUtils.h"
+#include "CertificateSelector.h"
+#include "esteid_error.h"
+#include "HostExceptions.h"
+#include "Labels.h"
+#include "Logger.h"
+#include "Signer.h"
+#include "version.h"
+
+#include <memory>
+#include <string.h>
+
+using namespace std;
 
 STDMETHODIMP CEstEIDIEPluginBHO::SetSite(IUnknown* pUnkSite) {
-	EstEID_log("");
+	_log("");
 	IObjectWithSiteImpl<CEstEIDIEPluginBHO>::SetSite(pUnkSite);
 
 	CComPtr<IServiceProvider> pSP;
@@ -50,131 +51,119 @@ STDMETHODIMP CEstEIDIEPluginBHO::SetSite(IUnknown* pUnkSite) {
 }
 
 STDMETHODIMP CEstEIDIEPluginBHO::get_version(BSTR *result) {
-	EstEID_log("");
+	_log("");
 	*result = _bstr_t(ESTEID_PLUGIN_VERSION).Detach();
 	return S_OK;
 }
 
 STDMETHODIMP CEstEIDIEPluginBHO::get_pluginLanguage(BSTR *result) {
-	EstEID_log("");
-	*result = _bstr_t(this->language ? this->language : _T("")).Detach();
+	_log("");
+	*result = _bstr_t(language ? language : _T("")).Detach();
 	return S_OK;
 }
 
 
-STDMETHODIMP CEstEIDIEPluginBHO::put_pluginLanguage(BSTR language) {
-	EstEID_log("");
-	this->language = _bstr_t(language).Detach();
+STDMETHODIMP CEstEIDIEPluginBHO::put_pluginLanguage(BSTR _language) {
+	USES_CONVERSION;
+	_log("");
+	language = _bstr_t(_language).Detach();
+	Labels::l10n.setLanguage(W2A(language));
 	return S_OK;
 }
 
 
 STDMETHODIMP CEstEIDIEPluginBHO::get_errorMessage(BSTR *result) {
-	EstEID_log("");
-	*result = _bstr_t(this->errorMessage.c_str()).Detach();
+	_log("");
+	*result = _bstr_t(errorMessage.c_str()).Detach();
 	return S_OK;
 }
 
 STDMETHODIMP CEstEIDIEPluginBHO::get_errorCode(BSTR *result) {
-	EstEID_log("");
-	*result = _bstr_t(this->errorCode).Detach();
+	_log("");
+	*result = _bstr_t(errorCode).Detach();
 	return S_OK;
 }
 
-BOOL CEstEIDIEPluginBHO::isSiteAllowed() {
-	EstEID_log("");
-	BSTR url_buffer;
-	if(webBrowser == NULL){
-		EstEID_log("Browser object is not initialized!!!");
-		return FALSE;
+void CEstEIDIEPluginBHO::isSiteAllowed() {
+	_log("");
+	if(!webBrowser) {
+		_log("Browser object is not initialized!!!");
+		NotAllowedException("Site not allowed");
 	}
 
+	CComBSTR url_buffer;
 	webBrowser->get_LocationURL(&url_buffer);
 	BOOL allowed = wcsstr(url_buffer, _T("https://")) == url_buffer;
 #ifdef DEVELOPMENT_MODE
 	allowed = TRUE;
-	EstEID_log("*** Development Mode, all protocols allowed ***");
+	_log("*** Development Mode, all protocols allowed ***");
 #endif	
-	if(!allowed){
-		this->errorCode = ESTEID_SITE_NOT_ALLOWED;
-		this->errorMessage.assign("Site not allowed");
-		EstEID_log("Protocol not allowed");
-	}
-	SysFreeString(url_buffer);	
-	return allowed;
+	if(!allowed)
+		throw NotAllowedException("Site not allowed");
 }
 
-STDMETHODIMP CEstEIDIEPluginBHO::getCertificate(IDispatch **_certificate){
-	EstEID_log("");
-	FAIL_IF_SITE_IS_NOT_ALLOWED;
+STDMETHODIMP CEstEIDIEPluginBHO::getCertificate(VARIANT filter, IDispatch **certificate) {
+	_log("");
 	try {
-		if(!this->certificate || !isSameCardInReader(this->certificate)) {
-			this->certificate.CoCreateInstance(CLSID_EstEIDCertificate);
-		}
-		CComPtr<IEstEIDCertificate> cert;
-		this->certificate.CopyTo(&cert);
-		*_certificate = cert.Detach();
+		isSiteAllowed();
+		cert.Release();
+		cert.CoCreateInstance(CLSID_EstEIDCertificate);
+		cert->Init(filter);
+		CComPtr<IEstEIDCertificate> copy;
+		cert.CopyTo(&copy);
+		*certificate = copy.Detach();
 		clearErrors();
+		_log("Get certificate ended");
 		return S_OK;
 	}
-	catch (BaseException &e) {
-		EstEID_log("Exception caught when getting certificate: %s: %s", e.getErrorMessage().c_str(), e.getErrorDescription().c_str());
+	catch (const BaseException &e) {
+		_log("Exception caught when getting certificate: %s", e.what());
 		setError(e);
-		return Error((this->errorMessage).c_str());
+		return Error(errorMessage.c_str());
 	}
 }
 
-BOOL CEstEIDIEPluginBHO::isSameCardInReader(CComPtr<IEstEIDCertificate> _cert){ //todo: must check is card changed
-	/* not implemented yet */
-	this->certificate = NULL;
-	return false;
-}
-
-STDMETHODIMP CEstEIDIEPluginBHO::sign(BSTR id, BSTR hash, BSTR language, BSTR *signature){
-	LOG_LOCATION;
-	FAIL_IF_SITE_IS_NOT_ALLOWED;
+STDMETHODIMP CEstEIDIEPluginBHO::sign(BSTR id, BSTR hashhex, BSTR _language, VARIANT info, BSTR *signature) {
+	_log("");
 	USES_CONVERSION;
 	try {
-		wstring hashToSign(hash, SysStringLen(hash));
-		std::string hashString(hashToSign.begin(), hashToSign.end());
-		char * certId = W2A(id);
-		Signer * signer = SignerFactory::createSigner(hashString, certId);
-		string result = signer->sign();
-		*signature = _bstr_t(result.c_str()).Detach();
+		isSiteAllowed();
+
+		CComBSTR idHex;
+		cert->get_id(&idHex);
+		if (idHex != id)
+			throw NoCertificatesException();
+
+		language = _bstr_t(_language).Detach();
+		Labels::l10n.setLanguage(W2A(language));
+
+		CComBSTR certHex;
+		cert->get_cert(&certHex);
+		unique_ptr<Signer> signer(Signer::createSigner(W2A(certHex)));
+		if (info.vt == VT_BSTR && !signer->showInfo(W2A_CP(info.bstrVal, CP_UTF8)))
+			throw UserCancelledException();
+
+		vector<unsigned char> result = signer->sign(BinaryUtils::hex2bin(W2A(hashhex)));
+		*signature = _bstr_t(BinaryUtils::bin2hex(result).c_str()).Detach();
 		clearErrors();
-		EstEID_log("Signing ended");
+		_log("Signing ended");
 		return S_OK;
 	}
-	catch (BaseException &e) {
-		EstEID_log("Exception caught during signing: %s: %s", e.getErrorMessage().c_str(), e.getErrorDescription().c_str());
+	catch (const BaseException &e) {
+		_log("Exception caught during signing: %s", e.what());
 		setError(e);
-		return Error((this->errorMessage).c_str());
+		return Error(errorMessage.c_str());
 	}
-}
-
-BOOL CEstEIDIEPluginBHO::certificateMatchesId(PCCERT_CONTEXT certContext, BSTR id) {
-	USES_CONVERSION;
-	BYTE *cert;
-	cert = (BYTE*)malloc(certContext->cbCertEncoded + 1);
-	memcpy(cert, certContext->pbCertEncoded, certContext->cbCertEncoded);
-	cert[certContext->cbCertEncoded] = '\0';
-	std::string hashAsString;
-	hashAsString = CEstEIDHelper::calculateMD5Hash((char*)cert);
-	free(cert);
-	BOOL result = (strcmp(hashAsString.c_str(), W2A(id)) == 0);
-	EstEID_log("Cert match check result: %s", result ? "matches" : "does not match");
-	return result;
 }
 
 void CEstEIDIEPluginBHO::clearErrors() {
-	EstEID_log("");
-	this->errorCode = 0;
-	this->errorMessage.assign("");
+	_log("");
+	errorCode = 0;
+	errorMessage.clear();
 }
 
-void CEstEIDIEPluginBHO::setError(BaseException &exception) {
-	EstEID_log("");
-	this->errorCode = exception.getErrorCode();
-	this->errorMessage.assign(exception.getErrorDescription());
-	EstEID_log("Set error: %s (HEX %Xh, DEC %u)", this->errorMessage.c_str(), exception.getErrorCode(), exception.getErrorCode());
+void CEstEIDIEPluginBHO::setError(const BaseException &exception) {
+	errorCode = exception.getErrorCode();
+	errorMessage.assign(exception.what());
+	_log("Set error: %s (HEX %Xh, DEC %u)", errorMessage.c_str(), exception.getErrorCode(), exception.getErrorCode());
 }

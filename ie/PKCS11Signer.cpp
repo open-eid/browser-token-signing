@@ -1,5 +1,5 @@
 /*
-* Estonian ID card plugin for web browsers
+* Chrome Token Signing Native Host
 *
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -18,120 +18,116 @@
 
 #include "Pkcs11Signer.h"
 #include "PKCS11CardManager.h"
+#include "Labels.h"
+#include "Logger.h"
 #include "BinaryUtils.h"
-#include "EstEIDHelper.h"
 #include "HostExceptions.h"
 #include "PinDialog.h"
-#include <future>
-#include <string>
-extern "C" {
-#include "esteid_log.h"
-}
+
+#include <WinCrypt.h>
 
 using namespace std;
 
-void Pkcs11Signer::initialize() {
-	LOG_LOCATION
-	cardManager = getCardManager();
-	pinTriesLeft = cardManager->getPIN2RetryCount();
-	dialog = new CPinDialog;
+Pkcs11Signer::Pkcs11Signer(const string &pkcs11ModulePath, const string &certInHex)
+	: Signer(certInHex)
+	, pkcs11Path(pkcs11ModulePath)
+{
+	HMODULE hModule = ::GetModuleHandle(NULL);
+	if (hModule == NULL) {
+		_log("MFC initialization failed. Module handle is null");
+		throw TechnicalException("MFC initialization failed. Module handle is null");
+	}
+	// initialize MFC
+	if (!AfxWinInit(hModule, NULL, ::GetCommandLine(), 0)) {
+		_log("MFC initialization failed");
+		throw TechnicalException("MFC initialization failed");
+	}
 }
 
-unique_ptr<PKCS11CardManager> Pkcs11Signer::getCardManager() {
+vector<unsigned char> Pkcs11Signer::sign(const vector<unsigned char> &digest) {
+	_log("Signing using PKCS#11 module");
+
+	PKCS11CardManager::Token selected;
 	try {
-		unique_ptr<PKCS11CardManager> manager;
-		for (auto &token : createCardManager()->getAvailableTokens()) {
-			try{
-				manager.reset(createCardManager()->getManagerForReader(token));
-			}
-			catch (PKCS11TokenNotPresent &e) {
-				EstEID_log("%s", e.what());
-				continue;
-			}
-			catch (PKCS11TokenNotRecognized &ex) {
-				EstEID_log("%s", ex.what());
-				continue;
-			}
-			std::string signCertMD5Hash;
-			signCertMD5Hash = CEstEIDHelper::calculateMD5Hash((char *)&(manager->getSignCert())[0]);
-			if (strcmp(signCertMD5Hash.c_str(), getCertId()) == 0) {
+		for (const PKCS11CardManager::Token &token : PKCS11CardManager(pkcs11Path).tokens()) {
+			if (token.cert == BinaryUtils::hex2bin(getCertInHex())) {
+				selected = token;
 				break;
 			}
-			manager.reset();
 		}
-
-		if (!manager) {
-			EstEID_log("No card manager found for this certificate");
-			throw TechnicalException("No card manager found for this certificate");
-		}
-		return manager;
 	}
-	catch (const std::runtime_error &a) {
-		EstEID_log("Technical error: %s", a.what());
+	catch (const runtime_error &a) {
+		_log("Technical error: %s", a.what());
 		throw TechnicalException("Error getting certificate manager: " + string(a.what()));
 	}
-}
 
-PKCS11CardManager* Pkcs11Signer::createCardManager() {
-	if (pkcs11ModulePath.empty()) {
-		return PKCS11CardManager::instance();
+	if (selected.cert.empty()) {
+		_log("No card manager found for this certificate");
+		throw InvalidArgumentException("No card manager found for this certificate");
 	}
-	return PKCS11CardManager::instance(pkcs11ModulePath);
-}
 
-string Pkcs11Signer::sign() {
-	EstEID_log("Signing using PKCS#11 module");
-	EstEID_log("Hash is %s and cert id (MD5 hash) is %s", getHash()->c_str(), getCertId());
-	validateHashLength();
-	return askPinAndSignHash();
-}
+	pinTriesLeft = selected.retry;
 
-string Pkcs11Signer::askPinAndSignHash() {
 	try {
-		dialog->setAttemptsRemaining(pinTriesLeft);
-		char* signingPin = askPin();
-		vector<unsigned char> binaryHash = BinaryUtils::hex2bin(*getHash());
-		vector<unsigned char> result = cardManager->sign(binaryHash, signingPin);
-		string signature = BinaryUtils::bin2hex(result);
-		EstEID_log("Sign result: %s", signature.c_str());
-		return signature;
+		validatePinNotBlocked();
+		return PKCS11CardManager(pkcs11Path).sign(selected, digest, askPin());
 	}
-	catch (AuthenticationError &e) {
-		EstEID_log("Wrong pin");
+	catch (const AuthenticationError &) {
+		_log("Wrong pin");
+		pinTriesLeft--;
 		handleWrongPinEntry();
-		return askPinAndSignHash();
+		return sign(digest);
 	}
-	catch (AuthenticationBadInput &e) {
-		EstEID_log("Bad pin input");
+	catch (const AuthenticationBadInput &) {
+		_log("Bad pin input");
+		pinTriesLeft--;
 		handleWrongPinEntry();
-		return askPinAndSignHash();
+		return sign(digest);
 	}
 }
 
 char* Pkcs11Signer::askPin() {
-	char* signingPin = dialog->getPin();
-	if (strlen(signingPin) < 4) {
-		EstEID_log("Pin is too short");
-		dialog->setInvalidPin(true);
+	_log("Showing pin entry dialog");
+	wstring label = Labels::l10n.get("sign PIN");
+	vector<unsigned char> data = BinaryUtils::hex2bin(getCertInHex());
+	PCCERT_CONTEXT cert = CertCreateCertificateContext(X509_ASN_ENCODING | PKCS_7_ASN_ENCODING, data.data(), data.size());
+	if (cert) {
+		BYTE keyUsage = 0;
+		CertGetIntendedKeyUsage(X509_ASN_ENCODING | PKCS_7_ASN_ENCODING, cert->pCertInfo, &keyUsage, 1);
+		if (!(keyUsage & CERT_NON_REPUDIATION_KEY_USAGE))
+			label = Labels::l10n.get("auth PIN");
+		CertFreeCertificateContext(cert);
+	}
+	size_t start_pos = 0;
+	while((start_pos = label.find(L"@PIN@", start_pos)) != std::string::npos) {
+		label.replace(start_pos, 5, L"PIN");
+		start_pos += 3;
+	}
+
+	PinDialog dialog(label);
+	if (dialog.DoModal() != IDOK) {
+		_log("User cancelled");
+		throw UserCancelledException();
+	}
+	if (strlen(dialog.getPin()) < 4) {
+		_log("Pin is too short");
+		handleWrongPinEntry();
 		return askPin();
 	}
-	return signingPin;
+	return dialog.getPin();
 }
 
-void Pkcs11Signer::validateHashLength() {
-	int length = getHash()->length();
-	if (length != BINARY_SHA1_LENGTH * 2 && length != BINARY_SHA224_LENGTH * 2 && length != BINARY_SHA256_LENGTH * 2 && length != BINARY_SHA384_LENGTH * 2 && length != BINARY_SHA512_LENGTH * 2) {
-		EstEID_log("Hash length %i is invalid", getHash()->length());
-		throw InvalidHashException();
+void Pkcs11Signer::validatePinNotBlocked() {
+	if (pinTriesLeft <= 0) {
+		_log("PIN2 retry count is zero");
+		MessageBox(NULL, Labels::l10n.get("PIN2 blocked").c_str(), L"PIN Blocked", MB_OK | MB_ICONERROR);
+		throw PinBlockedException();
 	}
 }
 
 void Pkcs11Signer::handleWrongPinEntry() {
-	pinTriesLeft--;
-	dialog->setInvalidPin(true);
-}
-
-void Pkcs11Signer::setPkcs11ModulePath(string &path) {
-	EstEID_log("pkcs11 module path is %s", path.c_str());
-	pkcs11ModulePath = path;
+	validatePinNotBlocked();
+	_log("Showing incorrect pin error dialog, %i tries left", pinTriesLeft);
+	wstring msg = Labels::l10n.get("tries left") + L" " + to_wstring(pinTriesLeft);
+	MessageBox(NULL, msg.c_str(), Labels::l10n.get("incorrect PIN2").c_str(), MB_OK | MB_ICONERROR);
 }

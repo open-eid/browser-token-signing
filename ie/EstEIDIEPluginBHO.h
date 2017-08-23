@@ -20,7 +20,6 @@
  */
 
 #pragma once
-#include "EstEIDHelper.h"
 #include "esteidpluginie_i.h"
 #include "HostExceptions.h"
 #include <windows.h>
@@ -44,7 +43,7 @@ class ATL_NO_VTABLE CEstEIDIEPluginBHO :
 	public IDispatchImpl<IEstEIDIEPluginBHO, &IID_IEstEIDIEPluginBHO, &LIBID_esteidpluginieLib, /*wMajor =*/ 1, /*wMinor =*/ 0>
 {
 public:
-	CEstEIDIEPluginBHO(){}
+	CEstEIDIEPluginBHO() = default;
 
 DECLARE_REGISTRY_RESOURCEID(IDR_ESTEIDIEPLUGINBHO)
 
@@ -58,31 +57,21 @@ END_COM_MAP()
 
 	DECLARE_PROTECT_FINAL_CONSTRUCT()
 
-	HRESULT FinalConstruct()
-	{
-		this->errorCode = 0;
-		this->language = NULL;
-		return S_OK;
-	}
-
 	void FinalRelease()
 	{
 		webBrowser.Release();
 	}
 
 private:
+	CComPtr<IEstEIDCertificate> cert;
 	CComPtr<IWebBrowser2> webBrowser;
-	CComPtr<IEstEIDCertificate> certificate;
-	BSTR language;
-	int errorCode;
+	BSTR language = NULL;
+	int errorCode = 0;
 	std::string errorMessage;
 
 	void clearErrors();
-	void setError(BaseException &exception);
-	void mapInternalErrorCodes(unsigned int code);
-	BOOL isSiteAllowed();
-	BOOL isSameCardInReader(CComPtr<IEstEIDCertificate> _cert);
-	BOOL CEstEIDIEPluginBHO::certificateMatchesId(PCCERT_CONTEXT certContext, BSTR id);
+	void setError(const BaseException &exception);
+	void isSiteAllowed();
 
 public:
 	STDMETHOD(SetSite)(IUnknown *pUnkSite);
@@ -91,8 +80,8 @@ public:
 	STDMETHOD(put_pluginLanguage)(BSTR language);
 	STDMETHOD(get_errorMessage)(BSTR *result);
 	STDMETHOD(get_errorCode)(BSTR *result);
-	STDMETHOD(getCertificate)(IDispatch **_certificate);
-	STDMETHOD(sign)(BSTR id, BSTR hash, BSTR language, BSTR *signature);	
+	STDMETHOD(getCertificate)(VARIANT filter, IDispatch **certificate);
+	STDMETHOD(sign)(BSTR id, BSTR hash, BSTR language, VARIANT info, BSTR *signature);	
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(EstEIDIEPluginBHO), CEstEIDIEPluginBHO)

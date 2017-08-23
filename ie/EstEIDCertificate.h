@@ -21,10 +21,10 @@
 
 #pragma once
 
-#include <comutil.h>
 #include "esteidpluginie_i.h"
-#include "cert_dialog_win.h"
 
+#include <comutil.h>
+#include <vector>
 
 #if defined(_WIN32_WCE) && !defined(_CE_DCOM) && !defined(_CE_ALLOW_SINGLE_THREADED_OBJECTS_IN_MTA)
 #error "Single-threaded COM objects are not properly supported on Windows CE platform, such as the Windows Mobile platforms that do not include full DCOM support. Define _CE_ALLOW_SINGLE_THREADED_OBJECTS_IN_MTA to force ATL to support creating single-thread COM object's and allow use of it's single-threaded COM object implementations. The threading model in your rgs file was set to 'Free' as that is the only threading model supported in non DCOM Windows CE platforms."
@@ -37,22 +37,9 @@ class ATL_NO_VTABLE CEstEIDCertificate :
 	public CComCoClass<CEstEIDCertificate, &CLSID_EstEIDCertificate>,
 	public IDispatchImpl<IEstEIDCertificate, &IID_IEstEIDCertificate, &LIBID_esteidpluginieLib, /*wMajor =*/ 1, /*wMinor =*/ 0>{
 public:
-	CEstEIDCertificate(){}
+	CEstEIDCertificate() = default;
 
 	DECLARE_REGISTRY_RESOURCEID(IDR_ESTEIDCERTIFICATE)
-
-	HRESULT FinalConstruct() {
-		certificate = NULL;
-		readFromCertContext();
-		return S_OK;
-	}
-
-	void FinalRelease() {
-		if(certificate) {
-			free(certificate);
-			certificate = NULL;
-		}
-	}
 
 	BEGIN_COM_MAP(CEstEIDCertificate)
 		COM_INTERFACE_ENTRY(IEstEIDCertificate)
@@ -61,22 +48,15 @@ public:
 
 	DECLARE_PROTECT_FINAL_CONSTRUCT()
 
-private:
-	BYTE *certificate;
-	std::string id;
-	std::string certificateAsHex;
-
-	void readFromCertContext();
-	void CryptoErrorHandler(BOOL result);
-	void binCert2Hex(const unsigned int binLength);
-	void calculateMD5Hash(unsigned int certLength);
-	char *getBytesAsHexString(void *bytes, unsigned int length);
-	void loadCertContexts(PCCERT_CONTEXT certContext);
-
 public:
 	STDMETHOD(get_id)(BSTR *id);
 	STDMETHOD(get_certificateAsHex)(BSTR *certificate);
 	STDMETHOD(get_cert)(BSTR *certificate);
+	STDMETHOD(Init)(VARIANT filter);
+
+private:
+	std::vector<BYTE> cert;
+	std::string id, hex;
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(EstEIDCertificate), CEstEIDCertificate)

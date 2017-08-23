@@ -1,79 +1,61 @@
+/*
+* Chrome Token Signing Native Host
+*
+* This library is free software; you can redistribute it and/or
+* modify it under the terms of the GNU Lesser General Public
+* License as published by the Free Software Foundation; either
+* version 2.1 of the License, or (at your option) any later version.
+*
+* This library is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+* Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with this library; if not, write to the Free Software
+* Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+*/
+
 #include "NativeCertificateSelector.h"
-#include "BinaryUtils.h"
 #include "HostExceptions.h"
-extern "C" {
-#include "esteid_log.h"
-}
+#include "Logger.h"
 
 using namespace std;
 
-std::vector<unsigned char> NativeCertificateSelector::getCert() {
-	LOG_LOCATION;
-	PCCERT_CONTEXT pCertContext = NULL;
-	HCERTSTORE hCertStore = NULL;
-	CRYPTUI_SELECTCERTIFICATE_STRUCT sel = { sizeof(sel) };
-	int counter = 0;
-
-	hCertStore = CertOpenStore(CERT_STORE_PROV_SYSTEM, 0, NULL, CERT_SYSTEM_STORE_CURRENT_USER | CERT_STORE_READONLY_FLAG, L"MY");
-	if (!hCertStore){
+vector<unsigned char> NativeCertificateSelector::getCert(bool forSigning) const {
+	HCERTSTORE sys = CertOpenStore(CERT_STORE_PROV_SYSTEM,
+		X509_ASN_ENCODING, 0, CERT_SYSTEM_STORE_CURRENT_USER | CERT_STORE_READONLY_FLAG, L"MY");
+	if (!sys)
 		throw TechnicalException("Failed to open Cert Store");
-	}
 
-	EstEID_log("Pointer to CERT_STORE 0x%08X", hCertStore);
-
-	sel.pvCallbackData = &counter;
-	sel.pFilterCallback = filter_proc;
-	sel.rghDisplayStores = &hCertStore;
-	sel.cDisplayStores = 1;
-
-#ifdef _SEB_BUILD	
-	EstEID_log("SEB build");
-	EstEID_log("Pointer to CERT_STORE 0x%08X", hCertStore);
-	PCCERT_CONTEXT pCertContextForEnumeration = NULL;
+	PCCERT_CONTEXT cert = nullptr;
 	int certificatesCount = 0;
-	EstEID_log("Pointer to CERT_STORE 0x%08X", hCertStore);
-	while (pCertContextForEnumeration = CertEnumCertificatesInStore(hCertStore, pCertContextForEnumeration))
-	{
-		if (isValidForSigning(pCertContextForEnumeration))
+	while (cert = CertEnumCertificatesInStore(sys, cert)) {
+		if (!isValid(cert, forSigning))
+			continue;
+		DWORD flags = CRYPT_ACQUIRE_CACHE_FLAG | CRYPT_ACQUIRE_COMPARE_KEY_FLAG | CRYPT_ACQUIRE_SILENT_FLAG;
+		NCRYPT_KEY_HANDLE key = 0;
+		DWORD spec = 0;
+		BOOL freeKey = FALSE;
+		CryptAcquireCertificatePrivateKey(cert, flags, 0, &key, &spec, &freeKey);
+		if (!key)
+			continue;
+		switch (spec)
 		{
-			certificatesCount++;
-			pCertContext = pCertContextForEnumeration;
-			loadCertContexts(pCertContext);
+		case CERT_NCRYPT_KEY_SPEC: if (freeKey)	NCryptFreeObject(key); break;
+		case AT_KEYEXCHANGE:
+		case AT_SIGNATURE: if (freeKey) CryptReleaseContext(key, 0); break;
 		}
+		PCCERT_CONTEXT copy = nullptr;
+		if (CertAddCertificateContextToStore(store, cert, CERT_STORE_ADD_USE_EXISTING, &copy)) {
+			++certificatesCount;
+			_log("Certificate added to the memory store.");
+		}
+		else
+			_log("Could not add the certificate to the memory store.");
 	}
-
-	EstEID_log("Pointer to CERT_STORE 0x%08X", hCertStore);
-
-	EstEID_log("Certificates count %i", certificatesCount);
-
-	if (certificatesCount != 1)
-	{
-		pCertContext = CryptUIDlgSelectCertificate(&sel);
-	}
-
-	EstEID_log("Pointer to CERT_STORE 0x%08X", hCertStore);
-
-	if (pCertContextForEnumeration){
-		CertFreeCertificateContext(pCertContextForEnumeration);
-	}
-	if (!pCertContext) {
-		EstEID_log("User didn't select sertificate");
-		throw UserCancelledException();
-	}
-#else
-	pCertContext = CryptUIDlgSelectCertificate(&sel);
-	if (!pCertContext) {
-		EstEID_log("User didn't select sertificate");
-		CertCloseStore(hCertStore, CERT_CLOSE_STORE_FORCE_FLAG);
-		throw UserCancelledException();
-	}
-#endif
-	vector<unsigned char> certData(pCertContext->pbCertEncoded, pCertContext->pbCertEncoded + pCertContext->cbCertEncoded);
-	CertFreeCertificateContext(pCertContext);
-	EstEID_log("Pointer to CERT_STORE 0x%08X", hCertStore);
-	if (hCertStore) {
-		CertCloseStore(hCertStore, CERT_CLOSE_STORE_FORCE_FLAG);
-	}
-	return certData;
-	
+	CertCloseStore(sys, 0);
+	if (certificatesCount < 1)
+		throw NoCertificatesException();
+	return showDialog();
 }

@@ -1,44 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug HTTP|Win32">
-      <Configuration>Debug HTTP</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug HTTP|x64">
-      <Configuration>Debug HTTP</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug SEB|Win32">
-      <Configuration>Debug SEB</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug SEB|x64">
-      <Configuration>Debug SEB</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release HTTP|Win32">
-      <Configuration>Release HTTP</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release HTTP|x64">
-      <Configuration>Release HTTP</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release SEB|Win32">
-      <Configuration>Release SEB</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release SEB|x64">
-      <Configuration>Release SEB</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
@@ -65,37 +33,7 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release HTTP|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseOfAtl>Dynamic</UseOfAtl>
-    <CharacterSet>Unicode</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release SEB|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseOfAtl>Dynamic</UseOfAtl>
-    <CharacterSet>Unicode</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseOfAtl>Dynamic</UseOfAtl>
-    <CharacterSet>Unicode</CharacterSet>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug HTTP|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseOfAtl>Dynamic</UseOfAtl>
-    <CharacterSet>Unicode</CharacterSet>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug SEB|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseOfAtl>Dynamic</UseOfAtl>
     <CharacterSet>Unicode</CharacterSet>
@@ -110,37 +48,7 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release HTTP|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseOfAtl>Dynamic</UseOfAtl>
-    <CharacterSet>Unicode</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release SEB|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseOfAtl>Dynamic</UseOfAtl>
-    <CharacterSet>Unicode</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseOfAtl>Dynamic</UseOfAtl>
-    <CharacterSet>Unicode</CharacterSet>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug HTTP|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseOfAtl>Dynamic</UseOfAtl>
-    <CharacterSet>Unicode</CharacterSet>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug SEB|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseOfAtl>Dynamic</UseOfAtl>
     <CharacterSet>Unicode</CharacterSet>
@@ -154,23 +62,7 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="ie-token-signing.props" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release HTTP|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="ie-token-signing.props" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release SEB|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="ie-token-signing.props" />
-  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="ie-token-signing.props" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug HTTP|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="ie-token-signing.props" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug SEB|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="ie-token-signing.props" />
   </ImportGroup>
@@ -178,23 +70,7 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="ie-token-signing.props" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release HTTP|x64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="ie-token-signing.props" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release SEB|x64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="ie-token-signing.props" />
-  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="ie-token-signing.props" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug HTTP|x64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="ie-token-signing.props" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug SEB|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="ie-token-signing.props" />
   </ImportGroup>
@@ -202,46 +78,14 @@
   <PropertyGroup>
     <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
     <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</IgnoreImportLibrary>
-    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug HTTP|Win32'">true</IgnoreImportLibrary>
-    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug SEB|Win32'">true</IgnoreImportLibrary>
     <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</IgnoreImportLibrary>
-    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug HTTP|x64'">true</IgnoreImportLibrary>
-    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug SEB|x64'">true</IgnoreImportLibrary>
     <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</IgnoreImportLibrary>
-    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release HTTP|Win32'">true</IgnoreImportLibrary>
-    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release SEB|Win32'">true</IgnoreImportLibrary>
     <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</IgnoreImportLibrary>
-    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release HTTP|x64'">true</IgnoreImportLibrary>
-    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release SEB|x64'">true</IgnoreImportLibrary>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release SEB|Win32'">
-    <TargetName>esteid-plugin-ie</TargetName>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release SEB|x64'">
-    <TargetName>esteid-plugin-ie</TargetName>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release HTTP|Win32'">
-    <TargetName>esteid-plugin-ie</TargetName>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release HTTP|x64'">
-    <TargetName>esteid-plugin-ie</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <TargetName>esteid-plugin-ie</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <TargetName>esteid-plugin-ie</TargetName>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug SEB|Win32'">
-    <TargetName>esteid-plugin-ie</TargetName>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug SEB|x64'">
-    <TargetName>esteid-plugin-ie</TargetName>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug HTTP|Win32'">
-    <TargetName>esteid-plugin-ie</TargetName>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug HTTP|x64'">
     <TargetName>esteid-plugin-ie</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -264,7 +108,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../common;../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>MAJOR_VER=$(MAJOR_VERSION);MINOR_VER=$(MINOR_VERSION);RELEASE_VER=$(RELEASE_VERSION);BUILD_VER=$(BUILD_NUMBER);WIN32;_WINDOWS;_DEBUG;_USRDLL;WIN_IE;DEVELOPMENT_MODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level3</WarningLevel>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
@@ -288,78 +132,6 @@
       <ComponentFileName>esteid-plugin-ie</ComponentFileName>
     </Manifest>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug HTTP|Win32'">
-    <Midl>
-      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MkTypLibCompatible>false</MkTypLibCompatible>
-      <TargetEnvironment>Win32</TargetEnvironment>
-      <GenerateStublessProxies>true</GenerateStublessProxies>
-      <TypeLibraryName>$(IntDir)esteidpluginie.tlb</TypeLibraryName>
-      <HeaderFileName>esteidpluginie_i.h</HeaderFileName>
-      <InterfaceIdentifierFileName>esteidpluginie_i.c</InterfaceIdentifierFileName>
-      <ProxyFileName>esteidpluginie_p.c</ProxyFileName>
-      <ValidateAllParameters>true</ValidateAllParameters>
-    </Midl>
-    <ClCompile>
-      <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>MAJOR_VER=$(MAJOR_VERSION);MINOR_VER=$(MINOR_VERSION);RELEASE_VER=$(RELEASE_VERSION);BUILD_VER=$(BUILD_NUMBER);WIN32;_WINDOWS;_DEBUG;_USRDLL;WIN_IE;DEVELOPMENT_MODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <WarningLevel>Level3</WarningLevel>
-      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-    </ClCompile>
-    <ResourceCompile>
-      <PreprocessorDefinitions>MAJOR_VER=$(MAJOR_VERSION);MINOR_VER=$(MINOR_VERSION);RELEASE_VER=$(RELEASE_VERSION);BUILD_VER=$(BUILD_NUMBER);_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ResourceCompile>
-    <Link>
-      <RegisterOutput>true</RegisterOutput>
-      <AdditionalDependencies>Uafxcwd.lib;Libcmtd.lib;Ncrypt.lib;Cryptui.lib;crypt32.lib;winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ModuleDefinitionFile>.\esteid-plugin-ie.def</ModuleDefinitionFile>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Windows</SubSystem>
-    </Link>
-    <Manifest>
-      <TypeLibraryFile>.\Debug\esteidpluginie.tlb</TypeLibraryFile>
-      <ComponentFileName>esteid-plugin-ie</ComponentFileName>
-    </Manifest>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug SEB|Win32'">
-    <Midl>
-      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MkTypLibCompatible>false</MkTypLibCompatible>
-      <TargetEnvironment>Win32</TargetEnvironment>
-      <GenerateStublessProxies>true</GenerateStublessProxies>
-      <TypeLibraryName>$(IntDir)esteidpluginie.tlb</TypeLibraryName>
-      <HeaderFileName>esteidpluginie_i.h</HeaderFileName>
-      <InterfaceIdentifierFileName>esteidpluginie_i.c</InterfaceIdentifierFileName>
-      <ProxyFileName>esteidpluginie_p.c</ProxyFileName>
-      <ValidateAllParameters>true</ValidateAllParameters>
-    </Midl>
-    <ClCompile>
-      <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>MAJOR_VER=$(MAJOR_VERSION);MINOR_VER=$(MINOR_VERSION);RELEASE_VER=$(RELEASE_VERSION);BUILD_VER=$(BUILD_NUMBER);_SEB_BUILD;WIN32;_WINDOWS;_DEBUG;_USRDLL;WIN_IE;DEVELOPMENT_MODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <WarningLevel>Level3</WarningLevel>
-      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-    </ClCompile>
-    <ResourceCompile>
-      <PreprocessorDefinitions>MAJOR_VER=$(MAJOR_VERSION);MINOR_VER=$(MINOR_VERSION);RELEASE_VER=$(RELEASE_VERSION);BUILD_VER=$(BUILD_NUMBER);_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ResourceCompile>
-    <Link>
-      <RegisterOutput>true</RegisterOutput>
-      <AdditionalDependencies>Uafxcwd.lib;Libcmtd.lib;Ncrypt.lib;Cryptui.lib;crypt32.lib;winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ModuleDefinitionFile>.\esteid-plugin-ie.def</ModuleDefinitionFile>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Windows</SubSystem>
-    </Link>
-    <Manifest>
-      <TypeLibraryFile>.\Debug\esteidpluginie.tlb</TypeLibraryFile>
-      <ComponentFileName>esteid-plugin-ie</ComponentFileName>
-    </Manifest>
-  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Midl>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -373,7 +145,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../common;../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>MAJOR_VER=$(MAJOR_VERSION);MINOR_VER=$(MINOR_VERSION);RELEASE_VER=$(RELEASE_VERSION);BUILD_VER=$(BUILD_NUMBER);WIN32;WIN64;_WINDOWS;_DEBUG;_USRDLL;WIN_IE;DEVELOPMENT_MODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level3</WarningLevel>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
@@ -392,68 +164,6 @@
       <IgnoreSpecificDefaultLibraries>Uafxcwd.lib;Libcmtd.lib</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug HTTP|x64'">
-    <Midl>
-      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MkTypLibCompatible>false</MkTypLibCompatible>
-      <TargetEnvironment>X64</TargetEnvironment>
-      <GenerateStublessProxies>true</GenerateStublessProxies>
-      <TypeLibraryName>$(IntDir)esteidpluginie.tlb</TypeLibraryName>
-      <HeaderFileName>esteidpluginie_i.h</HeaderFileName>
-      <InterfaceIdentifierFileName>esteidpluginie_i.c</InterfaceIdentifierFileName>
-      <ProxyFileName>esteidpluginie_p.c</ProxyFileName>
-    </Midl>
-    <ClCompile>
-      <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>MAJOR_VER=$(MAJOR_VERSION);MINOR_VER=$(MINOR_VERSION);RELEASE_VER=$(RELEASE_VERSION);BUILD_VER=$(BUILD_NUMBER);WIN32;WIN64;_WINDOWS;_DEBUG;_USRDLL;WIN_IE;DEVELOPMENT_MODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <WarningLevel>Level3</WarningLevel>
-      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-    </ClCompile>
-    <ResourceCompile>
-      <PreprocessorDefinitions>MAJOR_VER=$(MAJOR_VERSION);MINOR_VER=$(MINOR_VERSION);RELEASE_VER=$(RELEASE_VERSION);BUILD_VER=$(BUILD_NUMBER);_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ResourceCompile>
-    <Link>
-      <RegisterOutput>true</RegisterOutput>
-      <AdditionalDependencies>Uafxcwd.lib;Libcmtd.lib;Ncrypt.lib;Cryptui.lib;crypt32.lib;winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ModuleDefinitionFile>.\esteid-plugin-ie.def</ModuleDefinitionFile>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Windows</SubSystem>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug SEB|x64'">
-    <Midl>
-      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MkTypLibCompatible>false</MkTypLibCompatible>
-      <TargetEnvironment>X64</TargetEnvironment>
-      <GenerateStublessProxies>true</GenerateStublessProxies>
-      <TypeLibraryName>$(IntDir)esteidpluginie.tlb</TypeLibraryName>
-      <HeaderFileName>esteidpluginie_i.h</HeaderFileName>
-      <InterfaceIdentifierFileName>esteidpluginie_i.c</InterfaceIdentifierFileName>
-      <ProxyFileName>esteidpluginie_p.c</ProxyFileName>
-    </Midl>
-    <ClCompile>
-      <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>MAJOR_VER=$(MAJOR_VERSION);MINOR_VER=$(MINOR_VERSION);RELEASE_VER=$(RELEASE_VERSION);BUILD_VER=$(BUILD_NUMBER);_SEB_BUILD;WIN32;WIN64;_WINDOWS;_DEBUG;_USRDLL;WIN_IE;DEVELOPMENT_MODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <WarningLevel>Level3</WarningLevel>
-      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-    </ClCompile>
-    <ResourceCompile>
-      <PreprocessorDefinitions>MAJOR_VER=$(MAJOR_VERSION);MINOR_VER=$(MINOR_VERSION);RELEASE_VER=$(RELEASE_VERSION);BUILD_VER=$(BUILD_NUMBER);_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ResourceCompile>
-    <Link>
-      <RegisterOutput>true</RegisterOutput>
-      <AdditionalDependencies>Uafxcwd.lib;Libcmtd.lib;Ncrypt.lib;Cryptui.lib;crypt32.lib;winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ModuleDefinitionFile>.\esteid-plugin-ie.def</ModuleDefinitionFile>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Windows</SubSystem>
-    </Link>
-  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Midl>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -468,7 +178,7 @@
     </Midl>
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
-      <AdditionalIncludeDirectories>../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../common;../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>MAJOR_VER=$(MAJOR_VERSION);MINOR_VER=$(MINOR_VERSION);RELEASE_VER=$(RELEASE_VERSION);BUILD_VER=$(BUILD_NUMBER);WIN32;_WINDOWS;NDEBUG;_USRDLL;WIN_IE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level3</WarningLevel>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
@@ -487,70 +197,6 @@
       <IgnoreSpecificDefaultLibraries>Uafxcw.lib;Libcmtd.lib</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release HTTP|Win32'">
-    <Midl>
-      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MkTypLibCompatible>false</MkTypLibCompatible>
-      <TargetEnvironment>Win32</TargetEnvironment>
-      <GenerateStublessProxies>true</GenerateStublessProxies>
-      <TypeLibraryName>$(IntDir)esteidpluginie.tlb</TypeLibraryName>
-      <HeaderFileName>esteidpluginie_i.h</HeaderFileName>
-      <InterfaceIdentifierFileName>esteidpluginie_i.c</InterfaceIdentifierFileName>
-      <ProxyFileName>esteidpluginie_p.c</ProxyFileName>
-      <ValidateAllParameters>true</ValidateAllParameters>
-    </Midl>
-    <ClCompile>
-      <Optimization>MaxSpeed</Optimization>
-      <AdditionalIncludeDirectories>../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>MAJOR_VER=$(MAJOR_VERSION);MINOR_VER=$(MINOR_VERSION);RELEASE_VER=$(RELEASE_VERSION);BUILD_VER=$(BUILD_NUMBER);WIN32;_WINDOWS;NDEBUG;_USRDLL;WIN_IE;DEVELOPMENT_MODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <WarningLevel>Level3</WarningLevel>
-      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-    </ClCompile>
-    <ResourceCompile>
-      <PreprocessorDefinitions>MAJOR_VER=$(MAJOR_VERSION);MINOR_VER=$(MINOR_VERSION);RELEASE_VER=$(RELEASE_VERSION);BUILD_VER=$(BUILD_NUMBER);NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ResourceCompile>
-    <Link>
-      <RegisterOutput>true</RegisterOutput>
-      <AdditionalDependencies>Uafxcw.lib;Libcmt.lib;Ncrypt.lib;Cryptui.lib;crypt32.lib;Winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ModuleDefinitionFile>.\esteid-plugin-ie.def</ModuleDefinitionFile>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Windows</SubSystem>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release SEB|Win32'">
-    <Midl>
-      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MkTypLibCompatible>false</MkTypLibCompatible>
-      <TargetEnvironment>Win32</TargetEnvironment>
-      <GenerateStublessProxies>true</GenerateStublessProxies>
-      <TypeLibraryName>$(IntDir)esteidpluginie.tlb</TypeLibraryName>
-      <HeaderFileName>esteidpluginie_i.h</HeaderFileName>
-      <InterfaceIdentifierFileName>esteidpluginie_i.c</InterfaceIdentifierFileName>
-      <ProxyFileName>esteidpluginie_p.c</ProxyFileName>
-      <ValidateAllParameters>true</ValidateAllParameters>
-    </Midl>
-    <ClCompile>
-      <Optimization>MaxSpeed</Optimization>
-      <AdditionalIncludeDirectories>../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>MAJOR_VER=$(MAJOR_VERSION);MINOR_VER=$(MINOR_VERSION);RELEASE_VER=$(RELEASE_VERSION);BUILD_VER=$(BUILD_NUMBER);_SEB_BUILD;WIN32;_WINDOWS;NDEBUG;_USRDLL;WIN_IE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <WarningLevel>Level3</WarningLevel>
-      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-    </ClCompile>
-    <ResourceCompile>
-      <PreprocessorDefinitions>MAJOR_VER=$(MAJOR_VERSION);MINOR_VER=$(MINOR_VERSION);RELEASE_VER=$(RELEASE_VERSION);BUILD_VER=$(BUILD_NUMBER);NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ResourceCompile>
-    <Link>
-      <RegisterOutput>true</RegisterOutput>
-      <AdditionalDependencies>Uafxcw.lib;Libcmt.lib;Ncrypt.lib;Cryptui.lib;crypt32.lib;Winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ModuleDefinitionFile>.\esteid-plugin-ie.def</ModuleDefinitionFile>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Windows</SubSystem>
-    </Link>
-  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Midl>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -564,7 +210,7 @@
     </Midl>
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
-      <AdditionalIncludeDirectories>../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../common;../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>MAJOR_VER=$(MAJOR_VERSION);MINOR_VER=$(MINOR_VERSION);RELEASE_VER=$(RELEASE_VERSION);BUILD_VER=$(BUILD_NUMBER);WIN32;WIN64;_WINDOWS;NDEBUG;_USRDLL;WIN_IE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level3</WarningLevel>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
@@ -583,86 +229,23 @@
       <IgnoreSpecificDefaultLibraries>Uafxcw.lib;Libcmtd.lib</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release HTTP|x64'">
-    <Midl>
-      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MkTypLibCompatible>false</MkTypLibCompatible>
-      <TargetEnvironment>X64</TargetEnvironment>
-      <GenerateStublessProxies>true</GenerateStublessProxies>
-      <TypeLibraryName>$(IntDir)esteidpluginie.tlb</TypeLibraryName>
-      <HeaderFileName>esteidpluginie_i.h</HeaderFileName>
-      <InterfaceIdentifierFileName>esteidpluginie_i.c</InterfaceIdentifierFileName>
-      <ProxyFileName>esteidpluginie_p.c</ProxyFileName>
-    </Midl>
-    <ClCompile>
-      <Optimization>MaxSpeed</Optimization>
-      <AdditionalIncludeDirectories>../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>MAJOR_VER=$(MAJOR_VERSION);MINOR_VER=$(MINOR_VERSION);RELEASE_VER=$(RELEASE_VERSION);BUILD_VER=$(BUILD_NUMBER);WIN32;WIN64;_WINDOWS;NDEBUG;_USRDLL;WIN_IE;DEVELOPMENT_MODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <WarningLevel>Level3</WarningLevel>
-      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-    </ClCompile>
-    <ResourceCompile>
-      <PreprocessorDefinitions>MAJOR_VER=$(MAJOR_VERSION);MINOR_VER=$(MINOR_VERSION);RELEASE_VER=$(RELEASE_VERSION);BUILD_VER=$(BUILD_NUMBER);NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ResourceCompile>
-    <Link>
-      <RegisterOutput>true</RegisterOutput>
-      <AdditionalDependencies>Uafxcw.lib;Libcmt.lib;Ncrypt.lib;Cryptui.lib;crypt32.lib;Winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ModuleDefinitionFile>.\esteid-plugin-ie.def</ModuleDefinitionFile>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Windows</SubSystem>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release SEB|x64'">
-    <Midl>
-      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MkTypLibCompatible>false</MkTypLibCompatible>
-      <TargetEnvironment>X64</TargetEnvironment>
-      <GenerateStublessProxies>true</GenerateStublessProxies>
-      <TypeLibraryName>$(IntDir)esteidpluginie.tlb</TypeLibraryName>
-      <HeaderFileName>esteidpluginie_i.h</HeaderFileName>
-      <InterfaceIdentifierFileName>esteidpluginie_i.c</InterfaceIdentifierFileName>
-      <ProxyFileName>esteidpluginie_p.c</ProxyFileName>
-    </Midl>
-    <ClCompile>
-      <Optimization>MaxSpeed</Optimization>
-      <AdditionalIncludeDirectories>../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>MAJOR_VER=$(MAJOR_VERSION);MINOR_VER=$(MINOR_VERSION);RELEASE_VER=$(RELEASE_VERSION);BUILD_VER=$(BUILD_NUMBER);_SEB_BUILD;WIN32;WIN64;_WINDOWS;NDEBUG;_USRDLL;WIN_IE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <WarningLevel>Level3</WarningLevel>
-      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-    </ClCompile>
-    <ResourceCompile>
-      <PreprocessorDefinitions>MAJOR_VER=$(MAJOR_VERSION);MINOR_VER=$(MINOR_VERSION);RELEASE_VER=$(RELEASE_VERSION);BUILD_VER=$(BUILD_NUMBER);NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ResourceCompile>
-    <Link>
-      <RegisterOutput>true</RegisterOutput>
-      <AdditionalDependencies>Uafxcw.lib;Libcmt.lib;Ncrypt.lib;Cryptui.lib;crypt32.lib;Winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ModuleDefinitionFile>.\esteid-plugin-ie.def</ModuleDefinitionFile>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Windows</SubSystem>
-    </Link>
-  </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CertificateSelectorFactory.cpp" />
+    <ClCompile Include="CertificateSelector.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="esteid-plugin-ie.cpp" />
-    <ClCompile Include="..\common\esteid_log.c" />
-    <ClCompile Include="..\common\esteid_map.c" />
     <ClCompile Include="EstEIDCertificate.cpp" />
     <ClCompile Include="EstEIDIEPluginBHO.cpp" />
-    <ClCompile Include="..\common\cert_dialog_win.c" />
     <ClCompile Include="esteidpluginie_i.c" />
     <ClCompile Include="BinaryUtils.cpp" />
     <ClCompile Include="CngCapiSigner.cpp" />
+    <ClCompile Include="Labels.cpp" />
+    <ClCompile Include="Logger.cpp" />
     <ClCompile Include="NativeCertificateSelector.cpp" />
     <ClCompile Include="PinDialog.cpp" />
     <ClCompile Include="PKCS11CertificateSelector.cpp" />
     <ClCompile Include="PKCS11Path.cpp" />
     <ClCompile Include="PKCS11Signer.cpp" />
-    <ClCompile Include="SignerFactory.cpp" />
+    <ClCompile Include="Signer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="esteid-plugin-ie.def" />
@@ -675,19 +258,15 @@
     <Midl Include="esteidpluginie.idl" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\common\esteid_map.h" />
     <ClInclude Include="BinaryUtils.h" />
     <ClInclude Include="CertificateSelector.h" />
-    <ClInclude Include="CertificateSelectorFactory.h" />
     <ClInclude Include="CngCapiSigner.h" />
     <ClInclude Include="dllmain.h" />
-    <ClInclude Include="..\common\esteid_error.h" />
-    <ClInclude Include="..\common\esteid_log.h" />
     <ClInclude Include="EstEIDCertificate.h" />
-    <ClInclude Include="EstEIDHelper.h" />
     <ClInclude Include="EstEIDIEPluginBHO.h" />
-    <ClInclude Include="..\common\cert_dialog_win.h" />
     <ClInclude Include="HostExceptions.h" />
+    <ClInclude Include="Labels.h" />
+    <ClInclude Include="Logger.h" />
     <ClInclude Include="NativeCertificateSelector.h" />
     <ClInclude Include="PinDialog.h" />
     <ClInclude Include="PKCS11CardManager.h" />
@@ -696,7 +275,6 @@
     <ClInclude Include="PKCS11Signer.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Signer.h" />
-    <ClInclude Include="SignerFactory.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="..\common\version.h" />

@@ -18,11 +18,24 @@
 
 #pragma once
 
-#include <string>
+#include "HostExceptions.h"
+#include <afx.h>
+#include <wincrypt.h>
 #include <vector>
-#include "cert_dialog_win.h"
 
 class CertificateSelector {
 public:
-	virtual std::vector<unsigned char> getCert() = 0;
+	static CertificateSelector* createCertificateSelector();
+
+	virtual ~CertificateSelector() {
+		if (store)
+			CertCloseStore(store, 0);
+	}
+	virtual std::vector<unsigned char> getCert(bool forSigning) const throw(UserCancelledException, TechnicalException) = 0;
+
+protected:
+	CertificateSelector() = default;
+	bool isValid(PCCERT_CONTEXT cert, bool forSigning) const;
+	std::vector<unsigned char> showDialog() const;
+	HCERTSTORE store = CertOpenStore(CERT_STORE_PROV_MEMORY, 0, NULL, 0, NULL);
 };

@@ -11,6 +11,7 @@ Warning: Firefox 52 removed NPAPI support and added Chrome Extensions support si
 
 ## Building
 [![Build Status](https://travis-ci.org/open-eid/browser-token-signing.svg?branch=master)](https://travis-ci.org/open-eid/browser-token-signing)
+[![Build Status](https://ci.appveyor.com/api/projects/status/github/open-eid/browser-token-signing?branch=master&svg=true)](https://ci.appveyor.com/project/open-eid/browser-token-signing)
 [![Coverity Scan Build Status](https://scan.coverity.com/projects/3355/badge.svg)](https://scan.coverity.com/projects/3355)
 
 ### Ubuntu

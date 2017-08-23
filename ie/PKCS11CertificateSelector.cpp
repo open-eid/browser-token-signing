@@ -18,88 +18,44 @@
 
 #include "PKCS11CertificateSelector.h"
 #include "PKCS11CardManager.h"
-#include "BinaryUtils.h"
+#include "Logger.h"
 #include "HostExceptions.h"
-extern "C" {
-#include "esteid_log.h"
-}
+
+#include <memory>
 
 using namespace std;
 
-void PKCS11CertificateSelector::initialize() {
-	if (hMemoryStore = CertOpenStore(CERT_STORE_PROV_MEMORY, 0, NULL, 0, NULL)) {
-		EstEID_log("Opened a memory store.");
-	} else {	
-		EstEID_log("Error opening a memory store.");
-		throw TechnicalException("Error opening a memory store.");
-	}
-	fetchAllSigningCertificates();
-}
+PKCS11CertificateSelector::PKCS11CertificateSelector(const string &_driverPath)
+	: CertificateSelector()
+	, driverPath(_driverPath)
+{}
 
-void PKCS11CertificateSelector::fetchAllSigningCertificates() {
+vector<unsigned char> PKCS11CertificateSelector::getCert(bool forSigning) const {
+	int certificatesCount = 0;
 	try {
-		unique_ptr<PKCS11CardManager> manager;
-		bool certificateAddedToMemoryStore = false;
-		vector<CK_SLOT_ID> foundTokens = createCardManager()->getAvailableTokens();
-		for (auto &token : foundTokens) {
-			try {
-				manager.reset(createCardManager()->getManagerForReader(token));
-			}
-			catch (PKCS11TokenNotRecognized &ex) {
-				EstEID_log("%s", ex.what());
+		for (const auto &token : PKCS11CardManager(driverPath).tokens()) {
+			PCCERT_CONTEXT cert = CertCreateCertificateContext(X509_ASN_ENCODING | PKCS_7_ASN_ENCODING, token.cert.data(), token.cert.size());
+			if (!cert)
+				continue;
+			_log("new certificate handle created.");
+
+			if (isValid(cert, forSigning)) {
+				CertFreeCertificateContext(cert);
 				continue;
 			}
-			catch (PKCS11TokenNotPresent &ex) {
-				EstEID_log("%s", ex.what());
-				continue;
+			if (CertAddCertificateContextToStore(store, cert, CERT_STORE_ADD_USE_EXISTING, nullptr)) {
+				++certificatesCount;
+				_log("Certificate added to the memory store.");
 			}
-			if (manager->hasSignCert()) {
-				addCertificateToMemoryStore(manager->getSignCert());
-				certificateAddedToMemoryStore = true;
-			}
-		}
-		if (foundTokens.size() > 0 && !certificateAddedToMemoryStore) {
-			throw PKCS11TokenNotRecognized();
+			else
+				_log("Could not add the certificate to the memory store.");
 		}
 	}
 	catch (const std::runtime_error &a) {
-		EstEID_log("Technical error: %s", a.what());
+		_log("Technical error: %s", a.what());
 		throw TechnicalException("Error getting certificate manager: " + string(a.what()));
 	}
-}
-
-PKCS11CardManager* PKCS11CertificateSelector::createCardManager() {
-	if (driverPath.empty()) {
-		return PKCS11CardManager::instance();
-	}
-	return PKCS11CardManager::instance(driverPath);
-}
-
-void PKCS11CertificateSelector::addCertificateToMemoryStore(std::vector<unsigned char> signCert) {
-	PCCERT_CONTEXT cert = CertCreateCertificateContext(X509_ASN_ENCODING | PKCS_7_ASN_ENCODING, signCert.data(), signCert.size());
-	if (CertAddCertificateContextToStore(hMemoryStore, cert, CERT_STORE_ADD_USE_EXISTING, NULL)) {
-		EstEID_log("Certificate added to the memory store.");
-	}
-	else {
-		EstEID_log("Could not add the certificate to the memory store.");
-		throw TechnicalException("Could not add certificate to the memory store.");
-	}
-}
-
-vector<unsigned char> PKCS11CertificateSelector::getCert() {
-	CRYPTUI_SELECTCERTIFICATE_STRUCT pcsc = { sizeof(pcsc) };
-	pcsc.pFilterCallback = nullptr; //already filtered in PKCS11CardManager
-	pcsc.pvCallbackData = nullptr;
-	pcsc.cDisplayStores = 1;
-	pcsc.rghDisplayStores = &hMemoryStore;
-	PCCERT_CONTEXT cert_context = CryptUIDlgSelectCertificate(&pcsc);
-
-	if (!cert_context) {
-		CertCloseStore(hMemoryStore, 0);
-		throw UserCancelledException();
-	}
-	vector<unsigned char> certData(cert_context->pbCertEncoded, cert_context->pbCertEncoded + cert_context->cbCertEncoded);
-	CertFreeCertificateContext(cert_context);
-	CertCloseStore(hMemoryStore, 0);
-	return certData;
+	if (certificatesCount < 1)
+		throw NoCertificatesException();
+	return showDialog();
 }

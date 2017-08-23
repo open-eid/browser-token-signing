@@ -22,6 +22,6 @@
 
 class NativeCertificateSelector : public CertificateSelector {
 public:
-	NativeCertificateSelector() : CertificateSelector(){}
-	virtual std::vector<unsigned char> getCert();
+	NativeCertificateSelector() = default;
+	std::vector<unsigned char> getCert(bool forSigning) const override;
 };
