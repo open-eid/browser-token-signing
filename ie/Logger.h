@@ -16,32 +16,16 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include "BinaryUtils.h"
-#include <stdio.h>
-#include <stdexcept>
+#pragma once
 
-using namespace std;
+#include <cstdarg>
 
-vector<unsigned char> BinaryUtils::hex2bin(const string &hex) {
-  if (hex.size() % 2 == 1)
-      throw runtime_error("Hex is incorrect");
-
-  vector<unsigned char> bin(hex.size() / 2, 0);
-  unsigned char *c = &bin[0];
-  const char *h = hex.c_str();
-  while (*h) {
-    int x;
-    sscanf(h, "%2X", &x);
-    *c = x;
-    c++;
-    h += 2;
-  }
-  return bin;
+namespace Logger {
+    void writeLog(const char *functionName, const char *fileName, int lineNumber, const char *message, ...);
 }
 
-string BinaryUtils::bin2hex(const vector<unsigned char> &bin) {
-  string hex(bin.size() * 2, 0);
-  for (size_t j = 0; j < bin.size(); ++j)
-    sprintf(&hex[j * 2], "%02X", (unsigned char) bin.at(j));
-  return hex;
-}
+#if defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
+#define _log(...) Logger::writeLog(__func__, __FILE__, __LINE__, __VA_ARGS__)
+#else
+#define _log(...) Logger::writeLog(__FUNCTION__, __FILE__, __LINE__, __VA_ARGS__)
+#endif

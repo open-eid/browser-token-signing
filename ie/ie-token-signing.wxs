@@ -18,12 +18,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 -->
 
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Name="IE Token Signing Plugin" UpgradeCode="713f9d27-5016-4c6a-bee1-94403255fbd4" Id="*" Language="1033" Version="$(var.VERSION)" Codepage="1251" Manufacturer="RIA">
-		<Package Keywords="Installer" Platform="$(var.Platform)" InstallerVersion="405" Compressed="yes" InstallPrivileges="elevated" InstallScope="perMachine"/>
+	<Product Name="IE Token Signing Plugin" UpgradeCode="713f9d27-5016-4c6a-bee1-94403255fbd4" Id="*"
+			Language="1033" Version="$(var.VERSION)" Codepage="1251" Manufacturer="RIA">
+		<Package Keywords="Installer" Platform="$(var.Platform)" InstallerVersion="405"
+			Compressed="yes" InstallPrivileges="elevated" InstallScope="perMachine"/>
 		<MediaTemplate EmbedCab="yes" CompressionLevel="high"/>
 		<Icon Id="Icon.ico" SourceFile="$(var.SolutionDir)media/ID.ico"/>
-	<Property Id="ARPPRODUCTICON" Value="Icon.ico"/>
-	<MajorUpgrade AllowSameVersionUpgrades="yes" DowngradeErrorMessage=
+		<Property Id="ARPPRODUCTICON" Value="Icon.ico"/>
+		<MajorUpgrade AllowSameVersionUpgrades="yes" DowngradeErrorMessage=
 		"A newer version of [ProductName] is already installed. If you are trying to downgrade, please uninstall the newer version first."/>
 		<Condition Message="[ProductName] requires Windows 7 or higher.">
 		  <![CDATA[Installed OR (VersionNT >= 601)]]>
@@ -32,7 +34,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 		<Directory Id="TARGETDIR" Name="SourceDir">
 			<Directory Id='ProgramFilesFolder'>
-				<Directory Id="APPLICATIONFOLDER" Name="IE Token Signing Plugin">					
+				<Directory Id="APPLICATIONFOLDER" Name="IE Token Signing Plugin">
 					<Component Id="Application" Guid="{B5C61F10-1F23-497a-91A5-9348BA3DB6E6}" Win64="no">
 						<AppId Description="IE plugin for Estonian ID Card" Id="545B4ED6-A2FE-49F1-AF8E-FA18B6261E48"/>
 						<File Source="$(var.SolutionDir)$(var.Configuration)\esteid-plugin-ie.dll" Id="esteid_plugin_ie.dll" KeyPath="yes" Name="esteid-plugin-ie.dll">
@@ -52,18 +54,17 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 							</TypeLib>
 						</File>
 						<ProgId Id="MIME"/>
-						<RegistryValue Root="HKCR" Key="AppID\esteid-plugin-ie.DLL" Name="AppID" Value="{545B4ED6-A2FE-49F1-AF8E-FA18B6261E48}" Type="string" Action="write"/>
-						<RegistryValue Root="HKCR" Key="MIME\Database\Content Type\application/x-digidoc" Name="CLSID" Value="{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}" Type="string" Action="write"/>
-						<RegistryValue Root="HKLM" Key="Software\Microsoft\Windows\CurrentVersion\Explorer\Browser Helper Objects\{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}" Value="EstEIDIEPluginBHO" Type="string" Action="write"/>
-						<RegistryValue Root="HKLM" Key="Software\Microsoft\Windows\CurrentVersion\Explorer\Browser Helper Objects\{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}" Name="NoExplorer" Value="1" Type="integer" Action="write"/>
-						<RegistryValue Root="HKLM" Key="Software\Microsoft\Windows\CurrentVersion\Ext\PreApproved\{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}" Value="EstEIDIEPluginBHO" Type="string" Action="write"/>
-						<RegistryValue Root="HKLM" Key="Software\Microsoft\Windows\CurrentVersion\Ext\PreApproved\{FC5B7BD2-584A-4153-92D7-4C5840E4BC28}" Value="EstEIDIEPluginBHO" Type="string" Action="write"/>
+						<RegistryValue Root="HKCR" Key="AppID\esteid-plugin-ie.DLL" Name="AppID" Value="{545B4ED6-A2FE-49F1-AF8E-FA18B6261E48}" Type="string"/>
+						<RegistryValue Root="HKCR" Key="MIME\Database\Content Type\application/x-digidoc" Name="CLSID" Value="{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}" Type="string"/>
+						<RegistryValue Root="HKLM" Key="Software\Microsoft\Windows\CurrentVersion\Explorer\Browser Helper Objects\{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}" Value="EstEIDIEPluginBHO" Type="string"/>
+						<RegistryValue Root="HKLM" Key="Software\Microsoft\Windows\CurrentVersion\Explorer\Browser Helper Objects\{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}" Name="NoExplorer" Value="1" Type="integer"/>
+						<RegistryValue Root="HKLM" Key="Software\Microsoft\Windows\CurrentVersion\Ext\PreApproved\{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}" Value="EstEIDIEPluginBHO" Type="string"/>
+						<RegistryValue Root="HKLM" Key="Software\Microsoft\Windows\CurrentVersion\Ext\PreApproved\{FC5B7BD2-584A-4153-92D7-4C5840E4BC28}" Value="EstEIDIEPluginBHO" Type="string"/>
 
-						<RegistryKey Root="HKLM" Key="SOFTWARE\Classes\CLSID\{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}\Implemented Categories\{7DD95801-9882-11CF-9FA9-00AA006C42C4}" Action="createAndRemoveOnUninstall"/>
-						<RegistryKey Root="HKLM" Key="SOFTWARE\Classes\CLSID\{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}\Implemented Categories\{59fb2056-d625-48d0-a944-1a85b5ab2640}" Action="createAndRemoveOnUninstall"/>
-						<RegistryKey Root="HKCR" Key="CLSID\{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}\Implemented Categories\{59fb2056-d625-48d0-a944-1a85b5ab2640}" Action="createAndRemoveOnUninstall"/>
-						<RegistryKey Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Ext\CLSID" Action="create"/>
-						<RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Ext\CLSID" Name="{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}" Value="1" Action="write" Type="string"/>
+						<RegistryKey Root="HKLM" Key="SOFTWARE\Classes\CLSID\{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}\Implemented Categories\{7DD95801-9882-11CF-9FA9-00AA006C42C4}" ForceCreateOnInstall="yes"/>
+						<RegistryKey Root="HKLM" Key="SOFTWARE\Classes\CLSID\{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}\Implemented Categories\{59fb2056-d625-48d0-a944-1a85b5ab2640}" ForceCreateOnInstall="yes"/>
+						<RegistryKey Root="HKCR" Key="CLSID\{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}\Implemented Categories\{59fb2056-d625-48d0-a944-1a85b5ab2640}" ForceCreateOnInstall="yes"/>
+						<RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Ext\CLSID" Name="{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}" Value="1" Type="string"/>
 					</Component>
 				</Directory>
 			</Directory>

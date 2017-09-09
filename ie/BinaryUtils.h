@@ -1,5 +1,5 @@
 /*
- * Estonian ID card plugin for web browsers
+ * Chrome Token Signing Native Host
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -25,3 +25,4 @@ namespace BinaryUtils {
     std::vector<unsigned char> hex2bin(const std::string &hex);
     std::string bin2hex(const std::vector<unsigned char> &bin);
 };
+

@@ -1,43 +1,38 @@
 /*
-* Chrome Token Signing Native Host
-*
-* This library is free software; you can redistribute it and/or
-* modify it under the terms of the GNU Lesser General Public
-* License as published by the Free Software Foundation; either
-* version 2.1 of the License, or (at your option) any later version.
-*
-* This library is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-* Lesser General Public License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public
-* License along with this library; if not, write to the Free Software
-* Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+ * Chrome Token Signing Native Host
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
 #include "CngCapiSigner.h"
 #include "BinaryUtils.h"
 #include "HostExceptions.h"
-#include "EstEIDHelper.h"
 #include <Windows.h>
 #include <ncrypt.h>
 #include <WinCrypt.h>
 #include <cryptuiapi.h>
-extern "C" {
-#include "esteid_log.h"
-}
+#include "Logger.h"
 
 using namespace std;
 
-string CngCapiSigner::sign() {
-	EstEID_log("Signing with hash: %s, with certId: %s", getHash()->c_str(), getCertId());
+vector<unsigned char> CngCapiSigner::sign(const vector<unsigned char> &digest)
+{
 	BCRYPT_PKCS1_PADDING_INFO padInfo;
 	DWORD obtainKeyStrategy = CRYPT_ACQUIRE_PREFER_NCRYPT_KEY_FLAG;
-	vector<unsigned char> digest = BinaryUtils::hex2bin(getHash()->c_str());
 
-	ALG_ID alg = 0;
-
+	ALG_ID alg = 0;	
 	switch (digest.size())
 	{
 	case BINARY_SHA1_LENGTH:
@@ -63,62 +58,76 @@ string CngCapiSigner::sign() {
 	default:
 		throw InvalidHashException();
 	}
-
+	
 	SECURITY_STATUS err = 0;
 	DWORD size = 256;
 	vector<unsigned char> signature(size, 0);
+
+	HCERTSTORE store = CertOpenStore(CERT_STORE_PROV_SYSTEM,
+		X509_ASN_ENCODING, 0, CERT_SYSTEM_STORE_CURRENT_USER | CERT_STORE_READONLY_FLAG, L"MY");
+	if (!store)
+		throw TechnicalException("Failed to open Cert Store");
+	
+	vector<unsigned char> certInBinary = BinaryUtils::hex2bin(getCertInHex());
+	
+	PCCERT_CONTEXT certFromBinary = CertCreateCertificateContext(X509_ASN_ENCODING, certInBinary.data(), certInBinary.size());
+	PCCERT_CONTEXT certInStore = CertFindCertificateInStore(store, X509_ASN_ENCODING, 0, CERT_FIND_EXISTING, certFromBinary, 0);
+	CertFreeCertificateContext(certFromBinary);
+
+	if (!certInStore)
+	{
+		CertCloseStore(store, 0);
+		throw NoCertificatesException();
+	}
 
 	DWORD flags = obtainKeyStrategy | CRYPT_ACQUIRE_COMPARE_KEY_FLAG;
 	DWORD spec = 0;
 	BOOL freeKeyHandle = false;
 	HCRYPTPROV_OR_NCRYPT_KEY_HANDLE key = NULL;
 	BOOL gotKey = true;
-	gotKey = CryptAcquireCertificatePrivateKey(certContext, flags, 0, &key, &spec, &freeKeyHandle);
-	CertFreeCertificateContext(certContext);
+	gotKey = CryptAcquireCertificatePrivateKey(certInStore, flags, 0, &key, &spec, &freeKeyHandle);
+	CertFreeCertificateContext(certInStore);
+	CertCloseStore(store, 0);
 
-	switch (spec)
+	switch (spec) 
 	{
 	case CERT_NCRYPT_KEY_SPEC:
 	{
-		EstEID_log("Using CNG");
-		err = NCryptSignHash(key, &padInfo, PBYTE(&digest[0]), DWORD(digest.size()),
-			&signature[0], DWORD(signature.size()), (DWORD*)&size, BCRYPT_PAD_PKCS1);
+		err = NCryptSignHash(key, &padInfo, PBYTE(digest.data()), DWORD(digest.size()),
+			signature.data(), DWORD(signature.size()), (DWORD*)&size, BCRYPT_PAD_PKCS1);
 		if (freeKeyHandle) {
 			NCryptFreeObject(key);
 		}
+		signature.resize(size);
 		break;
 	}
+	case AT_KEYEXCHANGE:
 	case AT_SIGNATURE:
 	{
-		EstEID_log("keySpec is AT_SIGNATURE... Using CAPI");
 		HCRYPTHASH hash = 0;
-		EstEID_log("calling CryptCreateHash()...");
 		if (!CryptCreateHash(key, alg, 0, 0, &hash)) {
-			EstEID_log("CryptCreateHash() return code: (%s) %x", "FAILURE", GetLastError());
 			if (freeKeyHandle) {
 				CryptReleaseContext(key, 0);
 			}
-			EstEID_log("throwing technical exception - createHash failed..");
 			throw TechnicalException("CreateHash failed");
 		}
-		EstEID_log("calling CryptSetHashParam()..");
+
 		if (!CryptSetHashParam(hash, HP_HASHVAL, digest.data(), 0))	{
-			EstEID_log("CryptSetHashParam() error code: (%s) %x", "FAILURE", GetLastError());
 			if (freeKeyHandle) {
 				CryptReleaseContext(key, 0);
 			}
 			CryptDestroyHash(hash);
-			EstEID_log("throwing technical exception - SetHashParam failed..");
 			throw TechnicalException("SetHashParam failed");
 		}
-		EstEID_log("calling CryptSignHashW()..");
-		INT retCode = CryptSignHashW(hash, AT_SIGNATURE, 0, 0, LPBYTE(signature.data()), &size);
+
+		INT retCode = CryptSignHashW(hash, spec, 0, 0, LPBYTE(signature.data()), &size);
 		err = retCode ? ERROR_SUCCESS : GetLastError();
-		EstEID_log("CryptSignHash() return code: %u (%s) %x", retCode, retCode ? "SUCCESS" : "FAILURE", err);
+		_log("CryptSignHash() return code: %u (%s) %x", retCode, retCode ? "SUCCESS" : "FAILURE", err);
 		if (freeKeyHandle) {
 			CryptReleaseContext(key, 0);
 		}
 		CryptDestroyHash(hash);
+		signature.resize(size);
 		reverse(signature.begin(), signature.end());
 		break;
 	}
@@ -129,8 +138,9 @@ string CngCapiSigner::sign() {
 	switch (err)
 	{
 	case ERROR_SUCCESS:
-		break;
-	case SCARD_W_CANCELLED_BY_USER: case ERROR_CANCELLED:
+		return signature;
+	case SCARD_W_CANCELLED_BY_USER:
+	case ERROR_CANCELLED:
 		throw UserCancelledException("Signing was cancelled");
 	case SCARD_W_CHV_BLOCKED:
 		throw PinBlockedException();
@@ -139,7 +149,5 @@ string CngCapiSigner::sign() {
 	default:
 		throw TechnicalException("Signing failed");
 	}
-	signature.resize(size);
-	return BinaryUtils::bin2hex(signature);
 }
 

@@ -19,25 +19,13 @@
 #pragma once
 
 #include "CertificateSelector.h"
-#include "PKCS11CardManager.h"
-#include <future>
-#include <string>
 #include <vector>
 
 class PKCS11CertificateSelector : public CertificateSelector {
 public:
-	PKCS11CertificateSelector(const std::string &_driverPath) : CertificateSelector(){
-		driverPath = _driverPath;
-		initialize();
-	}
-	virtual std::vector<unsigned char> getCert();
+	PKCS11CertificateSelector(const std::string &_driverPath);
+	std::vector<unsigned char> getCert(bool forSigning) const override;
 
 private:
-	void initialize();
-	void fetchAllSigningCertificates();
-	void addCertificateToMemoryStore(std::vector<unsigned char> signCert);
-	PKCS11CardManager* createCardManager();
-
-	HCERTSTORE  hMemoryStore;
 	std::string driverPath;
 };

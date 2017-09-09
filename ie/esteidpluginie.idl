@@ -21,8 +21,8 @@ interface IEstEIDIEPluginBHO : IDispatch{
 	[propget, id(3), helpstring("property errorCode")] HRESULT errorCode([out, retval] BSTR *result);
 	[propget, id(4), helpstring("property language")] HRESULT pluginLanguage([out, retval] BSTR *result);
 	[propput, id(4), helpstring("property language")] HRESULT pluginLanguage([in] BSTR language);
-	[id(6), helpstring("method getCertificate()")] HRESULT getCertificate([out, retval] IDispatch **_certificate);
-	[id(7), helpstring("method sign()")] HRESULT sign([in] BSTR id, [in] BSTR hash, [in] BSTR language, [out, retval] BSTR *signature); 
+	[id(6), helpstring("method getCertificate()")] HRESULT getCertificate([in, optional] VARIANT filter, [out, retval] IDispatch **certificate);
+	[id(7), helpstring("method sign()")] HRESULT sign([in] BSTR id, [in] BSTR hash, [in] BSTR language, [in, optional] VARIANT info, [out, retval] BSTR *signature); 
 };
 [
 	object,
@@ -36,6 +36,7 @@ interface IEstEIDCertificate : IDispatch{
 	[propget, id(1), helpstring("property certificate id")] HRESULT id([out, retval] BSTR *id);
 	[propget, id(2), helpstring("property certificate certificateAsHex")] HRESULT certificateAsHex([out, retval] BSTR *certificate);
 	[propget, id(3), helpstring("property certificate cert (certificateAsHex)")] HRESULT cert([out, retval] BSTR *certificate);
+	[id(4), helpstring("method Init")] HRESULT Init([in, optional] VARIANT filter);
 };
 [
 	uuid(23EF5046-6402-4C39-B34B-3C47826805D1),

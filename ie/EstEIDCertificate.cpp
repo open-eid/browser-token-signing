@@ -20,64 +20,73 @@
  */
 
 #include "stdafx.h"
-#include "HostExceptions.h"
 #include "EstEIDCertificate.h"
-#include "EstEIDHelper.h"
-#include "CertificateSelectorFactory.h"
-extern "C" {
-#include "esteid_log.h"
-}
 
-STDMETHODIMP CEstEIDCertificate::get_id(BSTR *id){
-	EstEID_log("");
-	*id = _bstr_t(this->id.c_str()).Detach();
+#include "BinaryUtils.h"
+#include "CertificateSelector.h"
+#include "Logger.h"
+
+#include <memory>
+#include <wincrypt.h>
+
+#define MD5_HASH_LEN 16
+
+STDMETHODIMP CEstEIDCertificate::get_id(BSTR *_id){
+	_log("");
+	*_id = _bstr_t(id.c_str()).Detach();
 	return S_OK;
 }
 
-void CEstEIDCertificate::readFromCertContext() {
-	vector<unsigned char> signCert = CertificateSelectorFactory::createCertificateSelector()->getCert();
-	PCCERT_CONTEXT pCertContext = CertCreateCertificateContext(X509_ASN_ENCODING | PKCS_7_ASN_ENCODING, signCert.data(), signCert.size());
-	loadCertContexts(pCertContext);
-	if (pCertContext){
-		CertFreeCertificateContext(pCertContext);
-	}
-}
-
-void CEstEIDCertificate::loadCertContexts(PCCERT_CONTEXT certContext) {
+STDMETHODIMP CEstEIDCertificate::Init(VARIANT filter) {
 	USES_CONVERSION;
-	EstEID_log("");
 
-	this->certificate = (BYTE*)malloc(certContext->cbCertEncoded + 1);
-	memcpy(this->certificate, certContext->pbCertEncoded, certContext->cbCertEncoded);
-	this->certificate[certContext->cbCertEncoded] = '\0';
-	EstEID_log("certificate binary length = %i", certContext->cbCertEncoded);
-	
-	calculateMD5Hash(certContext->cbCertEncoded);
-	binCert2Hex(certContext->cbCertEncoded);
+	std::string filterstr;
+	if (filter.vt == VT_BSTR)
+		filterstr = W2A(filter.bstrVal);
+	std::unique_ptr<CertificateSelector> selector(CertificateSelector::createCertificateSelector());
+	cert = selector->getCert(filterstr != "AUTH");
+	cert.resize(cert.size() + 1);
+	_log("certificate binary length = %i", cert.size());
+	hex = BinaryUtils::bin2hex(cert);
+
+	HCRYPTPROV cryptProv;
+	if (!CryptAcquireContext(&cryptProv, NULL, MS_DEF_PROV, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT)) {
+		return -1;
+	}
+
+	HCRYPTHASH cryptHash;
+	if (!CryptCreateHash(cryptProv, CALG_MD5, 0, 0, &cryptHash)) {
+		CryptReleaseContext(cryptProv, 0);
+		return -1;
+	}
+
+	if (!CryptHashData(cryptHash, cert.data(), cert.size(), 0)) {
+		CryptReleaseContext(cryptProv, 0);
+		CryptDestroyHash(cryptHash);
+		return -1;
+	}
+
+	DWORD cbHash = MD5_HASH_LEN;
+	std::vector<BYTE> hash(MD5_HASH_LEN, 0);
+	if (!CryptGetHashParam(cryptHash, HP_HASHVAL, hash.data(), &cbHash, 0)) {
+		CryptReleaseContext(cryptProv, 0);
+		CryptDestroyHash(cryptHash);
+		return -1;
+	}
+	CryptReleaseContext(cryptProv, 0);
+	CryptDestroyHash(cryptHash);
+	id = BinaryUtils::bin2hex(hash);
+	_log("Certificate ID (MD5 hash) is %s", id.c_str());
+	return S_OK;
 }
 
 STDMETHODIMP CEstEIDCertificate::get_certificateAsHex(BSTR *certificate) {
-	EstEID_log("");
-	*certificate = _bstr_t(this->certificateAsHex.data()).Detach();
+	_log("");
+	*certificate = _bstr_t(hex.c_str()).Detach();
 	return S_OK;
 }
 
 STDMETHODIMP CEstEIDCertificate::get_cert(BSTR *certificate) {
-	EstEID_log("");
-	*certificate = _bstr_t(this->certificateAsHex.data()).Detach();
-	return S_OK;
-}
-
-void CEstEIDCertificate::binCert2Hex(const unsigned int binLength) {
-	EstEID_log("");
-	char *hex = (char*)CEstEIDHelper::getBytesAsHexString((void*)this->certificate, binLength);
-	this->certificateAsHex.assign(hex);
-	free(hex);	
-}
-
-void CEstEIDCertificate::calculateMD5Hash(unsigned int certLength) {
-	EstEID_log("");
-	char *certMd5Hash = CEstEIDHelper::calculateMD5Hash((char*)this->certificate);
-	EstEID_log("Certificate ID (MD5 hash) is %s", certMd5Hash);
-	this->id.assign(certMd5Hash);
+	_log("");
+	return get_certificateAsHex(certificate);
 }

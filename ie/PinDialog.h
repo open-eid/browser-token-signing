@@ -1,5 +1,5 @@
 /*
-* Estonian ID card plugin for web browsers
+* Chrome Token Signing Native Host
 *
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -15,80 +15,31 @@
 * License along with this library; if not, write to the Free Software
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
+
 #pragma once
 
 #include "resource.h"
-#include <atlbase.h>
-#include <atlhost.h>
-#include <atlstr.h>
-#include <atlctl.h>
-extern "C" {
-#include "esteid_log.h"
-}
 
+#include <afxcmn.h>
+#include <string>
 
-using namespace ATL;
-
-class CPinDialog : 
-	public CAxDialogImpl<CPinDialog>
+class PinDialog : public CDialog
 {
+	DECLARE_DYNAMIC(PinDialog)
+
 public:
+	PinDialog(const std::wstring &_label, CWnd* pParent = NULL) : CDialog(PinDialog::IDD, pParent), label(_label) {}
 	char* getPin();
-	void showPinBlocked();
-	void setAttemptsRemaining(int attemptsRemaining);
-	void setInvalidPin(bool isPininvalid);
-	CPinDialog(){}
-	~CPinDialog(){}
+	afx_msg void OnBnClickedOk();
 
-	enum { IDD = IDD_PINDIALOG };
+	// Dialog Data
+	enum { IDD = IDD_PIN_DIALOG };
 
-BEGIN_MSG_MAP(CPinDialog)
-	MESSAGE_HANDLER(WM_INITDIALOG, OnInitDialog)
-	MESSAGE_HANDLER(WM_CTLCOLORSTATIC, OnCtlColorStatic)
-	COMMAND_HANDLER(IDOK, BN_CLICKED, OnClickedOK)
-	COMMAND_HANDLER(IDCANCEL, BN_CLICKED, OnClickedCancel)
-	CHAIN_MSG_MAP(CAxDialogImpl<CPinDialog>)
-END_MSG_MAP()
-
-	LRESULT OnInitDialog(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {		
-		CAxDialogImpl<CPinDialog>::OnInitDialog(uMsg, wParam, lParam, bHandled);
-		ATLVERIFY(CenterWindow());
-		GotoDlgCtrl(GetDlgItem(IDC_PIN_ENTRY));
-		if (invalidPin || attemptsRemainig <= 0) {			
-			wstring msg = getWrongPinErrorMessage();
-			EstEID_log("you have %i tries left", attemptsRemainig);
-			SetDlgItemText(IDC_PIN_MESSAGE, &msg[0]);
-		}
-		bHandled = TRUE;
-		return FALSE; //Focus is set manually
-	}
-
-	LRESULT OnCtlColorStatic(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {	
-		if (GetDlgItem(IDC_PIN_MESSAGE).m_hWnd == (HWND)lParam && (invalidPin || attemptsRemainig <= 0)) {
-			SetTextColor((HDC)wParam, RGB(255, 0, 0));
-		}
-		HBRUSH  hBr = (HBRUSH)GetStockObject(WHITE_BRUSH);
-		return (LRESULT)hBr;
-	}
-
-	LRESULT OnClickedOK(WORD wNotifyCode, WORD wID, HWND hWndCtl, BOOL& bHandled) {	
-		CString rawPin;
-		GetDlgItem(IDC_PIN_ENTRY).GetWindowText(rawPin);
-		pin = _strdup(ATL::CT2CA(rawPin));
-		EndDialog(wID);
-		return 0;
-	}
-
-	LRESULT OnClickedCancel(WORD wNotifyCode, WORD wID, HWND hWndCtl, BOOL& bHandled) {
-		EndDialog(wID);
-		return 0;
-	}
+protected:
+	DECLARE_MESSAGE_MAP()
+	virtual BOOL OnInitDialog() override;
 
 private:
 	char* pin;
-	int attemptsRemainig;
-	bool invalidPin = false;
-	wstring getWrongPinErrorMessage();
+	std::wstring label;
 };
-
-

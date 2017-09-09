@@ -1,25 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="..\common\cert_dialog_win.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\common\esteid_log.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="esteidpluginie_i.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EstEIDCertificate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="EstEIDIEPluginBHO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="dllmain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\common\esteid_map.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="esteid-plugin-ie.cpp">
@@ -31,16 +19,10 @@
     <ClCompile Include="CngCapiSigner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SignerFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="PKCS11Signer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PinDialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CertificateSelectorFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="NativeCertificateSelector.cpp">
@@ -52,30 +34,30 @@
     <ClCompile Include="PKCS11Path.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Signer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Logger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CertificateSelector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Labels.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EstEIDCertificate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\common\cert_dialog_win.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\common\esteid_log.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="esteidpluginie_i.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EstEIDCertificate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EstEIDIEPluginBHO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\common\esteid_error.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="dllmain.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EstEIDHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h">
@@ -85,9 +67,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\common\esteid_map.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BinaryUtils.h">
@@ -105,9 +84,6 @@
     <ClInclude Include="Signer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SignerFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="PKCS11CardManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -115,9 +91,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PinDialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CertificateSelectorFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CertificateSelector.h">
@@ -130,6 +103,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PKCS11Path.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Labels.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EstEIDCertificate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
