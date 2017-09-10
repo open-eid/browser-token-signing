@@ -139,7 +139,7 @@ STDMETHODIMP CEstEIDIEPluginBHO::sign(BSTR id, BSTR hashhex, BSTR _language, VAR
 
 		CComBSTR certHex;
 		cert->get_cert(&certHex);
-		unique_ptr<Signer> signer(Signer::createSigner(W2A(certHex)));
+		unique_ptr<Signer> signer(Signer::createSigner(BinaryUtils::hex2bin(W2A(certHex))));
 		if (info.vt == VT_BSTR && !signer->showInfo(W2A_CP(info.bstrVal, CP_UTF8)))
 			throw UserCancelledException();
 

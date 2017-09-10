@@ -16,9 +16,6 @@
     <ClCompile Include="BinaryUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CngCapiSigner.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="PKCS11Signer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -26,6 +23,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="NativeCertificateSelector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NativeSigner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PKCS11CertificateSelector.cpp">
@@ -72,9 +72,6 @@
     <ClInclude Include="BinaryUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CngCapiSigner.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="HostExceptions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -97,6 +94,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="NativeCertificateSelector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NativeSigner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PKCS11CertificateSelector.h">
