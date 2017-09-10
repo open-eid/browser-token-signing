@@ -237,10 +237,10 @@
     <ClCompile Include="EstEIDIEPluginBHO.cpp" />
     <ClCompile Include="esteidpluginie_i.c" />
     <ClCompile Include="BinaryUtils.cpp" />
-    <ClCompile Include="CngCapiSigner.cpp" />
     <ClCompile Include="Labels.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="NativeCertificateSelector.cpp" />
+    <ClCompile Include="NativeSigner.cpp" />
     <ClCompile Include="PinDialog.cpp" />
     <ClCompile Include="PKCS11CertificateSelector.cpp" />
     <ClCompile Include="PKCS11Path.cpp" />
@@ -260,7 +260,6 @@
   <ItemGroup>
     <ClInclude Include="BinaryUtils.h" />
     <ClInclude Include="CertificateSelector.h" />
-    <ClInclude Include="CngCapiSigner.h" />
     <ClInclude Include="dllmain.h" />
     <ClInclude Include="EstEIDCertificate.h" />
     <ClInclude Include="EstEIDIEPluginBHO.h" />
@@ -268,6 +267,7 @@
     <ClInclude Include="Labels.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="NativeCertificateSelector.h" />
+    <ClInclude Include="NativeSigner.h" />
     <ClInclude Include="PinDialog.h" />
     <ClInclude Include="PKCS11CardManager.h" />
     <ClInclude Include="PKCS11CertificateSelector.h" />
