@@ -1,28 +1,9 @@
 sudo: true
 language: c
-script:
-- if [ "${TRAVIS_OS_NAME}" = "osx" ]; then
-    sudo ln -s /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift-migrator/sdk/MacOSX.sdk/usr/include/openssl /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/include;
-    make OPENSSL=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr;
-  else
-    make;
-  fi
-os:
-- linux
-- osx
-
-env:
-  global:
-   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
-   #   via the "travis encrypt" command using the project repo's public key
-   - secure: "ZHu8ewM8g4loEtBwOvaVUtGFeDmoI3SLJKrRIWAJrzxDwQf8svjWQKuL9mMV3oAEjZ/issOk+KfoFTa6+2spS6U1uB6eIS/cg+nWp2VcW9DTxR63Mr3NpBgqYsMraXw3rwzCGY3I5jv/LfuSf9OKKKAW4JaLeIXuodze1yLA/yc="
-
+script: make;
+os: osx
+osx_image: xcode8.3
 addons:
-  apt:
-    packages:
-    - libgtk2.0-dev
-    - libssl-dev
-    - libpcsclite-dev
   coverity_scan:
     project:
       name: "open-eid/browser-token-signing"

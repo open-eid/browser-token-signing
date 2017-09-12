@@ -19,32 +19,40 @@
  *
  */
 
-#import <Cocoa/Cocoa.h>
+#ifndef ESTEID_PLUGIN_H
+#define	ESTEID_PLUGIN_H
 
-@interface CertificateSelection : NSObject {
-  IBOutlet NSPanel* certificateSelectionPanel;
-	IBOutlet NSTableView* certificateSelection;
-	IBOutlet NSButton* okButton;
-	IBOutlet NSButton* cancelButton;
-  IBOutlet NSTextField* warningLabel;
-	BOOL cancelled;	
-	NSMutableArray* certificates;
-}
+#ifdef __APPLE__
+#define XP_MACOSX
+#define XP_UNIX
+#endif
 
-@property (assign) NSPanel* certificateSelectionPanel;
-@property (assign) NSTableView * certificateSelection;
-@property (assign) NSButton* okButton;
-@property (assign) NSButton* cancelButton;
-@property (assign) NSTextField* warningLabel;
+#include "npapi.h"
+#include "npfunctions.h"
 
-- (IBAction)okClicked:(id)pId; 
+#include <string>
+#include <vector>
 
-- (IBAction)cancelClicked:(id)pId;
+typedef struct : public NPObject {
+    NPP npp;
+    NPNetscapeFuncs *browserFunctions = nullptr;
+    std::string error;
+    int errorCode = 0;
+    bool allowedSite = false;
+    std::vector<unsigned char> certInfo;
+} PluginInstance;
 
-- (IBAction)enableOkButton:(id)pId; 
+NPClass *pluginClass();
 
-- (NSString *)showForWindow:(NSWindow *)window;
+typedef struct : public NPObject {
+    PluginInstance *parent = nullptr;
+} CertInstance;
+    
+NPClass *certClass();
 
-- (BOOL)tableView:(NSTableView*)pTableView shouldSelectRow:(int)row;
+std::vector<unsigned char> md5(const std::vector<unsigned char> &data);
+bool isSameIdentifier(NPIdentifier identifier, const char* name);
+bool copyStringToNPVariant(const char *string, NPVariant *variant);
+std::string createStringFromNPVariant(const NPVariant &variant);
 
-@end
+#endif

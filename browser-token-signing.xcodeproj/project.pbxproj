@@ -1,0 +1,374 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 47;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		124E7EEE11F6DF5B00AED77F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 124E7EED11F6DF5B00AED77F /* Cocoa.framework */; };
+		124E7F1D11F6E0EF00AED77F /* plugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 124E7F1B11F6E0EF00AED77F /* plugin.cpp */; };
+		4E206A7E1F669BA100ADE162 /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E206A7C1F669BA100ADE162 /* Logger.cpp */; };
+		4E206A821F66A93200ADE162 /* Labels.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E206A801F66A93200ADE162 /* Labels.cpp */; };
+		4E206A831F66AB0600ADE162 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F642D75C1238CB0800CBFD02 /* Security.framework */; };
+		4E8C0ADE1F67DB8800DB8FCC /* BinaryUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E8C0ADC1F67DB8800DB8FCC /* BinaryUtils.cpp */; };
+		4E8C0AE61F67E0C200DB8FCC /* CertificateSelection.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4E8C0AE01F67E0C200DB8FCC /* CertificateSelection.mm */; };
+		4E8C0AE71F67E0C200DB8FCC /* CertificateSelection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4E8C0AE11F67E0C200DB8FCC /* CertificateSelection.xib */; };
+		4E8C0AE81F67E0C200DB8FCC /* PINDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4E8C0AE31F67E0C200DB8FCC /* PINDialog.mm */; };
+		4E8C0AE91F67E0C200DB8FCC /* PINDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4E8C0AE41F67E0C200DB8FCC /* PINDialog.xib */; };
+		4E8C0AEA1F67E0C200DB8FCC /* PINPadDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4E8C0AE51F67E0C200DB8FCC /* PINPadDialog.xib */; };
+		4E8C0AEE1F67E0DE00DB8FCC /* PKCS11Path.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E8C0AEC1F67E0DE00DB8FCC /* PKCS11Path.cpp */; };
+		4E8C0AF01F67E14700DB8FCC /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E8C0AEF1F67E14700DB8FCC /* SecurityInterface.framework */; };
+		9DFA12261C3CE2240056CFC2 /* PCSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DFA12251C3CE2240056CFC2 /* PCSC.framework */; };
+		F69726561225427F0059AC50 /* cert-class.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F69726521225427F0059AC50 /* cert-class.cpp */; };
+		F69726571225427F0059AC50 /* plugin-class.mm in Sources */ = {isa = PBXBuildFile; fileRef = F69726541225427F0059AC50 /* plugin-class.mm */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		124E7EE111F6DE0200AED77F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = npapi/Info.plist; sourceTree = "<group>"; };
+		124E7EED11F6DF5B00AED77F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		124E7F0E11F6E09300AED77F /* esteidfirefoxplugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = esteidfirefoxplugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		124E7F1A11F6E0EF00AED77F /* plugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = plugin.h; sourceTree = "<group>"; };
+		124E7F1B11F6E0EF00AED77F /* plugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = plugin.cpp; sourceTree = "<group>"; };
+		4E206A7C1F669BA100ADE162 /* Logger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Logger.cpp; sourceTree = "<group>"; };
+		4E206A7D1F669BA100ADE162 /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
+		4E206A7F1F669D2400ADE162 /* esteid_error.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = esteid_error.h; sourceTree = "<group>"; };
+		4E206A801F66A93200ADE162 /* Labels.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Labels.cpp; sourceTree = "<group>"; };
+		4E206A811F66A93200ADE162 /* Labels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Labels.h; sourceTree = "<group>"; };
+		4E8C0ADC1F67DB8800DB8FCC /* BinaryUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BinaryUtils.cpp; sourceTree = "<group>"; };
+		4E8C0ADD1F67DB8800DB8FCC /* BinaryUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BinaryUtils.h; sourceTree = "<group>"; };
+		4E8C0ADF1F67E0C200DB8FCC /* CertificateSelection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CertificateSelection.h; sourceTree = "<group>"; };
+		4E8C0AE01F67E0C200DB8FCC /* CertificateSelection.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CertificateSelection.mm; sourceTree = "<group>"; };
+		4E8C0AE11F67E0C200DB8FCC /* CertificateSelection.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CertificateSelection.xib; sourceTree = "<group>"; };
+		4E8C0AE21F67E0C200DB8FCC /* PINDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PINDialog.h; sourceTree = "<group>"; };
+		4E8C0AE31F67E0C200DB8FCC /* PINDialog.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PINDialog.mm; sourceTree = "<group>"; };
+		4E8C0AE41F67E0C200DB8FCC /* PINDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PINDialog.xib; sourceTree = "<group>"; };
+		4E8C0AE51F67E0C200DB8FCC /* PINPadDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PINPadDialog.xib; sourceTree = "<group>"; };
+		4E8C0AEB1F67E0DE00DB8FCC /* PKCS11CardManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKCS11CardManager.h; sourceTree = "<group>"; };
+		4E8C0AEC1F67E0DE00DB8FCC /* PKCS11Path.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PKCS11Path.cpp; sourceTree = "<group>"; };
+		4E8C0AED1F67E0DE00DB8FCC /* PKCS11Path.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKCS11Path.h; sourceTree = "<group>"; };
+		4E8C0AEF1F67E14700DB8FCC /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = System/Library/Frameworks/SecurityInterface.framework; sourceTree = SDKROOT; };
+		9DFA12251C3CE2240056CFC2 /* PCSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PCSC.framework; path = System/Library/Frameworks/PCSC.framework; sourceTree = SDKROOT; };
+		F642D75C1238CB0800CBFD02 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		F69726521225427F0059AC50 /* cert-class.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "cert-class.cpp"; sourceTree = "<group>"; };
+		F69726541225427F0059AC50 /* plugin-class.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "plugin-class.mm"; sourceTree = "<group>"; };
+		F6F7D329130BCF8200BF2AAC /* cards.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = cards.yaml; path = uitests/cards.yaml; sourceTree = "<group>"; };
+		F6F7D32A130BCF8200BF2AAC /* config.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = config.yaml; path = uitests/config.yaml; sourceTree = "<group>"; };
+		F6F7D32B130BCF8200BF2AAC /* labels.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = labels.yaml; path = uitests/labels.yaml; sourceTree = "<group>"; };
+		F6F7D32C130BCF8200BF2AAC /* mac_helpers.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = mac_helpers.rb; path = uitests/mac_helpers.rb; sourceTree = "<group>"; };
+		F6F7D32D130BCF8200BF2AAC /* misc_methods.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = misc_methods.rb; path = uitests/misc_methods.rb; sourceTree = "<group>"; };
+		F6F7D32E130BCF8200BF2AAC /* plugin_mac_firefox_spec.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = plugin_mac_firefox_spec.rb; path = uitests/plugin_mac_firefox_spec.rb; sourceTree = "<group>"; };
+		F6F7D32F130BCF8200BF2AAC /* plugin_mac_safari_spec.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = plugin_mac_safari_spec.rb; path = uitests/plugin_mac_safari_spec.rb; sourceTree = "<group>"; };
+		F6F7D330130BCF8200BF2AAC /* plugin_shared.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = plugin_shared.rb; path = uitests/plugin_shared.rb; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		124E7EDE11F6DE0200AED77F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4E8C0AF01F67E14700DB8FCC /* SecurityInterface.framework in Frameworks */,
+				4E206A831F66AB0600ADE162 /* Security.framework in Frameworks */,
+				9DFA12261C3CE2240056CFC2 /* PCSC.framework in Frameworks */,
+				124E7EEE11F6DF5B00AED77F /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0259C574FE90428111CA0C5A /* esteid_webkit_plugin */ = {
+			isa = PBXGroup;
+			children = (
+				F6F7D328130BCF1A00BF2AAC /* uitests */,
+				124E7F1811F6E0EF00AED77F /* npapi */,
+				124E7F0511F6E09300AED77F /* common */,
+				0259C582FE90428111CA0C5A /* Resources */,
+				1ED78706FE9D4A0611CA0C5A /* Products */,
+				2E58F364FFB232C311CA0CBA /* Frameworks */,
+			);
+			name = esteid_webkit_plugin;
+			sourceTree = "<group>";
+		};
+		0259C582FE90428111CA0C5A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				124E7EE111F6DE0200AED77F /* Info.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		124E7F0511F6E09300AED77F /* common */ = {
+			isa = PBXGroup;
+			children = (
+				4E8C0AEB1F67E0DE00DB8FCC /* PKCS11CardManager.h */,
+				4E8C0AEC1F67E0DE00DB8FCC /* PKCS11Path.cpp */,
+				4E8C0AED1F67E0DE00DB8FCC /* PKCS11Path.h */,
+				4E8C0ADC1F67DB8800DB8FCC /* BinaryUtils.cpp */,
+				4E8C0ADD1F67DB8800DB8FCC /* BinaryUtils.h */,
+				4E206A801F66A93200ADE162 /* Labels.cpp */,
+				4E206A811F66A93200ADE162 /* Labels.h */,
+				4E206A7F1F669D2400ADE162 /* esteid_error.h */,
+				4E206A7C1F669BA100ADE162 /* Logger.cpp */,
+				4E206A7D1F669BA100ADE162 /* Logger.h */,
+			);
+			path = common;
+			sourceTree = "<group>";
+		};
+		124E7F1811F6E0EF00AED77F /* npapi */ = {
+			isa = PBXGroup;
+			children = (
+				4E8C0ADF1F67E0C200DB8FCC /* CertificateSelection.h */,
+				4E8C0AE01F67E0C200DB8FCC /* CertificateSelection.mm */,
+				4E8C0AE11F67E0C200DB8FCC /* CertificateSelection.xib */,
+				4E8C0AE21F67E0C200DB8FCC /* PINDialog.h */,
+				4E8C0AE31F67E0C200DB8FCC /* PINDialog.mm */,
+				4E8C0AE41F67E0C200DB8FCC /* PINDialog.xib */,
+				4E8C0AE51F67E0C200DB8FCC /* PINPadDialog.xib */,
+				F69726521225427F0059AC50 /* cert-class.cpp */,
+				F69726541225427F0059AC50 /* plugin-class.mm */,
+				124E7F1A11F6E0EF00AED77F /* plugin.h */,
+				124E7F1B11F6E0EF00AED77F /* plugin.cpp */,
+			);
+			path = npapi;
+			sourceTree = "<group>";
+		};
+		1ED78706FE9D4A0611CA0C5A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				124E7F0E11F6E09300AED77F /* esteidfirefoxplugin.bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2E58F364FFB232C311CA0CBA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4E8C0AEF1F67E14700DB8FCC /* SecurityInterface.framework */,
+				9DFA12251C3CE2240056CFC2 /* PCSC.framework */,
+				124E7EED11F6DF5B00AED77F /* Cocoa.framework */,
+				F642D75C1238CB0800CBFD02 /* Security.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F6F7D328130BCF1A00BF2AAC /* uitests */ = {
+			isa = PBXGroup;
+			children = (
+				F6F7D329130BCF8200BF2AAC /* cards.yaml */,
+				F6F7D32A130BCF8200BF2AAC /* config.yaml */,
+				F6F7D32B130BCF8200BF2AAC /* labels.yaml */,
+				F6F7D32C130BCF8200BF2AAC /* mac_helpers.rb */,
+				F6F7D32D130BCF8200BF2AAC /* misc_methods.rb */,
+				F6F7D32E130BCF8200BF2AAC /* plugin_mac_firefox_spec.rb */,
+				F6F7D32F130BCF8200BF2AAC /* plugin_mac_safari_spec.rb */,
+				F6F7D330130BCF8200BF2AAC /* plugin_shared.rb */,
+			);
+			name = uitests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		124E7EDF11F6DE0200AED77F /* esteidfirefoxplugin */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 124E7EE411F6DE0200AED77F /* Build configuration list for PBXNativeTarget "esteidfirefoxplugin" */;
+			buildPhases = (
+				124E7EDC11F6DE0200AED77F /* Resources */,
+				124E7EDD11F6DE0200AED77F /* Sources */,
+				124E7EDE11F6DE0200AED77F /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = esteidfirefoxplugin;
+			productName = "esteid-firefox-plugin";
+			productReference = 124E7F0E11F6E09300AED77F /* esteidfirefoxplugin.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0259C573FE90428111CA0C5A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0820;
+			};
+			buildConfigurationList = C027D11D08A954E7001699E2 /* Build configuration list for PBXProject "browser-token-signing" */;
+			compatibilityVersion = "Xcode 6.3";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 0259C574FE90428111CA0C5A /* esteid_webkit_plugin */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				124E7EDF11F6DE0200AED77F /* esteidfirefoxplugin */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		124E7EDC11F6DE0200AED77F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4E8C0AE71F67E0C200DB8FCC /* CertificateSelection.xib in Resources */,
+				4E8C0AEA1F67E0C200DB8FCC /* PINPadDialog.xib in Resources */,
+				4E8C0AE91F67E0C200DB8FCC /* PINDialog.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		124E7EDD11F6DE0200AED77F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				124E7F1D11F6E0EF00AED77F /* plugin.cpp in Sources */,
+				4E206A7E1F669BA100ADE162 /* Logger.cpp in Sources */,
+				4E8C0AE61F67E0C200DB8FCC /* CertificateSelection.mm in Sources */,
+				4E8C0AE81F67E0C200DB8FCC /* PINDialog.mm in Sources */,
+				4E206A821F66A93200ADE162 /* Labels.cpp in Sources */,
+				F69726561225427F0059AC50 /* cert-class.cpp in Sources */,
+				4E8C0ADE1F67DB8800DB8FCC /* BinaryUtils.cpp in Sources */,
+				4E8C0AEE1F67E0DE00DB8FCC /* PKCS11Path.cpp in Sources */,
+				F69726571225427F0059AC50 /* plugin-class.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		124E7EE211F6DE0200AED77F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/include";
+				INFOPLIST_FILE = npapi/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Internet Plug-Ins/";
+				PRODUCT_BUNDLE_IDENTIFIER = "ee.ria.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = esteidfirefoxplugin;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		124E7EE311F6DE0200AED77F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/include";
+				INFOPLIST_FILE = npapi/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Internet Plug-Ins/";
+				PRODUCT_BUNDLE_IDENTIFIER = "ee.ria.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = esteidfirefoxplugin;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
+		C027D11E08A954E7001699E2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_NUMBER = 0;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "VERSION=\\\"$(VERSION)\\\"";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				VERSION = 3.13.0;
+			};
+			name = Debug;
+		};
+		C027D11F08A954E7001699E2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_NUMBER = 0;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "VERSION=\\\"$(VERSION)\\\"";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				SDKROOT = macosx;
+				VERSION = 3.13.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		124E7EE411F6DE0200AED77F /* Build configuration list for PBXNativeTarget "esteidfirefoxplugin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				124E7EE211F6DE0200AED77F /* Debug */,
+				124E7EE311F6DE0200AED77F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C027D11D08A954E7001699E2 /* Build configuration list for PBXProject "browser-token-signing" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C027D11E08A954E7001699E2 /* Debug */,
+				C027D11F08A954E7001699E2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0259C573FE90428111CA0C5A /* Project object */;
+}
