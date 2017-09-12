@@ -13,7 +13,7 @@
     <ClCompile Include="esteid-plugin-ie.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BinaryUtils.cpp">
+    <ClCompile Include="..\common\BinaryUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PKCS11Signer.cpp">
@@ -31,19 +31,19 @@
     <ClCompile Include="PKCS11CertificateSelector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PKCS11Path.cpp">
+    <ClCompile Include="..\common\PKCS11Path.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Signer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Logger.cpp">
+    <ClCompile Include="..\common\Logger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CertificateSelector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Labels.cpp">
+    <ClCompile Include="..\common\Labels.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="EstEIDCertificate.cpp">
@@ -69,7 +69,7 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BinaryUtils.h">
+    <ClInclude Include="..\common\BinaryUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="HostExceptions.h">
@@ -81,7 +81,7 @@
     <ClInclude Include="Signer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PKCS11CardManager.h">
+    <ClInclude Include="..\common\PKCS11CardManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PKCS11Signer.h">
@@ -102,13 +102,13 @@
     <ClInclude Include="PKCS11CertificateSelector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PKCS11Path.h">
+    <ClInclude Include="..\common\PKCS11Path.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Logger.h">
+    <ClInclude Include="..\common\Logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Labels.h">
+    <ClInclude Include="..\common\Labels.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EstEIDCertificate.h">
