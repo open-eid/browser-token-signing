@@ -182,7 +182,12 @@ public:
         for (CK_SLOT_ID slotID : slotIDs)
         {
             CK_TOKEN_INFO tokenInfo;
-            C(GetTokenInfo, slotID, &tokenInfo);
+            try {
+                C(GetTokenInfo, slotID, &tokenInfo);
+            } catch(const std::runtime_error &e) {
+                _log("Failed to get slot info at SLOT ID %u, skiping", slotID);
+                continue;
+            }
             CK_SESSION_HANDLE session = 0;
             C(OpenSession, slotID, CKF_SERIAL_SESSION, nullptr, nullptr, &session);
 
