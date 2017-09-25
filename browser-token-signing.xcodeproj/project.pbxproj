@@ -255,7 +255,6 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/include";
 				INFOPLIST_FILE = npapi/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Internet Plug-Ins/";
 				PRODUCT_BUNDLE_IDENTIFIER = "ee.ria.${PRODUCT_NAME:rfc1034identifier}";
@@ -269,7 +268,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/include";
 				INFOPLIST_FILE = npapi/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Internet Plug-Ins/";
 				PRODUCT_BUNDLE_IDENTIFIER = "ee.ria.${PRODUCT_NAME:rfc1034identifier}";
