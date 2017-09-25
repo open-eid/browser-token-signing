@@ -1,3 +1,12 @@
+browser-token-signing version [3.13.0](https://github.com/open-eid/browser-token-signing/releases/tag/v3.13.0) release notes
+--------------------------------------------
+- Rewrite NPAPI plugin for Safari MacOS
+- Rewrite BHO plugin
+- Drop Windows/Linux NPAPI support
+
+[Full Changelog](https://github.com/open-eid/browser-token-signing/compare/v3.12.2...v3.13.0)
+
+
 browser-token-signing version [3.12.2](https://github.com/open-eid/browser-token-signing/releases/tag/v3.12.2) release notes
 --------------------------------------------
 - Lithuania token iprovements

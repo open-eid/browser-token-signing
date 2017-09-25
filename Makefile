@@ -1,8 +1,41 @@
-# EstEID Browser Plugin
+BUILD_NUMBER ?= 0
+include VERSION.mk
 
-default: build
+SIGNER ?= Riigi Infosüsteemi Amet
 
-.DEFAULT:
-	$(MAKE) -f Makefile.$(shell uname) $@
+PROJ = xcodebuild -project browser-token-signing.xcodeproj VERSION=$(VERSION) BUILD_NUMBER=$(BUILD_NUMBER)
 
+TMPROOT = $(PWD)/tmp
+TARGET = $(TMPROOT)/Library/Internet\ Plug-Ins/esteidfirefoxplugin.bundle
+PKG = firefox-token-signing.pkg
 
+build: default
+
+default: pkg
+
+$(TARGET):
+	$(PROJ) DSTROOT=$(TMPROOT) install
+
+clean:
+	rm -rf $(TMPROOT)
+	git clean -dfx
+
+codesign: $(TARGET)
+	codesign -f -s "Developer ID Application: $(SIGNER)" $(TARGET)
+
+$(PKG): $(TARGET)
+	pkgbuild --version $(VERSION) \
+		--identifier ee.ria.firefox-token-signing \
+		--root $(TMPROOT) \
+		--install-location / \
+		$(PKG)
+
+pkg: $(PKG)
+
+signed: codesign
+	pkgbuild --version $(VERSION) \
+		--identifier ee.ria.firefox-token-signing \
+		--root $(TMPROOT) \
+		--install-location / \
+		--sign "Developer ID Installer: $(SIGNER)" \
+		$(PKG)
