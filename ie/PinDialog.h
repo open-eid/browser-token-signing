@@ -20,24 +20,30 @@
 
 #include "resource.h"
 
-#include <afxcmn.h>
+#include <atlbase.h>
+#include <atlhost.h>
 #include <string>
 
-class PinDialog : public CDialog
+class PinDialog : public CAxDialogImpl<PinDialog>
 {
-	DECLARE_DYNAMIC(PinDialog)
-
 public:
-	PinDialog(const std::wstring &_label, CWnd* pParent = NULL) : CDialog(PinDialog::IDD, pParent), label(_label) {}
+	PinDialog(const std::wstring &_label) : label(_label) {}
 	char* getPin();
-	afx_msg void OnBnClickedOk();
 
 	// Dialog Data
 	enum { IDD = IDD_PIN_DIALOG };
 
 protected:
-	DECLARE_MESSAGE_MAP()
-	virtual BOOL OnInitDialog() override;
+	BEGIN_MSG_MAP(PinDialog)
+		MESSAGE_HANDLER(WM_INITDIALOG, OnInitDialog)
+		COMMAND_HANDLER(IDOK, BN_CLICKED, OnClickedOK)
+		COMMAND_HANDLER(IDCANCEL, BN_CLICKED, OnClickedCancel)
+		CHAIN_MSG_MAP(CAxDialogImpl<PinDialog>)
+	END_MSG_MAP()
+
+	LRESULT OnInitDialog(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+	LRESULT OnClickedOK(WORD wNotifyCode, WORD wID, HWND hWndCtl, BOOL& bHandled);
+	LRESULT OnClickedCancel(WORD wNotifyCode, WORD wID, HWND hWndCtl, BOOL& bHandled);
 
 private:
 	char* pin;

@@ -17,31 +17,34 @@
 */
 
 #include "PinDialog.h"
-#include <afxdialogex.h>
 
 #include "Labels.h"
 
+#include <atlstr.h>
+
 #define _L(KEY) Labels::l10n.get(KEY).c_str()
 
-IMPLEMENT_DYNAMIC(PinDialog, CDialog)
-
-BEGIN_MESSAGE_MAP(PinDialog, CDialog)
-	ON_BN_CLICKED(IDOK, &PinDialog::OnBnClickedOk)
-END_MESSAGE_MAP()
-
-void PinDialog::OnBnClickedOk() {
+LRESULT PinDialog::OnClickedOK(WORD wNotifyCode, WORD wID, HWND hWndCtl, BOOL& bHandled) {
 	CString rawPin;
-	GetDlgItem(IDC_PIN_FIELD)->GetWindowText(rawPin);
+	GetDlgItemText(IDC_PIN_FIELD, rawPin);
 	pin = _strdup(ATL::CT2CA(rawPin));
-	CDialog::OnOK();
+	EndDialog(wID);
+	return 0;
 }
 
-BOOL PinDialog::OnInitDialog()
-{
-	BOOL result = CDialog::OnInitDialog();
-	GetDlgItem(IDC_PIN_MESSAGE)->SetWindowText(label.c_str());
-	GetDlgItem(IDCANCEL)->SetWindowText(_L("cancel"));
-	return result;
+LRESULT PinDialog::OnInitDialog(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
+	CAxDialogImpl<PinDialog>::OnInitDialog(uMsg, wParam, lParam, bHandled);
+	ATLVERIFY(CenterWindow());
+	GotoDlgCtrl(GetDlgItem(IDC_PIN_FIELD));
+	SetDlgItemText(IDC_PIN_MESSAGE, label.c_str());
+	SetDlgItemText(IDCANCEL, _L("cancel"));
+	bHandled = TRUE;
+	return FALSE; //Focus is set manually
+}
+
+LRESULT PinDialog::OnClickedCancel(WORD wNotifyCode, WORD wID, HWND hWndCtl, BOOL& bHandled) {
+	EndDialog(wID);
+	return 0;
 }
 
 char* PinDialog::getPin() {

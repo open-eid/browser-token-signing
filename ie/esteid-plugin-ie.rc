@@ -78,12 +78,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "RIA"
             VALUE "FileDescription", "Estonian ID card plugin"
-			VALUE "FileVersion", VER_STR(MAJOR_VER.MINOR_VER.RELEASE_VER.BUILD_VER)
+            VALUE "FileVersion", VER_STR(MAJOR_VER.MINOR_VER.RELEASE_VER.BUILD_VER)
             VALUE "LegalCopyright", "(c) RIA.  All rights reserved."
             VALUE "InternalName", "esteid-plugin-ie.dll"
             VALUE "OriginalFilename", "esteid-plugin-ie.dll"
             VALUE "ProductName", "Estonian ID card plugin"
-			VALUE "ProductVersion", VER_STR(MAJOR_VER.MINOR_VER.RELEASE_VER.BUILD_VER)
+            VALUE "ProductVersion", VER_STR(MAJOR_VER.MINOR_VER.RELEASE_VER.BUILD_VER)
         END
     END
     BLOCK "VarFileInfo"
