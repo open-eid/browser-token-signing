@@ -3,6 +3,7 @@ browser-token-signing version [3.13.0](https://github.com/open-eid/browser-token
 - Rewrite NPAPI plugin for Safari MacOS
 - Rewrite BHO plugin
 - Drop Windows/Linux NPAPI support
+- Add ECDSA token support
 
 [Full Changelog](https://github.com/open-eid/browser-token-signing/compare/v3.12.2...v3.13.0)
 

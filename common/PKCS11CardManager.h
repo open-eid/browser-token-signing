@@ -176,7 +176,6 @@ public:
         _log("slotCount = %i", slotCount);
         std::vector<CK_SLOT_ID> slotIDs(slotCount, 0);
         C(GetSlotList, CK_TRUE, slotIDs.data(), &slotCount);
-        std::reverse(slotIDs.begin(), slotIDs.end());
 
         std::vector<Token> result;
         for (CK_SLOT_ID slotID : slotIDs)

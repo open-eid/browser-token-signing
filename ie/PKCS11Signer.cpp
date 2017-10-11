@@ -31,16 +31,6 @@ Pkcs11Signer::Pkcs11Signer(const string &pkcs11ModulePath, const vector<unsigned
 	: Signer(cert)
 	, pkcs11Path(pkcs11ModulePath)
 {
-	HMODULE hModule = ::GetModuleHandle(NULL);
-	if (hModule == NULL) {
-		_log("MFC initialization failed. Module handle is null");
-		throw TechnicalException("MFC initialization failed. Module handle is null");
-	}
-	// initialize MFC
-	if (!AfxWinInit(hModule, NULL, ::GetCommandLine(), 0)) {
-		_log("MFC initialization failed");
-		throw TechnicalException("MFC initialization failed");
-	}
 }
 
 vector<unsigned char> Pkcs11Signer::sign(const vector<unsigned char> &digest) {
