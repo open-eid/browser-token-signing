@@ -53,14 +53,6 @@
 		F642D75C1238CB0800CBFD02 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		F69726521225427F0059AC50 /* cert-class.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "cert-class.cpp"; sourceTree = "<group>"; };
 		F69726541225427F0059AC50 /* plugin-class.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "plugin-class.mm"; sourceTree = "<group>"; };
-		F6F7D329130BCF8200BF2AAC /* cards.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = cards.yaml; path = uitests/cards.yaml; sourceTree = "<group>"; };
-		F6F7D32A130BCF8200BF2AAC /* config.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = config.yaml; path = uitests/config.yaml; sourceTree = "<group>"; };
-		F6F7D32B130BCF8200BF2AAC /* labels.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = labels.yaml; path = uitests/labels.yaml; sourceTree = "<group>"; };
-		F6F7D32C130BCF8200BF2AAC /* mac_helpers.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = mac_helpers.rb; path = uitests/mac_helpers.rb; sourceTree = "<group>"; };
-		F6F7D32D130BCF8200BF2AAC /* misc_methods.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = misc_methods.rb; path = uitests/misc_methods.rb; sourceTree = "<group>"; };
-		F6F7D32E130BCF8200BF2AAC /* plugin_mac_firefox_spec.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = plugin_mac_firefox_spec.rb; path = uitests/plugin_mac_firefox_spec.rb; sourceTree = "<group>"; };
-		F6F7D32F130BCF8200BF2AAC /* plugin_mac_safari_spec.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = plugin_mac_safari_spec.rb; path = uitests/plugin_mac_safari_spec.rb; sourceTree = "<group>"; };
-		F6F7D330130BCF8200BF2AAC /* plugin_shared.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = plugin_shared.rb; path = uitests/plugin_shared.rb; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,7 +73,6 @@
 		0259C574FE90428111CA0C5A /* browser_token_signing */ = {
 			isa = PBXGroup;
 			children = (
-				F6F7D328130BCF1A00BF2AAC /* uitests */,
 				124E7F1811F6E0EF00AED77F /* npapi */,
 				124E7F0511F6E09300AED77F /* common */,
 				0259C582FE90428111CA0C5A /* Resources */,
@@ -151,21 +142,6 @@
 				F642D75C1238CB0800CBFD02 /* Security.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		F6F7D328130BCF1A00BF2AAC /* uitests */ = {
-			isa = PBXGroup;
-			children = (
-				F6F7D329130BCF8200BF2AAC /* cards.yaml */,
-				F6F7D32A130BCF8200BF2AAC /* config.yaml */,
-				F6F7D32B130BCF8200BF2AAC /* labels.yaml */,
-				F6F7D32C130BCF8200BF2AAC /* mac_helpers.rb */,
-				F6F7D32D130BCF8200BF2AAC /* misc_methods.rb */,
-				F6F7D32E130BCF8200BF2AAC /* plugin_mac_firefox_spec.rb */,
-				F6F7D32F130BCF8200BF2AAC /* plugin_mac_safari_spec.rb */,
-				F6F7D330130BCF8200BF2AAC /* plugin_shared.rb */,
-			);
-			name = uitests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -246,6 +222,30 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		124E7EE211F6DE0200AED77F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = npapi/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Internet Plug-Ins/";
+				PRODUCT_BUNDLE_IDENTIFIER = "ee.ria.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = esteidfirefoxplugin;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		124E7EE311F6DE0200AED77F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = npapi/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Internet Plug-Ins/";
+				PRODUCT_BUNDLE_IDENTIFIER = "ee.ria.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = esteidfirefoxplugin;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
 		C027D11E08A954E7001699E2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -335,30 +335,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				SDKROOT = macosx;
 				VERSION = 3.13.0;
-			};
-			name = Release;
-		};
-		124E7EE211F6DE0200AED77F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = npapi/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Internet Plug-Ins/";
-				PRODUCT_BUNDLE_IDENTIFIER = "ee.ria.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = esteidfirefoxplugin;
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Debug;
-		};
-		124E7EE311F6DE0200AED77F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = npapi/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Internet Plug-Ins/";
-				PRODUCT_BUNDLE_IDENTIFIER = "ee.ria.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = esteidfirefoxplugin;
-				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;
 		};
