@@ -21,7 +21,7 @@ clean:
 	git clean -dfx
 
 codesign: $(TARGET)
-	codesign -f -s "Developer ID Application: $(SIGNER)" $(TARGET)
+	codesign -f -s "Developer ID Application: $(SIGNER)" --entitlements=browser-token-signing.entitlements $(TARGET)
 
 $(PKG): $(TARGET)
 	pkgbuild --version $(VERSION) \
