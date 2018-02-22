@@ -59,7 +59,7 @@ STDMETHODIMP CEstEIDCertificate::Init(VARIANT filter) {
 		return -1;
 	}
 
-	if (!CryptHashData(cryptHash, cert.data(), cert.size(), 0)) {
+	if (!CryptHashData(cryptHash, cert.data(), DWORD(cert.size()), 0)) {
 		CryptReleaseContext(cryptProv, 0);
 		CryptDestroyHash(cryptHash);
 		return -1;

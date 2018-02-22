@@ -40,7 +40,7 @@ HRESULT CreateComponentCategory(CATID catid, WCHAR* catDescription) {
 	catinfo.catid = catid;
 	catinfo.lcid = 0x0409 ; // english
 
-	int len = wcslen(catDescription);
+	size_t len = wcslen(catDescription);
 	if (len>127)
 		len = 127;
 	wcsncpy_s(catinfo.szDescription, 127, catDescription, len);

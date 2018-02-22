@@ -49,6 +49,7 @@ public:
 		if (errorCode == "user_cancel") return ESTEID_USER_CANCEL;
 		if (errorCode == "no_certificates") return ESTEID_CERT_NOT_FOUND_ERROR;
 		if (errorCode == "not_allowed") return ESTEID_SITE_NOT_ALLOWED;
+		if (errorCode == "driver_error") return ESTEID_LIBRARY_LOAD_ERROR;
 		if (errorCode == "pin_blocked") return ESTEID_PIN_BLOCKED;
 		return ESTEID_UNKNOWN_ERROR;
 	}
@@ -63,7 +64,7 @@ public:
 
 class InvalidArgumentException : public BaseException {
 public:
-	InvalidArgumentException(const std::string &message) : BaseException("invalid_argument", message) {}
+	InvalidArgumentException(const std::string &message = "Invalid argument") : BaseException("invalid_argument", message) {}
 };
 
 class InvalidHashException : public BaseException {
@@ -110,6 +111,11 @@ public:
 class PinBlockedException : public BaseException {
 public:
 	PinBlockedException() : BaseException("pin_blocked", "Maximum number of PIN entry attempts has been reached") {}
+};
+
+class DriverException : public BaseException {
+public:
+	DriverException() : BaseException("driver_error", "Failed to load driver") {}
 };
 
 class PKCS11Exception : public BaseException {

@@ -32,18 +32,18 @@
 
 NPNetscapeFuncs* browserFunctions;
 
-bool isSameIdentifier(NPIdentifier identifier, const char* name) {
-    return browserFunctions->getstringidentifier(name) == identifier;
+NPIdentifier toIdentifier(const char* name) {
+    return browserFunctions->getstringidentifier(name);
 }
 
-bool copyStringToNPVariant(const char *string, NPVariant *variant) {
+bool setValue(NPVariant *variant, const char *string) {
     char *out = (char *)browserFunctions->memalloc(uint32_t(strlen(string) + 1));
     strcpy(out, string);
     STRINGZ_TO_NPVARIANT(out, *variant);
     return true;
 }
 
-std::string createStringFromNPVariant(const NPVariant &variant) {
+std::string toString(const NPVariant &variant) {
     if (!NPVARIANT_IS_STRING(variant)) {
         return std::string();
     }
@@ -51,36 +51,17 @@ std::string createStringFromNPVariant(const NPVariant &variant) {
                        NPVARIANT_TO_STRING(variant).UTF8Length);
 }
 
+std::string toString(NPIdentifier identifier) {
+    NPUTF8 *str = browserFunctions->utf8fromidentifier(identifier);
+    std::string result = str;
+    browserFunctions->memfree(str);
+    return result;
+}
+
 std::vector<unsigned char> md5(const std::vector<unsigned char> &data) {
     std::vector<unsigned char> md5(CC_MD5_DIGEST_LENGTH, 0);
     CC_MD5(data.data(), (unsigned int)data.size(), md5.data());
     return md5;
-}
-
-int is_from_allowed_url(NPP instanceData) {
-    NPObject *windowObject = NULL;
-    browserFunctions->getvalue(instanceData, NPNVWindowNPObject, &windowObject);
-    NPIdentifier location = browserFunctions->getstringidentifier("location");
-    NPVariant variantValue;
-    browserFunctions->getproperty(instanceData, windowObject, location, &variantValue);
-
-    NPObject *locationObj = NPVARIANT_TO_OBJECT(variantValue);
-    NPIdentifier href = browserFunctions->getstringidentifier("href");
-    browserFunctions->getproperty(instanceData, locationObj, href, &variantValue);
-
-    std::string stringValue = createStringFromNPVariant(variantValue);
-    _log("href=%s", stringValue.c_str());
-
-    size_t pos = stringValue.find(":");
-    if (pos == std::string::npos) {
-        _log("hdetected protocol: null");
-        return false;
-    }
-
-    std::string protocol = stringValue.substr(0, pos);
-    int allowed = !strcasecmp("https", protocol.c_str());
-    _log("protocol %s is %sallowed", protocol.c_str(), allowed ? "" : "not ");
-    return allowed;
 }
 
 // NP Fucntions
@@ -105,19 +86,11 @@ NP_EXPORT(NPError) NP_GetEntryPoints(NPPluginFuncs *pluginFuncs) {
     return NPERR_NO_ERROR;
 }
 
-#if defined(XP_MACOSX) || defined(_WIN32)
 NP_EXPORT(NPError) NP_Initialize(NPNetscapeFuncs *browserFuncs) {
     _log("");
     browserFunctions = browserFuncs;
     return NPERR_NO_ERROR;
 }
-#else
-NP_EXPORT(NPError) NP_Initialize(NPNetscapeFuncs *browserFuncs, NPPluginFuncs *pluginFuncs) {
-    _log("");
-    browserFunctions = browserFuncs;
-    return NP_GetEntryPoints(pluginFuncs);
-}
-#endif
 
 NP_EXPORT(NPError) NP_Shutdown(void) {
     _log("");
@@ -150,7 +123,6 @@ NPError NPP_New(NPMIMEType mimeType, NPP instanceData, uint16_t mode, int16_t ar
     PluginInstance *pluginInstance = (PluginInstance *)browserFunctions->createobject(instanceData, pluginClass());
     pluginInstance->browserFunctions = browserFunctions;
     pluginInstance->npp = instanceData;
-    pluginInstance->allowedSite = is_from_allowed_url(instanceData);
     instanceData->pdata = pluginInstance;
     return NPERR_NO_ERROR;
 }

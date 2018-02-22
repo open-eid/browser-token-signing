@@ -23,67 +23,60 @@
 #include "BinaryUtils.h"
 #include "Logger.h"
 
-NPObject *certAllocate(NPP npp, NPClass *theClass) {
+static NPObject *certAllocate(NPP npp, NPClass *theClass) {
     _log("");
     return new CertInstance;
 }
 
-void certDeallocate(CertInstance *obj) {
+static void certDeallocate(NPObject *obj) {
     _log("");
-    delete obj;
+    delete (CertInstance*)obj;
 }
 
-void certInvalidate(CertInstance *obj) {
+static void certInvalidate(NPObject *obj) {
     _log("");
 }
 
-bool certHasMethod(CertInstance *obj, NPIdentifier name) {
-    NPUTF8 *nameString = obj->parent->browserFunctions->utf8fromidentifier(name);
-    _log("name=%s", nameString);
-    obj->parent->browserFunctions->memfree(nameString);
-    return false;
-}
-
-bool certInvoke(CertInstance *obj, NPIdentifier name, NPVariant *args, uint32_t argCount, NPVariant *result) {
-    NPUTF8 *nameString = obj->parent->browserFunctions->utf8fromidentifier(name);
-    _log("name=%s", nameString);
-    obj->parent->browserFunctions->memfree(nameString);
-    return false;
-}
-
-bool certInvokeDefault(CertInstance *obj, NPVariant *args, uint32_t argCount, NPVariant *result) {
+static bool certHasMethod(NPObject *obj, NPIdentifier name) {
     _log("");
     return false;
 }
 
-bool certHasProperty(CertInstance *obj, NPIdentifier name) {
-    NPUTF8 *nameString = obj->parent->browserFunctions->utf8fromidentifier(name);
-    _log("name=%s", nameString);
-    obj->parent->browserFunctions->memfree(nameString);
+static bool certInvoke(NPObject *obj, NPIdentifier name, const NPVariant *args, uint32_t argCount, NPVariant *result) {
+    _log("");
+    return false;
+}
+
+static bool certInvokeDefault(NPObject *obj, const NPVariant *args, uint32_t argCount, NPVariant *result) {
+    _log("");
+    return false;
+}
+
+static bool certHasProperty(NPObject *npobj, NPIdentifier name) {
+    _log("name=%s", toString(name).c_str());
     return
-        isSameIdentifier(name, "id") ||
-        isSameIdentifier(name, "cert") ||
-        isSameIdentifier(name, "certificateAsHex");
+        name == toIdentifier("id") ||
+        name == toIdentifier("cert") ||
+        name == toIdentifier("certificateAsHex");
 }
 
-bool certGetProperty(CertInstance *obj, NPIdentifier name, NPVariant *variant) {
-    NPUTF8 *nameString = obj->parent->browserFunctions->utf8fromidentifier(name);
-    _log("name=%s", nameString);
-    obj->parent->browserFunctions->memfree(nameString);
+static bool certGetProperty(NPObject *npobj, NPIdentifier name, NPVariant *variant) {
+    CertInstance *obj = (CertInstance*)npobj;
+    _log("name=%s", toString(name).c_str());
     std::string result;
-    if (isSameIdentifier(name, "id")) {
+    if (name == toIdentifier("id")) {
         result = BinaryUtils::bin2hex(md5(obj->parent->certInfo));
     }
-    else if (isSameIdentifier(name, "certificateAsHex") ||
-             isSameIdentifier(name, "cert")) {
+    else if (name == toIdentifier("certificateAsHex") ||
+             name == toIdentifier("cert")) {
         result = BinaryUtils::bin2hex(obj->parent->certInfo);
     }
     if (result.empty())
         return false;
-    return copyStringToNPVariant(result.c_str(), variant);
+    return setValue(variant, result.c_str());
 }
 
-bool certSetProperty(CertInstance *obj, NPIdentifier name, const NPVariant *variant) {
+static bool certSetProperty(NPObject *obj, NPIdentifier name, const NPVariant *variant) {
     _log("");
     return false;
 }
@@ -91,18 +84,18 @@ bool certSetProperty(CertInstance *obj, NPIdentifier name, const NPVariant *vari
 NPClass *certClass() {
     static NPClass _class = {
         NP_CLASS_STRUCT_VERSION,
-        (NPAllocateFunctionPtr) certAllocate,
-        (NPDeallocateFunctionPtr) certDeallocate,
-        (NPInvalidateFunctionPtr) certInvalidate,
-        (NPHasMethodFunctionPtr) certHasMethod,
-        (NPInvokeFunctionPtr) certInvoke,
-        (NPInvokeDefaultFunctionPtr) certInvokeDefault,
-        (NPHasPropertyFunctionPtr) certHasProperty,
-        (NPGetPropertyFunctionPtr) certGetProperty,
-        (NPSetPropertyFunctionPtr) certSetProperty,
-        (NPRemovePropertyFunctionPtr)NULL,
-        (NPEnumerationFunctionPtr)NULL,
-        (NPConstructFunctionPtr)NULL
+        certAllocate,
+        certDeallocate,
+        certInvalidate,
+        certHasMethod,
+        certInvoke,
+        certInvokeDefault,
+        certHasProperty,
+        certGetProperty,
+        certSetProperty,
+        nullptr,
+        nullptr,
+        nullptr
     };
     return &_class;
 }

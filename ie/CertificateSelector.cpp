@@ -77,7 +77,7 @@ bool CertificateSelector::isValid(PCCERT_CONTEXT cert, bool forSigning) const
 		return false;
 	BYTE keyUsage = 0;
 	CertGetIntendedKeyUsage(X509_ASN_ENCODING | PKCS_7_ASN_ENCODING, cert->pCertInfo, &keyUsage, 1);
-	return forSigning == bool(keyUsage & CERT_NON_REPUDIATION_KEY_USAGE);
+	return forSigning == (keyUsage & CERT_NON_REPUDIATION_KEY_USAGE) > 0;
 }
 
 std::vector<unsigned char> CertificateSelector::showDialog() const
