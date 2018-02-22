@@ -21,7 +21,7 @@
 
 #pragma once
 #include "esteidpluginie_i.h"
-#include "HostExceptions.h"
+#include "Exceptions.h"
 #include <windows.h>
 #include <Wincrypt.h>
 #include <comutil.h>

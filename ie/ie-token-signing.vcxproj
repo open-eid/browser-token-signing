@@ -259,7 +259,7 @@
     <ClInclude Include="dllmain.h" />
     <ClInclude Include="EstEIDCertificate.h" />
     <ClInclude Include="EstEIDIEPluginBHO.h" />
-    <ClInclude Include="HostExceptions.h" />
+    <ClInclude Include="..\common\Exceptions.h" />
     <ClInclude Include="..\common\Labels.h" />
     <ClInclude Include="..\common\Logger.h" />
     <ClInclude Include="NativeCertificateSelector.h" />
