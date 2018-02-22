@@ -23,7 +23,7 @@
 #include "BinaryUtils.h"
 #include "Labels.h"
 #include "Logger.h"
-#include "esteid_error.h"
+#include "Exceptions.h"
 #include "CertificateSelection.h"
 #include "PINDialog.h"
 

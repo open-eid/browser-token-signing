@@ -33,7 +33,6 @@
 		124E7F1B11F6E0EF00AED77F /* plugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = plugin.cpp; sourceTree = "<group>"; };
 		4E206A7C1F669BA100ADE162 /* Logger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Logger.cpp; sourceTree = "<group>"; };
 		4E206A7D1F669BA100ADE162 /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
-		4E206A7F1F669D2400ADE162 /* esteid_error.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = esteid_error.h; sourceTree = "<group>"; };
 		4E206A801F66A93200ADE162 /* Labels.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Labels.cpp; sourceTree = "<group>"; };
 		4E206A811F66A93200ADE162 /* Labels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Labels.h; sourceTree = "<group>"; };
 		4E8C0ADC1F67DB8800DB8FCC /* BinaryUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BinaryUtils.cpp; sourceTree = "<group>"; };
@@ -49,6 +48,8 @@
 		4E8C0AEC1F67E0DE00DB8FCC /* PKCS11Path.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PKCS11Path.cpp; sourceTree = "<group>"; };
 		4E8C0AED1F67E0DE00DB8FCC /* PKCS11Path.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKCS11Path.h; sourceTree = "<group>"; };
 		4E8C0AEF1F67E14700DB8FCC /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = System/Library/Frameworks/SecurityInterface.framework; sourceTree = SDKROOT; };
+		4EA11C64203EF71300B266BB /* Exceptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Exceptions.h; sourceTree = "<group>"; };
+		4EA11C65203EF71300B266BB /* pkcs11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pkcs11.h; sourceTree = "<group>"; };
 		9DFA12251C3CE2240056CFC2 /* PCSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PCSC.framework; path = System/Library/Frameworks/PCSC.framework; sourceTree = SDKROOT; };
 		F642D75C1238CB0800CBFD02 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		F69726521225427F0059AC50 /* cert-class.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "cert-class.cpp"; sourceTree = "<group>"; };
@@ -93,16 +94,17 @@
 		124E7F0511F6E09300AED77F /* common */ = {
 			isa = PBXGroup;
 			children = (
+				4E8C0ADC1F67DB8800DB8FCC /* BinaryUtils.cpp */,
+				4E8C0ADD1F67DB8800DB8FCC /* BinaryUtils.h */,
+				4EA11C64203EF71300B266BB /* Exceptions.h */,
+				4E206A801F66A93200ADE162 /* Labels.cpp */,
+				4E206A811F66A93200ADE162 /* Labels.h */,
+				4E206A7C1F669BA100ADE162 /* Logger.cpp */,
+				4E206A7D1F669BA100ADE162 /* Logger.h */,
+				4EA11C65203EF71300B266BB /* pkcs11.h */,
 				4E8C0AEB1F67E0DE00DB8FCC /* PKCS11CardManager.h */,
 				4E8C0AEC1F67E0DE00DB8FCC /* PKCS11Path.cpp */,
 				4E8C0AED1F67E0DE00DB8FCC /* PKCS11Path.h */,
-				4E8C0ADC1F67DB8800DB8FCC /* BinaryUtils.cpp */,
-				4E8C0ADD1F67DB8800DB8FCC /* BinaryUtils.h */,
-				4E206A801F66A93200ADE162 /* Labels.cpp */,
-				4E206A811F66A93200ADE162 /* Labels.h */,
-				4E206A7F1F669D2400ADE162 /* esteid_error.h */,
-				4E206A7C1F669BA100ADE162 /* Logger.cpp */,
-				4E206A7D1F669BA100ADE162 /* Logger.h */,
 			);
 			path = common;
 			sourceTree = "<group>";
