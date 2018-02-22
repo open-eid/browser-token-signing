@@ -23,11 +23,10 @@
 #define	ESTEID_PLUGIN_H
 
 #ifdef __APPLE__
-#define XP_MACOSX
-#define XP_UNIX
+#define XP_MACOSX 1
+#define XP_UNIX 1
 #endif
 
-#include "npapi.h"
 #include "npfunctions.h"
 
 #include <string>
@@ -37,8 +36,7 @@ typedef struct : public NPObject {
     NPP npp;
     NPNetscapeFuncs *browserFunctions = nullptr;
     std::string error;
-    int errorCode = 0;
-    bool allowedSite = false;
+    int32_t errorCode = 0;
     std::vector<unsigned char> certInfo;
 } PluginInstance;
 
@@ -51,8 +49,9 @@ typedef struct : public NPObject {
 NPClass *certClass();
 
 std::vector<unsigned char> md5(const std::vector<unsigned char> &data);
-bool isSameIdentifier(NPIdentifier identifier, const char* name);
-bool copyStringToNPVariant(const char *string, NPVariant *variant);
-std::string createStringFromNPVariant(const NPVariant &variant);
+bool setValue(NPVariant *variant, const char *string);
+NPIdentifier toIdentifier(const char *name);
+std::string toString(const NPVariant &variant);
+std::string toString(NPIdentifier identifier);
 
 #endif
