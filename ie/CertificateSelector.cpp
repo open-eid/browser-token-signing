@@ -22,7 +22,6 @@
 #include "Labels.h"
 
 #include <cryptuiapi.h>
-#include <vector>
 
 extern "C" {
 
@@ -82,6 +81,10 @@ bool CertificateSelector::isValid(PCCERT_CONTEXT cert, bool forSigning) const
 
 std::vector<unsigned char> CertificateSelector::showDialog() const
 {
+	PCCERT_CONTEXT cert = CertEnumCertificatesInStore(store, nullptr);
+	if (!cert)
+		throw NoCertificatesException();
+	CertFreeCertificateContext(cert);
 	std::wstring title = Labels::l10n.get("select certificate");
 	std::wstring text = Labels::l10n.get("cert info");
 	CRYPTUI_SELECTCERTIFICATE_STRUCT pcsc = { sizeof(pcsc) };
@@ -91,7 +94,7 @@ std::vector<unsigned char> CertificateSelector::showDialog() const
 	pcsc.szDisplayString = text.c_str();
 	pcsc.cDisplayStores = 1;
 	pcsc.rghDisplayStores = const_cast<HCERTSTORE*>(&store);
-	PCCERT_CONTEXT cert = CryptUIDlgSelectCertificate(&pcsc);
+	cert = CryptUIDlgSelectCertificate(&pcsc);
 	if (!cert)
 		throw UserCancelledException();
 	std::vector<unsigned char> data(cert->pbCertEncoded, cert->pbCertEncoded + cert->cbCertEncoded);
