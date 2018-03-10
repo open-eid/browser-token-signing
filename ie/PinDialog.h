@@ -18,34 +18,17 @@
 
 #pragma once
 
-#include "resource.h"
-
-#include <atlbase.h>
-#include <atlhost.h>
+#include "stdafx.h"
 #include <string>
 
-class PinDialog : public CAxDialogImpl<PinDialog>
+class PinDialog
 {
 public:
-	PinDialog(const std::wstring &_label) : label(_label) {}
-	char* getPin();
-
-	// Dialog Data
-	enum { IDD = IDD_PIN_DIALOG };
-
-protected:
-	BEGIN_MSG_MAP(PinDialog)
-		MESSAGE_HANDLER(WM_INITDIALOG, OnInitDialog)
-		COMMAND_HANDLER(IDOK, BN_CLICKED, OnClickedOK)
-		COMMAND_HANDLER(IDCANCEL, BN_CLICKED, OnClickedCancel)
-		CHAIN_MSG_MAP(CAxDialogImpl<PinDialog>)
-	END_MSG_MAP()
-
-	LRESULT OnInitDialog(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-	LRESULT OnClickedOK(WORD wNotifyCode, WORD wID, HWND hWndCtl, BOOL& bHandled);
-	LRESULT OnClickedCancel(WORD wNotifyCode, WORD wID, HWND hWndCtl, BOOL& bHandled);
+	static std::string getPin(const std::wstring &label, HWND pParent = NULL);
 
 private:
-	char* pin;
+	PinDialog() {}
+	static INT_PTR CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
 	std::wstring label;
+	std::string pin;
 };

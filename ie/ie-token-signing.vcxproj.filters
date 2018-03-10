@@ -114,9 +114,13 @@
     <ClInclude Include="..\common\PKCS11Signer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PinDialogResource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="esteid-plugin-ie.rc" />
+    <ResourceCompile Include="PinDialog.rc" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="esteidpluginie.idl" />
