@@ -18,6 +18,8 @@
 
 #pragma once
 
+#define ISOLATION_AWARE_ENABLED 1
+
 #include "targetver.h"
 #include "resource.h"
 #include <afxrich.h>
