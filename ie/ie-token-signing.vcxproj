@@ -97,8 +97,6 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Midl>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MkTypLibCompatible>false</MkTypLibCompatible>
-      <TargetEnvironment>Win32</TargetEnvironment>
       <GenerateStublessProxies>true</GenerateStublessProxies>
       <TypeLibraryName>$(IntDir)esteidpluginie.tlb</TypeLibraryName>
       <HeaderFileName>esteidpluginie_i.h</HeaderFileName>
@@ -111,32 +109,25 @@
       <AdditionalIncludeDirectories>../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_USRDLL;WIN_IE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level3</WarningLevel>
-      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <DisableSpecificWarnings>4290</DisableSpecificWarnings>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
     </ClCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <RegisterOutput>true</RegisterOutput>
-      <AdditionalDependencies>Uafxcwd.lib;Libcmtd.lib;Ncrypt.lib;Cryptui.lib;crypt32.lib;winscard.lib</AdditionalDependencies>
+      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib;Winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>.\esteid-plugin-ie.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <IgnoreSpecificDefaultLibraries>Uafxcwd.lib;Libcmtd.lib</IgnoreSpecificDefaultLibraries>
       <AdditionalManifestDependencies>type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'</AdditionalManifestDependencies>
     </Link>
-    <Manifest>
-      <TypeLibraryFile>.\Debug\esteidpluginie.tlb</TypeLibraryFile>
-      <ComponentFileName>esteid-plugin-ie</ComponentFileName>
-    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Midl>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MkTypLibCompatible>false</MkTypLibCompatible>
-      <TargetEnvironment>X64</TargetEnvironment>
       <GenerateStublessProxies>true</GenerateStublessProxies>
       <TypeLibraryName>$(IntDir)esteidpluginie.tlb</TypeLibraryName>
       <HeaderFileName>esteidpluginie_i.h</HeaderFileName>
@@ -148,27 +139,25 @@
       <AdditionalIncludeDirectories>../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;_WINDOWS;_DEBUG;_USRDLL;WIN_IE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level3</WarningLevel>
-      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4290</DisableSpecificWarnings>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
     </ClCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <RegisterOutput>true</RegisterOutput>
-      <AdditionalDependencies>Uafxcwd.lib;Libcmtd.lib;Ncrypt.lib;Cryptui.lib;crypt32.lib;winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib;Winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>.\esteid-plugin-ie.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <IgnoreSpecificDefaultLibraries>Uafxcwd.lib;Libcmtd.lib</IgnoreSpecificDefaultLibraries>
       <AdditionalManifestDependencies>type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'</AdditionalManifestDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Midl>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MkTypLibCompatible>false</MkTypLibCompatible>
-      <TargetEnvironment>Win32</TargetEnvironment>
       <GenerateStublessProxies>true</GenerateStublessProxies>
       <TypeLibraryName>$(IntDir)esteidpluginie.tlb</TypeLibraryName>
       <HeaderFileName>esteidpluginie_i.h</HeaderFileName>
@@ -181,27 +170,29 @@
       <AdditionalIncludeDirectories>../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_USRDLL;WIN_IE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level3</WarningLevel>
-      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4290</DisableSpecificWarnings>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
     </ClCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <RegisterOutput>true</RegisterOutput>
-      <AdditionalDependencies>Uafxcw.lib;Libcmt.lib;Ncrypt.lib;Cryptui.lib;crypt32.lib;Winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib;Winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>.\esteid-plugin-ie.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <IgnoreSpecificDefaultLibraries>Uafxcw.lib;Libcmtd.lib</IgnoreSpecificDefaultLibraries>
       <AdditionalManifestDependencies>type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'</AdditionalManifestDependencies>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Midl>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MkTypLibCompatible>false</MkTypLibCompatible>
-      <TargetEnvironment>X64</TargetEnvironment>
       <GenerateStublessProxies>true</GenerateStublessProxies>
       <TypeLibraryName>$(IntDir)esteidpluginie.tlb</TypeLibraryName>
       <HeaderFileName>esteidpluginie_i.h</HeaderFileName>
@@ -213,20 +204,24 @@
       <AdditionalIncludeDirectories>../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;_WINDOWS;NDEBUG;_USRDLL;WIN_IE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level3</WarningLevel>
-      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4290</DisableSpecificWarnings>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
     </ClCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <RegisterOutput>true</RegisterOutput>
-      <AdditionalDependencies>Uafxcw.lib;Libcmt.lib;Ncrypt.lib;Cryptui.lib;crypt32.lib;Winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Ncrypt.lib;Cryptui.lib;crypt32.lib;Winscard.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>.\esteid-plugin-ie.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <IgnoreSpecificDefaultLibraries>Uafxcw.lib;Libcmtd.lib</IgnoreSpecificDefaultLibraries>
       <AdditionalManifestDependencies>type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'</AdditionalManifestDependencies>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -235,7 +230,20 @@
     <ClCompile Include="esteid-plugin-ie.cpp" />
     <ClCompile Include="EstEIDCertificate.cpp" />
     <ClCompile Include="EstEIDIEPluginBHO.cpp" />
-    <ClCompile Include="esteidpluginie_i.c" />
+    <ClCompile Include="esteidpluginie_i.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </ForcedIncludeFiles>
+    </ClCompile>
     <ClCompile Include="..\common\BinaryUtils.cpp" />
     <ClCompile Include="..\common\Labels.cpp" />
     <ClCompile Include="..\common\Logger.cpp" />
@@ -246,19 +254,24 @@
     <ClCompile Include="..\common\PKCS11Path.cpp" />
     <ClCompile Include="PKCS11Signer.cpp" />
     <ClCompile Include="Signer.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="esteid-plugin-ie.def" />
     <None Include="esteid-plugin-ie.rgs" />
     <None Include="EstEIDCertificate.rgs" />
     <None Include="EstEIDIEPluginBHO.rgs" />
-    <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="esteidpluginie.idl" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BinaryUtils.h" />
+    <ClInclude Include="..\common\BinaryUtils.h" />
     <ClInclude Include="CertificateSelector.h" />
     <ClInclude Include="dllmain.h" />
     <ClInclude Include="EstEIDCertificate.h" />

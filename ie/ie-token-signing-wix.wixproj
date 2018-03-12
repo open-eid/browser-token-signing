@@ -18,19 +18,19 @@
     <Name>ie-token-signing-wix</Name>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <OutputPath>$(Configuration)\</OutputPath>
-    <IntermediateOutputPath>$(Configuration)\obj\</IntermediateOutputPath>
+    <OutputPath>$(SolutionDir)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>$(Configuration)\</IntermediateOutputPath>
     <DefineConstants>Debug;VERSION=$(MAJOR_VERSION).$(MINOR_VERSION).$(RELEASE_VERSION).$(BUILD_NUMBER)</DefineConstants>
     <WixVariables>WixUILicenseRtf=$(SolutionDir)media/LICENSE.LGPL.rtf;WixUIDialogBmp=$(SolutionDir)media/dlgbmp.bmp</WixVariables>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <OutputPath>$(SolutionDir)\$(Configuration)\</OutputPath>
-    <IntermediateOutputPath>$(Configuration)\obj\</IntermediateOutputPath>
+    <IntermediateOutputPath>$(Configuration)\</IntermediateOutputPath>
     <DefineConstants>VERSION=$(MAJOR_VERSION).$(MINOR_VERSION).$(RELEASE_VERSION).$(BUILD_NUMBER)</DefineConstants>
     <WixVariables>WixUILicenseRtf=$(SolutionDir)media/LICENSE.LGPL.rtf;WixUIDialogBmp=$(SolutionDir)media/dlgbmp.bmp</WixVariables>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
-    <OutputPath>$(Platform)\$(Configuration)\</OutputPath>
+    <OutputPath>$(SolutionDir)\$(Platform)\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>$(Platform)\$(Configuration)\</IntermediateOutputPath>
     <DefineConstants>Debug;VERSION=$(MAJOR_VERSION).$(MINOR_VERSION).$(RELEASE_VERSION).$(BUILD_NUMBER)</DefineConstants>
     <WixVariables>WixUILicenseRtf=$(SolutionDir)media/LICENSE.LGPL.rtf;WixUIDialogBmp=$(SolutionDir)media/dlgbmp.bmp</WixVariables>
