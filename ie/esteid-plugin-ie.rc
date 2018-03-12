@@ -2,9 +2,6 @@
 //
 #include "resource.h"
 
-#define VER_STR_HELPER(x)       #x
-#define VER_STR(x)              VER_STR_HELPER(x)
-
 #define APSTUDIO_READONLY_SYMBOLS
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -14,7 +11,21 @@
 #include "targetver.h"
 #endif
 #include "winres.h"
+#define VER_STR_HELPER(x)       #x
+#define VER_STR(x)              VER_STR_HELPER(x)
 
+#ifndef MAJOR_VER
+#define MAJOR_VER 3
+#endif
+#ifndef MINOR_VER
+#define MINOR_VER 13
+#endif
+#ifndef RELEASE_VER
+#define RELEASE_VER 0
+#endif
+#ifndef BUILD_VER
+#define BUILD_VER 0
+#endif
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
 
@@ -42,7 +53,21 @@ BEGIN
     "#include ""targetver.h""\r\n"
     "#endif\r\n"
     "#include ""winres.h""\r\n"
-    "\0"
+    "#define VER_STR_HELPER(x)       #x\r\n"
+    "#define VER_STR(x)              VER_STR_HELPER(x)\r\n"
+    "\r\n"
+    "#ifndef MAJOR_VER\r\n"
+    "#define MAJOR_VER 3\r\n"
+    "#endif\r\n"
+    "#ifndef MINOR_VER\r\n"
+    "#define MINOR_VER 13\r\n"
+    "#endif\r\n"
+    "#ifndef RELEASE_VER\r\n"
+    "#define RELEASE_VER 0\r\n"
+    "#endif\r\n"
+    "#ifndef BUILD_VER\r\n"
+    "#define BUILD_VER 0\r\n"
+    "#endif\0"
 END
 
 3 TEXTINCLUDE 
@@ -102,52 +127,6 @@ IDR_ESTEIDPLUGINIE      REGISTRY                "esteid-plugin-ie.rgs"
 IDR_ESTEIDIEPLUGINBHO   REGISTRY                "EstEIDIEPluginBHO.rgs"
 IDR_ESTEIDCERTIFICATE   REGISTRY                "EstEIDCertificate.rgs"
 #endif    // English (United States) resources
-/////////////////////////////////////////////////////////////////////////////
-
-
-/////////////////////////////////////////////////////////////////////////////
-// English (United Kingdom) resources
-
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENG)
-LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
-#pragma code_page(1252)
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Dialog
-//
-
-IDD_PIN_DIALOG DIALOGEX 0, 0, 231, 66
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-EXSTYLE WS_EX_ACCEPTFILES
-FONT 8, "MS Shell Dlg", 400, 0, 0x1
-BEGIN
-    EDITTEXT        IDC_PIN_FIELD,7,22,217,14,ES_PASSWORD | ES_AUTOHSCROLL
-    DEFPUSHBUTTON   "OK",IDOK,120,45,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,174,45,50,14
-    LTEXT           "",IDC_PIN_MESSAGE,7,7,217,8
-END
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// DESIGNINFO
-//
-
-#ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO
-BEGIN
-    IDD_PIN_DIALOG, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 224
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 59
-    END
-END
-#endif    // APSTUDIO_INVOKED
-
-#endif    // English (United Kingdom) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

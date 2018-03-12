@@ -125,6 +125,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <IgnoreSpecificDefaultLibraries>Uafxcwd.lib;Libcmtd.lib</IgnoreSpecificDefaultLibraries>
+      <AdditionalManifestDependencies>type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'</AdditionalManifestDependencies>
     </Link>
     <Manifest>
       <TypeLibraryFile>.\Debug\esteidpluginie.tlb</TypeLibraryFile>
@@ -160,6 +161,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <IgnoreSpecificDefaultLibraries>Uafxcwd.lib;Libcmtd.lib</IgnoreSpecificDefaultLibraries>
+      <AdditionalManifestDependencies>type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'</AdditionalManifestDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -192,6 +194,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <IgnoreSpecificDefaultLibraries>Uafxcw.lib;Libcmtd.lib</IgnoreSpecificDefaultLibraries>
+      <AdditionalManifestDependencies>type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'</AdditionalManifestDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -223,6 +226,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <IgnoreSpecificDefaultLibraries>Uafxcw.lib;Libcmtd.lib</IgnoreSpecificDefaultLibraries>
+      <AdditionalManifestDependencies>type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'</AdditionalManifestDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -266,6 +270,7 @@
     <ClInclude Include="NativeSigner.h" />
     <ClInclude Include="PinDialog.h" />
     <ClInclude Include="..\common\PKCS11CardManager.h" />
+    <ClInclude Include="PinDialogResource.h" />
     <ClInclude Include="PKCS11CertificateSelector.h" />
     <ClInclude Include="..\common\PKCS11Path.h" />
     <ClInclude Include="..\common\PKCS11Signer.h" />
@@ -278,6 +283,7 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="esteid-plugin-ie.rc" />
+    <ResourceCompile Include="PinDialog.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

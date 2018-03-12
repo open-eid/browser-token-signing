@@ -19,45 +19,55 @@
 #include "PinDialog.h"
 
 #include "Labels.h"
+#include "PinDialogResource.h"
 
-#include <atlstr.h>
-
-#define _L(KEY) Labels::l10n.get(KEY).c_str()
-
-LRESULT PinDialog::OnClickedOK(WORD wNotifyCode, WORD wID, HWND hWndCtl, BOOL& bHandled) {
-	CString rawPin;
-	GetDlgItemText(IDC_PIN_FIELD, rawPin);
-	pin = _strdup(ATL::CT2CA(rawPin));
-	EndDialog(wID);
-	return 0;
+std::string PinDialog::getPin(const std::wstring &label, HWND pParent)
+{
+	PinDialog p;
+	p.label = label;
+	if (DialogBoxParam(ATL::_AtlBaseModule.GetModuleInstance(), MAKEINTRESOURCE(IDD_PIN_DIALOG), pParent, DlgProc, LPARAM(&p)) != IDOK)
+		p.pin.clear();
+	return p.pin;
 }
 
-LRESULT PinDialog::OnInitDialog(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
-	CAxDialogImpl<PinDialog>::OnInitDialog(uMsg, wParam, lParam, bHandled);
-	ATLVERIFY(CenterWindow());
-	GotoDlgCtrl(GetDlgItem(IDC_PIN_FIELD));
-	SetDlgItemText(IDC_PIN_MESSAGE, label.c_str());
-	SetDlgItemText(IDCANCEL, _L("cancel"));
-	bHandled = TRUE;
-	return FALSE; //Focus is set manually
+INT_PTR CALLBACK PinDialog::DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+	switch (uMsg)
+	{
+	case WM_INITDIALOG:
+	{
+		PinDialog *self = (PinDialog*)lParam;
+		SetWindowLongPtr(hwndDlg, GWLP_USERDATA, lParam);
+		SetDlgItemText(hwndDlg, IDC_PIN_MESSAGE, self->label.c_str());
+		SetDlgItemText(hwndDlg, IDCANCEL, Labels::l10n.get("cancel").c_str());
+		SendMessage(hwndDlg, DM_SETDEFID, IDCANCEL, 0);
+		EnableWindow(GetDlgItem(hwndDlg, IDOK), FALSE);
+		return TRUE;
+	}
+	case WM_COMMAND:
+		switch (LOWORD(wParam))
+		{
+		case IDC_PIN_FIELD:
+			if (HIWORD(wParam) == EN_CHANGE)
+			{
+				WORD len = WORD(SendDlgItemMessage(hwndDlg, IDC_PIN_FIELD, EM_LINELENGTH, 0, 0));
+				EnableWindow(GetDlgItem(hwndDlg, IDOK), len >= 4);
+				SendMessage(hwndDlg, DM_SETDEFID, len >= 4 ? IDOK : IDCANCEL, 0);
+			}
+			break;
+		case IDOK:
+		{
+			size_t len = size_t(SendDlgItemMessage(hwndDlg, IDC_PIN_FIELD, EM_LINELENGTH, 0, 0));
+			std::wstring tmp(len + 1, 0);
+			GetDlgItemText(hwndDlg, IDC_PIN_FIELD, &tmp[0], tmp.size());
+			PinDialog *self = (PinDialog*)GetWindowLongPtr(hwndDlg, GWLP_USERDATA);
+			self->pin = std::string(tmp.cbegin(), tmp.cend());
+			return EndDialog(hwndDlg, IDOK);
+		}
+		case IDCANCEL:
+			return EndDialog(hwndDlg, IDCANCEL);
+		}
+		return FALSE;
+	}
+	return FALSE;
 }
-
-LRESULT PinDialog::OnClickedCancel(WORD wNotifyCode, WORD wID, HWND hWndCtl, BOOL& bHandled) {
-	EndDialog(wID);
-	return 0;
-}
-
-char* PinDialog::getPin() {
-	return pin;
-}
-
-// common controls
-#if defined _M_IX86
-#pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='x86' publicKeyToken='6595b64144ccf1df' language='*'\"")
-#elif defined _M_IA64
-#pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='ia64' publicKeyToken='6595b64144ccf1df' language='*'\"")
-#elif defined _M_X64
-#pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='amd64' publicKeyToken='6595b64144ccf1df' language='*'\"")
-#else
-#pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
-#endif
