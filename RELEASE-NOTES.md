@@ -1,3 +1,14 @@
+browser-token-signing version [3.13.1](https://github.com/open-eid/browser-token-signing/releases/tag/v3.13.1) release notes
+--------------------------------------------
+- Use OpenSC driver with unkown ATR on OSX/Linux (#45)
+- Add new Lithuanian driver paths (#48)
+- Use SCardGetStatusChange to get ATR-s and avoid to connecting with card (#51)
+- Filter attributes with token filter (#53)
+- Code and build improvements
+
+[Full Changelog](https://github.com/open-eid/browser-token-signing/compare/v3.13.0...v3.13.1)
+
+
 browser-token-signing version [3.13.0](https://github.com/open-eid/browser-token-signing/releases/tag/v3.13.0) release notes
 --------------------------------------------
 - Rewrite NPAPI plugin for Safari MacOS
