@@ -26,9 +26,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 		<Icon Id="Icon.ico" SourceFile="$(var.SolutionDir)media/ID.ico"/>
 		<Property Id="ARPPRODUCTICON" Value="Icon.ico"/>
 		<MajorUpgrade AllowSameVersionUpgrades="yes" DowngradeErrorMessage=
-		"A newer version of [ProductName] is already installed. If you are trying to downgrade, please uninstall the newer version first."/>
+			"A newer version of [ProductName] is already installed. If you are trying to downgrade, please uninstall the newer version first."/>
 		<Condition Message="[ProductName] requires Windows 7 or higher.">
-		  <![CDATA[Installed OR (VersionNT >= 601)]]>
+			<![CDATA[Installed OR (VersionNT >= 601)]]>
 		</Condition>
 		<UIRef Id="WixUI_Minimal" />
 
@@ -36,7 +36,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 			<Directory Id='ProgramFilesFolder'>
 				<Directory Id="APPLICATIONFOLDER" Name="IE Token Signing Plugin">
 					<Component Id="Application" Guid="{B5C61F10-1F23-497a-91A5-9348BA3DB6E6}" Win64="no">
-						<AppId Description="IE plugin for Estonian ID Card" Id="545B4ED6-A2FE-49F1-AF8E-FA18B6261E48"/>
 						<File Source="$(var.SolutionDir)$(var.Configuration)\esteid-plugin-ie.dll" Id="esteid_plugin_ie.dll" KeyPath="yes" Name="esteid-plugin-ie.dll">
 							<TypeLib Id="{23EF5046-6402-4C39-B34B-3C47826805D1}" Description="esteidpluginie 1.0 Type Library" Language="0" MajorVersion="1" MinorVersion="0">
 								<Class Id="{2615B13B-A08B-442C-8032-4D9981060190}" Context="InprocServer32" Description="EstEIDCertificate Class" ThreadingModel="apartment" Programmable="yes">
@@ -44,7 +43,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 										<ProgId Id="esteidpluginie.EstEIDCertificate" Description="EstEIDCertificate Class"/>
 									</ProgId>
 								</Class>
-								<Class Id="{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}" Context="InprocServer32" Description="IE Token Signing Plugin" ThreadingModel="apartment" Programmable="yes">
+								<Class Id="{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}" Context="InprocServer32" Description="IE Token Signing Plugin" ThreadingModel="apartment" Programmable="yes" SafeForScripting="yes">
 									<ProgId Id="esteidpluginie.EstEIDIEPluginBHO.1" Description="IE Token Signing Plugin">
 										<ProgId Id="esteidpluginie.EstEIDIEPluginBHO" Description="IE Token Signing Plugin"/>
 									</ProgId>
@@ -53,17 +52,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 								<Interface Id="{E23AF8B5-2D34-45EC-95E6-24791F84486E}" Name="IEstEIDCertificate" ProxyStubClassId32="{00020424-0000-0000-C000-000000000046}"/>
 							</TypeLib>
 						</File>
-						<ProgId Id="MIME"/>
+						<AppId Description="IE plugin for Estonian ID Card" Id="545B4ED6-A2FE-49F1-AF8E-FA18B6261E48"/>
 						<RegistryValue Root="HKCR" Key="AppID\esteid-plugin-ie.DLL" Name="AppID" Value="{545B4ED6-A2FE-49F1-AF8E-FA18B6261E48}" Type="string"/>
 						<RegistryValue Root="HKCR" Key="MIME\Database\Content Type\application/x-digidoc" Name="CLSID" Value="{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}" Type="string"/>
-						<RegistryValue Root="HKLM" Key="Software\Microsoft\Windows\CurrentVersion\Explorer\Browser Helper Objects\{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}" Value="EstEIDIEPluginBHO" Type="string"/>
-						<RegistryValue Root="HKLM" Key="Software\Microsoft\Windows\CurrentVersion\Explorer\Browser Helper Objects\{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}" Name="NoExplorer" Value="1" Type="integer"/>
-						<RegistryValue Root="HKLM" Key="Software\Microsoft\Windows\CurrentVersion\Ext\PreApproved\{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}" Value="EstEIDIEPluginBHO" Type="string"/>
-						<RegistryValue Root="HKLM" Key="Software\Microsoft\Windows\CurrentVersion\Ext\PreApproved\{FC5B7BD2-584A-4153-92D7-4C5840E4BC28}" Value="EstEIDIEPluginBHO" Type="string"/>
+						<RegistryKey Root="HKCR" Key="CLSID\{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}\Implemented Categories\{59fb2056-d625-48d0-a944-1a85b5ab2640}" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes"/><!-- AppContainer -->
 
-						<RegistryKey Root="HKLM" Key="SOFTWARE\Classes\CLSID\{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}\Implemented Categories\{7DD95801-9882-11CF-9FA9-00AA006C42C4}" ForceCreateOnInstall="yes"/>
-						<RegistryKey Root="HKLM" Key="SOFTWARE\Classes\CLSID\{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}\Implemented Categories\{59fb2056-d625-48d0-a944-1a85b5ab2640}" ForceCreateOnInstall="yes"/>
-						<RegistryKey Root="HKCR" Key="CLSID\{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}\Implemented Categories\{59fb2056-d625-48d0-a944-1a85b5ab2640}" ForceCreateOnInstall="yes"/>
+						<!-- Plugin activation -->
+						<RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Browser Helper Objects\{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}" Value="EstEIDIEPluginBHO" Type="string"/>
+						<RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Browser Helper Objects\{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}" Name="NoExplorer" Value="1" Type="integer"/>
+						<RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Ext\PreApproved\{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}" Value="EstEIDIEPluginBHO" Type="string"/>
 						<RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Ext\CLSID" Name="{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}" Value="1" Type="string"/>
 					</Component>
 				</Directory>
@@ -74,7 +71,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 			<Directory Id='ProgramFiles64Folder'>
 				<Directory Id="APPLICATION64FOLDER" Name="IE Token Signing Plugin">
 					<Component Id="Application64" Guid="{86DFD242-790A-425a-B0B6-C3860A8674E4}" Win64="yes">
-						<AppId Description="IE plugin for Estonian ID Card" Id="545B4ED6-A2FE-49F1-AF8E-FA18B6261E48"/>
 						<File Source="$(var.SolutionDir)x64/$(var.Configuration)/esteid-plugin-ie.dll" Id="esteid_plugin_ie64.dll" KeyPath="yes" Name="esteid-plugin-ie64.dll">
 							<TypeLib Id="{23EF5046-6402-4C39-B34B-3C47826805D1}" Description="esteidpluginie 1.0 Type Library" Language="0" MajorVersion="1" MinorVersion="0">
 								<Class Id="{2615B13B-A08B-442C-8032-4D9981060190}" Context="InprocServer32" Description="EstEIDCertificate Class" ThreadingModel="apartment" Programmable="yes">
@@ -82,7 +78,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 										<ProgId Id="esteidpluginie.EstEIDCertificate" Description="EstEIDCertificate Class"/>
 									</ProgId>
 								</Class>
-								<Class Id="{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}" Context="InprocServer32" Description="IE Token Signing Plugin" ThreadingModel="apartment" Programmable="yes">
+								<Class Id="{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}" Context="InprocServer32" Description="IE Token Signing Plugin" ThreadingModel="apartment" Programmable="yes" SafeForScripting="yes">
 									<ProgId Id="esteidpluginie.EstEIDIEPluginBHO.1" Description="IE Token Signing Plugin">
 										<ProgId Id="esteidpluginie.EstEIDIEPluginBHO" Description="IE Token Signing Plugin"/>
 									</ProgId>
@@ -91,6 +87,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 								<Interface Id="{E23AF8B5-2D34-45EC-95E6-24791F84486E}" Name="IEstEIDCertificate" ProxyStubClassId32="{00020424-0000-0000-C000-000000000046}"/>
 							</TypeLib>
 						</File>
+						<RegistryKey Root="HKCR" Key="CLSID\{2A4E94A4-B275-491A-9E32-CD7A26FC7C3B}\Implemented Categories\{59fb2056-d625-48d0-a944-1a85b5ab2640}" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes"/><!-- AppContainer -->
 					</Component>
 				</Directory>
 			</Directory>
