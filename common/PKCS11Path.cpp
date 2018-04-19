@@ -117,7 +117,7 @@ PKCS11Path::Params PKCS11Path::getPkcs11ModulePath() {
     static const std::string openscPath("opensc-pkcs11.so");
     static const std::string estPath = openscPath;
     static const std::string latPath("otlv-pkcs11.so");
-    static const std::string finPath = openscPath;
+    static const std::string finPath("libcryptoki.so");
     static const std::string lit1Path("/usr/lib/ccs/libccpkip11.so");
     static const std::string lit2Path("pwpw-card-pkcs11.so");
     static const std::string litPath = access(lit1Path.c_str(), F_OK) == 0 ? lit1Path : lit2Path;
@@ -136,6 +136,7 @@ PKCS11Path::Params PKCS11Path::getPkcs11ModulePath() {
         {"3BDD18008131FE45904C41545649412D65494490008C", {latPath, "PIN1", "PIN2"}},
 
         {"3B7B940000806212515646696E454944", {finPath, "PIN1", "PIN2"}},
+        {"3B7F9600008031B865B0850300EF1200F6829000", {finPath, "PIN1", "PIN2"}},
 
         {"3BD5180081313A7D8073C8211030", {eTokenPath, "PIN", "PIN"}},
         {"3BD518008131FE7D8073C82110F4", {eTokenPath, "PIN", "PIN"}},
