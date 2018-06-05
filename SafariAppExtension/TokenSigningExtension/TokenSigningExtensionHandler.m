@@ -18,32 +18,34 @@
 
 #import <SafariServices/SafariServices.h>
 
+#import "TokenSigning.h"
+
 static SFSafariPage *_page = nil;
 
-@interface SafariExtensionHandler : SFSafariExtensionHandler
+@interface TokenSigningExtensionHandler : SFSafariExtensionHandler
 
 @end
 
-@implementation SafariExtensionHandler
+@implementation TokenSigningExtensionHandler
 
 - (void)messageReceivedWithName:(NSString *)messageName fromPage:(SFSafariPage *)page userInfo:(NSDictionary *)userInfo {
     // This method will be called when a content script provided by your extension calls safari.extension.dispatchMessage("message").
     [page getPagePropertiesWithCompletionHandler:^(SFSafariPageProperties *properties) {
         NSLog(@"The extension received a message (%@) from a script injected into (%@) with userInfo (%@)", messageName, properties.url, userInfo);
-        if (![messageName isEqualToString:@"message"]) {
+        if (![messageName isEqualToString:TokenSigningMessage]) {
             return;
         }
         _page = page;
-        NSUserDefaults *defaults = [[NSUserDefaults alloc] initWithSuiteName:@"ee.ria.SafariApp.shared"];
+        NSUserDefaults *defaults = [[NSUserDefaults alloc] initWithSuiteName:TokenSigningShared];
         [defaults setObject:userInfo forKey:userInfo[@"nonce"]];
         [defaults synchronize];
-        [NSDistributedNotificationCenter.defaultCenter postNotificationName:@"TokenSigning" object:userInfo[@"nonce"] userInfo:nil deliverImmediately:YES];
+        [NSDistributedNotificationCenter.defaultCenter postNotificationName:TokenSigning object:userInfo[@"nonce"] userInfo:nil deliverImmediately:YES];
     }];
 }
 
 - (void)messageReceivedFromContainingAppWithName:(NSString *)messageName userInfo:(NSDictionary<NSString *,id> *)userInfo {
     NSLog(@"The extension received a message (%@) from a application with userInfo (%@)", messageName, userInfo);
-    [_page dispatchMessageToScriptWithName:@"message" userInfo:userInfo];
+    [_page dispatchMessageToScriptWithName:TokenSigningMessage userInfo:userInfo];
 }
 
 @end

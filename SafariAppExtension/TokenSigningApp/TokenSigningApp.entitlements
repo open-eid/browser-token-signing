@@ -6,7 +6,7 @@
 	<true/>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>ee.ria.SafariApp.shared</string>
+		<string>ee.ria.TokenSigningApp.shared</string>
 	</array>
 	<key>com.apple.security.smartcard</key>
 	<true/>

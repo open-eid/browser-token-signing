@@ -11,9 +11,9 @@
 		4E1A1AFE1D21B76000CEB83E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1A1AFD1D21B76000CEB83E /* main.m */; };
 		4E1A1B031D21B76000CEB83E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E1A1B021D21B76000CEB83E /* Assets.xcassets */; };
 		4E1A1B061D21B76000CEB83E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E1A1B041D21B76000CEB83E /* Main.storyboard */; };
-		4E1A1B1A1D21B77800CEB83E /* SafariExtensionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1A1B191D21B77800CEB83E /* SafariExtensionHandler.m */; };
+		4E1A1B1A1D21B77800CEB83E /* TokenSigningExtensionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1A1B191D21B77800CEB83E /* TokenSigningExtensionHandler.m */; };
 		4E1A1B231D21B77800CEB83E /* script.js in Resources */ = {isa = PBXBuildFile; fileRef = 4E1A1B221D21B77800CEB83E /* script.js */; };
-		4E1A1B281D21B77800CEB83E /* SafariExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 4E1A1B111D21B77800CEB83E /* SafariExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4E1A1B281D21B77800CEB83E /* TokenSigningExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 4E1A1B111D21B77800CEB83E /* TokenSigningExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4E320CD12060FD1E0047F74F /* BinaryUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E320CCF2060FD1E0047F74F /* BinaryUtils.cpp */; };
 		4E320CD52060FD9E0047F74F /* CertificateSelection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4E320CD32060FD9E0047F74F /* CertificateSelection.xib */; };
 		4E320CD62060FD9E0047F74F /* CertificateSelection.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4E320CD42060FD9E0047F74F /* CertificateSelection.mm */; };
@@ -45,7 +45,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				4E1A1B281D21B77800CEB83E /* SafariExtension.appex in Embed App Extensions */,
+				4E1A1B281D21B77800CEB83E /* TokenSigningExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -53,15 +53,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		4E1A1AF61D21B76000CEB83E /* SafariApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SafariApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E1A1AF61D21B76000CEB83E /* TokenSigningApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TokenSigningApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E1A1AFA1D21B76000CEB83E /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		4E1A1AFD1D21B76000CEB83E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4E1A1B021D21B76000CEB83E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4E1A1B051D21B76000CEB83E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4E1A1B071D21B76000CEB83E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4E1A1B111D21B77800CEB83E /* SafariExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SafariExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		4E1A1B171D21B77800CEB83E /* SafariExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = SafariExtension.entitlements; sourceTree = "<group>"; };
-		4E1A1B191D21B77800CEB83E /* SafariExtensionHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SafariExtensionHandler.m; sourceTree = "<group>"; };
+		4E1A1B111D21B77800CEB83E /* TokenSigningExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TokenSigningExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E1A1B171D21B77800CEB83E /* TokenSigningExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TokenSigningExtension.entitlements; sourceTree = "<group>"; };
+		4E1A1B191D21B77800CEB83E /* TokenSigningExtensionHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TokenSigningExtensionHandler.m; sourceTree = "<group>"; };
 		4E1A1B211D21B77800CEB83E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4E1A1B221D21B77800CEB83E /* script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = script.js; sourceTree = "<group>"; };
 		4E320CCF2060FD1E0047F74F /* BinaryUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BinaryUtils.cpp; path = ../../common/BinaryUtils.cpp; sourceTree = "<group>"; };
@@ -82,7 +82,8 @@
 		4E320CE42060FE1F0047F74F /* PINPadDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PINPadDialog.xib; path = ../../npapi/PINPadDialog.xib; sourceTree = "<group>"; };
 		4E320CE52060FE1F0047F74F /* PINDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PINDialog.xib; path = ../../npapi/PINDialog.xib; sourceTree = "<group>"; };
 		4E320CE62060FE1F0047F74F /* PINDialog.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = PINDialog.mm; path = ../../npapi/PINDialog.mm; sourceTree = "<group>"; };
-		4E6C38E11EEEB40D00D891B3 /* SafariApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SafariApp.entitlements; sourceTree = "<group>"; };
+		4E6C38E11EEEB40D00D891B3 /* TokenSigningApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TokenSigningApp.entitlements; sourceTree = "<group>"; };
+		4E6E93D520C6859800CDD4FF /* TokenSigning.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TokenSigning.h; sourceTree = "<group>"; };
 		4E7B33DA1EF948BB00811030 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		4E88001F1EEAACB900747AA8 /* PCSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PCSC.framework; path = System/Library/Frameworks/PCSC.framework; sourceTree = SDKROOT; };
 		4E8C22811EEF370100230620 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = System/Library/Frameworks/SecurityInterface.framework; sourceTree = SDKROOT; };
@@ -112,8 +113,8 @@
 		4E1A1AED1D21B76000CEB83E = {
 			isa = PBXGroup;
 			children = (
-				4E1A1AF81D21B76000CEB83E /* SafariApp */,
-				4E1A1B151D21B77800CEB83E /* SafariExtension */,
+				4E1A1AF81D21B76000CEB83E /* TokenSigningApp */,
+				4E1A1B151D21B77800CEB83E /* TokenSigningExtension */,
 				4E1A1B121D21B77800CEB83E /* Frameworks */,
 				4E1A1AF71D21B76000CEB83E /* Products */,
 			);
@@ -122,13 +123,13 @@
 		4E1A1AF71D21B76000CEB83E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4E1A1AF61D21B76000CEB83E /* SafariApp.app */,
-				4E1A1B111D21B77800CEB83E /* SafariExtension.appex */,
+				4E1A1AF61D21B76000CEB83E /* TokenSigningApp.app */,
+				4E1A1B111D21B77800CEB83E /* TokenSigningExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		4E1A1AF81D21B76000CEB83E /* SafariApp */ = {
+		4E1A1AF81D21B76000CEB83E /* TokenSigningApp */ = {
 			isa = PBXGroup;
 			children = (
 				4E1A1AFA1D21B76000CEB83E /* AppDelegate.mm */,
@@ -152,19 +153,11 @@
 				4E320CE12060FDFD0047F74F /* PKCS11Path.h */,
 				4E1A1B021D21B76000CEB83E /* Assets.xcassets */,
 				4E1A1B041D21B76000CEB83E /* Main.storyboard */,
-				4E1A1AFC1D21B76000CEB83E /* Supporting Files */,
-			);
-			path = SafariApp;
-			sourceTree = "<group>";
-		};
-		4E1A1AFC1D21B76000CEB83E /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
 				4E1A1B071D21B76000CEB83E /* Info.plist */,
-				4E6C38E11EEEB40D00D891B3 /* SafariApp.entitlements */,
+				4E6C38E11EEEB40D00D891B3 /* TokenSigningApp.entitlements */,
 				4E1A1AFD1D21B76000CEB83E /* main.m */,
 			);
-			name = "Supporting Files";
+			path = TokenSigningApp;
 			sourceTree = "<group>";
 		};
 		4E1A1B121D21B77800CEB83E /* Frameworks */ = {
@@ -177,31 +170,24 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		4E1A1B151D21B77800CEB83E /* SafariExtension */ = {
+		4E1A1B151D21B77800CEB83E /* TokenSigningExtension */ = {
 			isa = PBXGroup;
 			children = (
-				4E1A1B191D21B77800CEB83E /* SafariExtensionHandler.m */,
+				4E6E93D520C6859800CDD4FF /* TokenSigning.h */,
+				4E1A1B191D21B77800CEB83E /* TokenSigningExtensionHandler.m */,
 				4E1A1B221D21B77800CEB83E /* script.js */,
-				4E1A1B161D21B77800CEB83E /* Supporting Files */,
-			);
-			path = SafariExtension;
-			sourceTree = "<group>";
-		};
-		4E1A1B161D21B77800CEB83E /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
 				4E1A1B211D21B77800CEB83E /* Info.plist */,
-				4E1A1B171D21B77800CEB83E /* SafariExtension.entitlements */,
+				4E1A1B171D21B77800CEB83E /* TokenSigningExtension.entitlements */,
 			);
-			name = "Supporting Files";
+			path = TokenSigningExtension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		4E1A1AF51D21B76000CEB83E /* SafariApp */ = {
+		4E1A1AF51D21B76000CEB83E /* TokenSigningApp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4E1A1B0A1D21B76000CEB83E /* Build configuration list for PBXNativeTarget "SafariApp" */;
+			buildConfigurationList = 4E1A1B0A1D21B76000CEB83E /* Build configuration list for PBXNativeTarget "TokenSigningApp" */;
 			buildPhases = (
 				4E1A1AF21D21B76000CEB83E /* Sources */,
 				4E1A1AF31D21B76000CEB83E /* Frameworks */,
@@ -213,14 +199,14 @@
 			dependencies = (
 				4E1A1B271D21B77800CEB83E /* PBXTargetDependency */,
 			);
-			name = SafariApp;
-			productName = SafariApp;
-			productReference = 4E1A1AF61D21B76000CEB83E /* SafariApp.app */;
+			name = TokenSigningApp;
+			productName = TokenSigningApp;
+			productReference = 4E1A1AF61D21B76000CEB83E /* TokenSigningApp.app */;
 			productType = "com.apple.product-type.application";
 		};
-		4E1A1B101D21B77800CEB83E /* SafariExtension */ = {
+		4E1A1B101D21B77800CEB83E /* TokenSigningExtension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4E1A1B291D21B77800CEB83E /* Build configuration list for PBXNativeTarget "SafariExtension" */;
+			buildConfigurationList = 4E1A1B291D21B77800CEB83E /* Build configuration list for PBXNativeTarget "TokenSigningExtension" */;
 			buildPhases = (
 				4E1A1B0D1D21B77800CEB83E /* Sources */,
 				4E1A1B0E1D21B77800CEB83E /* Frameworks */,
@@ -230,9 +216,9 @@
 			);
 			dependencies = (
 			);
-			name = SafariExtension;
-			productName = SafariExtension;
-			productReference = 4E1A1B111D21B77800CEB83E /* SafariExtension.appex */;
+			name = TokenSigningExtension;
+			productName = TokenSigningExtension;
+			productReference = 4E1A1B111D21B77800CEB83E /* TokenSigningExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -241,7 +227,7 @@
 		4E1A1AEE1D21B76000CEB83E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = RIA;
 				TargetAttributes = {
 					4E1A1AF51D21B76000CEB83E = {
@@ -269,7 +255,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 4E1A1AF11D21B76000CEB83E /* Build configuration list for PBXProject "SafariApp" */;
+			buildConfigurationList = 4E1A1AF11D21B76000CEB83E /* Build configuration list for PBXProject "TokenSigningApp" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -282,8 +268,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				4E1A1AF51D21B76000CEB83E /* SafariApp */,
-				4E1A1B101D21B77800CEB83E /* SafariExtension */,
+				4E1A1AF51D21B76000CEB83E /* TokenSigningApp */,
+				4E1A1B101D21B77800CEB83E /* TokenSigningExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -331,7 +317,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4E1A1B1A1D21B77800CEB83E /* SafariExtensionHandler.m in Sources */,
+				4E1A1B1A1D21B77800CEB83E /* TokenSigningExtensionHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,7 +326,7 @@
 /* Begin PBXTargetDependency section */
 		4E1A1B271D21B77800CEB83E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 4E1A1B101D21B77800CEB83E /* SafariExtension */;
+			target = 4E1A1B101D21B77800CEB83E /* TokenSigningExtension */;
 			targetProxy = 4E1A1B261D21B77800CEB83E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -360,6 +346,7 @@
 		4E1A1B081D21B76000CEB83E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUILD_NUMBER = 0;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -368,6 +355,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -375,6 +363,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -403,12 +392,14 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
+				VERSION = 1.0.0;
 			};
 			name = Debug;
 		};
 		4E1A1B091D21B76000CEB83E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUILD_NUMBER = 0;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -417,6 +408,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -424,6 +416,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -445,6 +438,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				SDKROOT = macosx;
+				VERSION = 1.0.0;
 			};
 			name = Release;
 		};
@@ -452,13 +446,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = SafariApp/SafariApp.entitlements;
+				CODE_SIGN_ENTITLEMENTS = TokenSigningApp/TokenSigningApp.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = ET847QJV9F;
-				INFOPLIST_FILE = SafariApp/Info.plist;
+				INFOPLIST_FILE = TokenSigningApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ee.ria.SafariApp;
+				PRODUCT_BUNDLE_IDENTIFIER = ee.ria.TokenSigningApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -467,13 +461,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = SafariApp/SafariApp.entitlements;
+				CODE_SIGN_ENTITLEMENTS = TokenSigningApp/TokenSigningApp.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = ET847QJV9F;
-				INFOPLIST_FILE = SafariApp/Info.plist;
+				INFOPLIST_FILE = TokenSigningApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ee.ria.SafariApp;
+				PRODUCT_BUNDLE_IDENTIFIER = ee.ria.TokenSigningApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -481,11 +475,11 @@
 		4E1A1B2A1D21B77800CEB83E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = SafariExtension/SafariExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = TokenSigningExtension/TokenSigningExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				DEVELOPMENT_TEAM = ET847QJV9F;
-				INFOPLIST_FILE = SafariExtension/Info.plist;
-				PRODUCT_BUNDLE_IDENTIFIER = ee.ria.SafariApp.SafariExtension;
+				INFOPLIST_FILE = TokenSigningExtension/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = ee.ria.TokenSigningApp.SafariExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -494,11 +488,11 @@
 		4E1A1B2B1D21B77800CEB83E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = SafariExtension/SafariExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = TokenSigningExtension/TokenSigningExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				DEVELOPMENT_TEAM = ET847QJV9F;
-				INFOPLIST_FILE = SafariExtension/Info.plist;
-				PRODUCT_BUNDLE_IDENTIFIER = ee.ria.SafariApp.SafariExtension;
+				INFOPLIST_FILE = TokenSigningExtension/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = ee.ria.TokenSigningApp.SafariExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -507,7 +501,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4E1A1AF11D21B76000CEB83E /* Build configuration list for PBXProject "SafariApp" */ = {
+		4E1A1AF11D21B76000CEB83E /* Build configuration list for PBXProject "TokenSigningApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4E1A1B081D21B76000CEB83E /* Debug */,
@@ -516,7 +510,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4E1A1B0A1D21B76000CEB83E /* Build configuration list for PBXNativeTarget "SafariApp" */ = {
+		4E1A1B0A1D21B76000CEB83E /* Build configuration list for PBXNativeTarget "TokenSigningApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4E1A1B0B1D21B76000CEB83E /* Debug */,
@@ -525,7 +519,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4E1A1B291D21B77800CEB83E /* Build configuration list for PBXNativeTarget "SafariExtension" */ = {
+		4E1A1B291D21B77800CEB83E /* Build configuration list for PBXNativeTarget "TokenSigningExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4E1A1B2A1D21B77800CEB83E /* Debug */,
