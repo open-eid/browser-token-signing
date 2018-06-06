@@ -19,6 +19,7 @@
 #pragma once
 
 static NSString *TokenSigning = @"TokenSigning";
+static NSString *TokenSigningApp = @"ee.ria.TokenSigningApp";
 static NSString *TokenSigningExtension = @"ee.ria.TokenSigningApp.SafariExtension";
 static NSString *TokenSigningMessage = @"message";
 static NSString *TokenSigningShared = @"ee.ria.TokenSigningApp.shared";

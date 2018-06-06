@@ -142,7 +142,7 @@ static NSTouchBarItemIdentifier touchBarItemSegmentId = @"ee.ria.chrome-token-si
         if (result == NSModalResponseAbort || dialog->certificateSelection.selectedRow == -1) {
             return @{@"result": @"user_cancel"};
         }
-        return @{@"cert": dialog->certificates[dialog->certificateSelection.selectedRow][@"cert"]};
+        return @{@"cert": dialog->certificates[dialog->certificateSelection.selectedRow][@"cert"], @"result": @"ok"};
     } catch(const BaseException &e) {
         _log("Exception: %s", e.what());
         return @{@"result": @(e.getErrorCode().c_str())};

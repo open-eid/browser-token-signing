@@ -64,7 +64,6 @@
     NSLog(@"request %@", resp);
     resp[@"src"] = @"background.js";
     resp[@"extension"] = [NSString stringWithFormat:@"%@.%@", NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"], NSBundle.mainBundle.infoDictionary[@"CFBundleVersion"]];
-    resp[@"result"] = @"ok";
 
     if (resp[@"lang"]) {
         Labels::l10n.setLanguage([resp[@"lang"] UTF8String]);
@@ -72,17 +71,20 @@
 
     if ([resp[@"type"] isEqualToString:@"VERSION"]) {
         resp[@"version"] = resp[@"extension"];
+        resp[@"result"] = @"ok";
     }
     else if ([resp[@"origin"] compare:@"https" options:NSCaseInsensitiveSearch range:NSMakeRange(0, 5)]) {
         resp[@"result"] = @"not_allowed";
     }
     else if ([resp[@"type"] isEqualToString:@"CERT"]) {
         NSDictionary *cert = [CertificateSelection show:![@"AUTH" isEqualToString:resp[@"filter"]]];
-        resp[@"cert"] = (NSString*)cert[@"cert"];
+        resp[@"cert"] = cert[@"cert"];
+        resp[@"result"] = cert[@"result"];
     }
     else if ([resp[@"type"] isEqualToString:@"SIGN"]) {
         NSDictionary *sign = [PINPanel show:resp cert:resp[@"cert"]];
         resp[@"signature"] = sign[@"signature"];
+        resp[@"result"] = sign[@"result"];
     }
     else {
         resp[@"result"] = @"invalid_argument";
