@@ -17,25 +17,43 @@
  */
 
 #import <SafariServices/SafariServices.h>
+#import <AppKit/AppKit.h>
 
 #import "TokenSigning.h"
 
-static SFSafariPage *_page = nil;
+static NSMutableDictionary<NSString *, SFSafariPage *> *pages;
 
 @interface TokenSigningExtensionHandler : SFSafariExtensionHandler
-
 @end
 
 @implementation TokenSigningExtensionHandler
 
 - (void)messageReceivedWithName:(NSString *)messageName fromPage:(SFSafariPage *)page userInfo:(NSDictionary *)userInfo {
     // This method will be called when a content script provided by your extension calls safari.extension.dispatchMessage("message").
+    BOOL isRunning = NO;
+    for (NSRunningApplication *app in NSWorkspace.sharedWorkspace.runningApplications) {
+        if ([app.bundleIdentifier isEqualToString:TokenSigningApp]) {
+            isRunning = YES;
+            break;
+        }
+    }
+    NSLog(@"TokenSigning isRunning: %d", isRunning);
+    if (!isRunning) {
+        NSBundle *bundle = [NSBundle bundleForClass:TokenSigningExtensionHandler.class];
+        NSString *path = bundle.bundlePath.stringByDeletingLastPathComponent.stringByDeletingLastPathComponent.stringByDeletingLastPathComponent;
+        NSLog(@"TokenSigning  path: %@", path);
+        BOOL isLaunched = [NSWorkspace.sharedWorkspace launchApplication:path];
+        NSLog(@"TokenSigning launchApplication: %d", isLaunched);
+    }
+    if (!pages) {
+         pages = [[NSMutableDictionary<NSString *, SFSafariPage *> alloc] init];
+    }
+    pages[userInfo[@"nonce"]] = page;
     [page getPagePropertiesWithCompletionHandler:^(SFSafariPageProperties *properties) {
-        NSLog(@"The extension received a message (%@) from a script injected into (%@) with userInfo (%@)", messageName, properties.url, userInfo);
+        NSLog(@"TokenSigning: The extension received a message (%@) from a script injected into (%@) with userInfo (%@)", messageName, properties.url, userInfo);
         if (![messageName isEqualToString:TokenSigningMessage]) {
             return;
         }
-        _page = page;
         NSUserDefaults *defaults = [[NSUserDefaults alloc] initWithSuiteName:TokenSigningShared];
         [defaults setObject:userInfo forKey:userInfo[@"nonce"]];
         [defaults synchronize];
@@ -44,8 +62,10 @@ static SFSafariPage *_page = nil;
 }
 
 - (void)messageReceivedFromContainingAppWithName:(NSString *)messageName userInfo:(NSDictionary<NSString *,id> *)userInfo {
-    NSLog(@"The extension received a message (%@) from a application with userInfo (%@)", messageName, userInfo);
-    [_page dispatchMessageToScriptWithName:TokenSigningMessage userInfo:userInfo];
+    NSLog(@"TokenSigning: The extension received a message (%@) from a application with userInfo (%@)", messageName, userInfo);
+    SFSafariPage *page = pages[userInfo[@"nonce"]];
+    [pages removeObjectForKey:userInfo[@"nonce"]];
+    [page dispatchMessageToScriptWithName:messageName userInfo:userInfo];
 }
 
 @end

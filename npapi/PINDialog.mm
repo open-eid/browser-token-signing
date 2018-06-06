@@ -151,7 +151,7 @@ static NSTouchBarItemIdentifier touchBarItemCancelId = @"ee.ria.chrome-token-sig
             [NSRunLoop.currentRunLoop addTimer:timer forMode:NSModalPanelRunLoopMode];
             future = std::async(std::launch::async, [&] {
                 try {
-                    pinpadresult = @{@"signature": @(BinaryUtils::bin2hex(pkcs11->sign(selected, hash, nullptr)).c_str())};
+                    pinpadresult = @{@"signature": @(BinaryUtils::bin2hex(pkcs11->sign(selected, hash, nullptr)).c_str()), @"result": @"ok"};
                     [NSApp stopModal];
                 }
                 catch(const UserCancelledException &) {
@@ -202,7 +202,7 @@ static NSTouchBarItemIdentifier touchBarItemCancelId = @"ee.ria.chrome-token-sig
         else {
             try {
                 std::vector<unsigned char> signature = pkcs11->sign(selected, hash, dialog->pinField.stringValue.UTF8String);
-                return @{@"signature":@(BinaryUtils::bin2hex(signature).c_str())};
+                return @{@"signature": @(BinaryUtils::bin2hex(signature).c_str()), @"result": @"ok"};
             }
             catch(const AuthenticationBadInput &) {
             }
