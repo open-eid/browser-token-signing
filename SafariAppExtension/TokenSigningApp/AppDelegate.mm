@@ -19,6 +19,7 @@
 #import "CertificateSelection.h"
 #import "PINDialog.h"
 #import "Labels.h"
+#import "../TokenSigningExtension/TokenSigning.h"
 
 #import <SafariServices/SafariServices.h>
 
@@ -45,24 +46,24 @@
     }
 #pragma clang diagnostic pop
 
-    [SFSafariExtensionManager getStateOfSafariExtensionWithIdentifier:@"ee.ria.SafariApp.SafariExtension" completionHandler:^(SFSafariExtensionState *state, NSError *error) {
+    [SFSafariExtensionManager getStateOfSafariExtensionWithIdentifier:TokenSigningExtension completionHandler:^(SFSafariExtensionState *state, NSError *error) {
         NSLog(@"Extension state %@, error %@", @(state ? state.enabled : 0), error);
         if (!state.enabled) {
-            [SFSafariApplication showPreferencesForExtensionWithIdentifier:@"ee.ria.SafariApp.SafariExtension" completionHandler:nil];
+            [SFSafariApplication showPreferencesForExtensionWithIdentifier:TokenSigningExtension completionHandler:nil];
         }
     }];
 
-    [NSDistributedNotificationCenter.defaultCenter addObserver:self selector:@selector(notificationEvent:) name:@"TokenSigning" object:nil];
+    [NSDistributedNotificationCenter.defaultCenter addObserver:self selector:@selector(notificationEvent:) name:TokenSigning object:nil];
 }
 
 -(void)notificationEvent:(NSNotification *)notification {
-    NSUserDefaults *defaults = [[NSUserDefaults alloc] initWithSuiteName:@"ee.ria.SafariApp.shared"];
+    NSUserDefaults *defaults = [[NSUserDefaults alloc] initWithSuiteName:TokenSigningShared];
     NSMutableDictionary *resp = [[defaults dictionaryForKey:notification.object] mutableCopy];
     [defaults removeObjectForKey:notification.object];
     [defaults synchronize];
     NSLog(@"request %@", resp);
     resp[@"src"] = @"background.js";
-    resp[@"extension"] = @"1.0.0.0";
+    resp[@"extension"] = [NSString stringWithFormat:@"%@.%@", NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"], NSBundle.mainBundle.infoDictionary[@"CFBundleVersion"]];
     resp[@"result"] = @"ok";
 
     if (resp[@"lang"]) {
@@ -70,7 +71,7 @@
     }
 
     if ([resp[@"type"] isEqualToString:@"VERSION"]) {
-        resp[@"version"] = @"1.0.0.0";
+        resp[@"version"] = resp[@"extension"];
     }
     else if ([resp[@"origin"] compare:@"https" options:NSCaseInsensitiveSearch range:NSMakeRange(0, 5)]) {
         resp[@"result"] = @"not_allowed";
@@ -87,7 +88,7 @@
         resp[@"result"] = @"invalid_argument";
     }
     NSLog(@"response %@", resp);
-    [SFSafariApplication dispatchMessageWithName:@"message" toExtensionWithIdentifier:@"ee.ria.SafariApp.SafariExtension" userInfo:resp completionHandler:nil];
+    [SFSafariApplication dispatchMessageWithName:TokenSigningMessage toExtensionWithIdentifier:TokenSigningExtension userInfo:resp completionHandler:nil];
 }
 
 @end
