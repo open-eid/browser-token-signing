@@ -32,7 +32,7 @@ void Logger::writeLog(const char *functionName, const char *fileName, int lineNu
 #ifdef _WIN32
     static const string path = string(getenv("TEMP")) + "\\esteid.log";
 #else
-    static const string path = string(getenv("HOME")) + "/tmp/esteid.log";
+    static const string path = string(getenv("TMPDIR")) + "/safari-token-signing.log";
 #endif
 
     FILE *log = fopen(path.c_str(), "r");
