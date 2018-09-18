@@ -45,18 +45,24 @@
         CFRelease(list);
     }
 #pragma clang diagnostic pop
+    [self checkExtensionState];
+    [NSDistributedNotificationCenter.defaultCenter addObserver:self selector:@selector(notificationEvent:) name:TokenSigning object:nil];
+}
 
+- (void)applicationDidBecomeActive:(NSNotification *)notification {
+    [self checkExtensionState];
+}
+
+- (void)checkExtensionState {
     [SFSafariExtensionManager getStateOfSafariExtensionWithIdentifier:TokenSigningExtension completionHandler:^(SFSafariExtensionState *state, NSError *error) {
         NSLog(@"Extension state %@, error %@", @(state ? state.enabled : 0), error);
         if (!state.enabled) {
             [SFSafariApplication showPreferencesForExtensionWithIdentifier:TokenSigningExtension completionHandler:nil];
         }
     }];
-
-    [NSDistributedNotificationCenter.defaultCenter addObserver:self selector:@selector(notificationEvent:) name:TokenSigning object:nil];
 }
 
--(void)notificationEvent:(NSNotification *)notification {
+- (void)notificationEvent:(NSNotification *)notification {
     NSUserDefaults *defaults = [[NSUserDefaults alloc] initWithSuiteName:TokenSigningShared];
     NSMutableDictionary *resp = [[defaults dictionaryForKey:notification.object] mutableCopy];
     [defaults removeObjectForKey:notification.object];
