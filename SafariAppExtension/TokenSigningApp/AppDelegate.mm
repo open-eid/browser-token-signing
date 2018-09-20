@@ -32,14 +32,32 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    LSSharedFileListRef list = LSSharedFileListCreate(kCFAllocatorDefault, kLSSharedFileListSessionLoginItems, NULL);
+    LSSharedFileListRef list = LSSharedFileListCreate(kCFAllocatorDefault, kLSSharedFileListSessionLoginItems, nil);
     if (list) {
+        bool found = false;
         CFURLRef url = CFBundleCopyBundleURL(CFBundleGetMainBundle());
-        NSDictionary *props = @{(__bridge NSString*)kLSSharedFileListLoginItemHidden: @(YES)};
-        LSSharedFileListItemRef item = LSSharedFileListInsertItemURL(
-            list, kLSSharedFileListItemLast, NULL, NULL, url, (__bridge CFDictionaryRef)props, NULL);
-        if (item) {
-            CFRelease(item);
+        UInt32 seedValue = 0;
+        CFArrayRef loginItemsArray = LSSharedFileListCopySnapshot(list, &seedValue);
+        for (id item in (__bridge NSArray *)loginItemsArray) {
+            LSSharedFileListItemRef itemRef = (__bridge LSSharedFileListItemRef)item;
+            CFURLRef tmp = nil;
+            if (LSSharedFileListItemResolve(itemRef, 0, &tmp, nil) == noErr) {
+                found = [[(__bridge NSURL*)tmp path] isEqualToString:[(__bridge NSURL*)url path]];
+                CFRelease(tmp);
+                if (found) {
+                    break;
+                }
+            }
+        }
+        CFRelease(loginItemsArray);
+
+        if (!found) {
+            NSDictionary *props = @{(__bridge id)kLSSharedFileListLoginItemHidden: @(YES)};
+            LSSharedFileListItemRef item = LSSharedFileListInsertItemURL(
+                list, kLSSharedFileListItemLast, nil, nil, url, (__bridge CFDictionaryRef)props, nil);
+            if (item) {
+                CFRelease(item);
+            }
         }
         CFRelease(url);
         CFRelease(list);
