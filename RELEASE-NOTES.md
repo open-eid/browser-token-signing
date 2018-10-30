@@ -1,3 +1,13 @@
+browser-token-signing version [3.13.2](https://github.com/open-eid/browser-token-signing/releases/tag/v3.13.2) release notes
+--------------------------------------------
+- Add SafarAppExtension plugin for Safari 12
+- Add Belgium middleware paths (#72)
+- Add hardware token filter on Windows (#73)
+- Handle PKCS11 CKR_PIN_LOCKED error code (#74)
+- Add IDEMIA driver paths
+
+[Full Changelog](https://github.com/open-eid/browser-token-signing/compare/v3.13.1...v3.13.2)
+
 browser-token-signing version [3.13.1](https://github.com/open-eid/browser-token-signing/releases/tag/v3.13.1) release notes
 --------------------------------------------
 - Use OpenSC driver with unkown ATR on OSX/Linux (#45)

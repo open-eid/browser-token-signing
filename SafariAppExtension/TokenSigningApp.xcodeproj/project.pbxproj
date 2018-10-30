@@ -11,7 +11,7 @@
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 4E03993D20C7DA1300BAF87E /* Build configuration list for PBXAggregateTarget "package" */;
 			buildPhases = (
-				4E03994220C7DA5500BAF87E /* ShellScript */,
+				4E03994220C7DA5500BAF87E /* Build package */,
 			);
 			dependencies = (
 				4E03994120C7DA2500BAF87E /* PBXTargetDependency */,
@@ -326,13 +326,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		4E03994220C7DA5500BAF87E /* ShellScript */ = {
+		4E03994220C7DA5500BAF87E /* Build package */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Build package";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 1;
@@ -458,7 +459,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				VERSION = 1.0.0;
+				VERSION = 1.0.1;
 			};
 			name = Debug;
 		};
@@ -506,7 +507,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				SDKROOT = macosx;
-				VERSION = 1.0.0;
+				VERSION = 1.0.1;
 			};
 			name = Release;
 		};
