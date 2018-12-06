@@ -113,6 +113,9 @@
     else {
         resp[@"result"] = @"invalid_argument";
     }
+    if (!resp[@"result"]) {
+        resp[@"result"] = @"ok";
+    }
     NSLog(@"response %@", resp);
     [SFSafariApplication dispatchMessageWithName:TokenSigningMessage toExtensionWithIdentifier:TokenSigningExtension userInfo:resp completionHandler:nil];
 }
