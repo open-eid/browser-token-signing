@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <MAJOR_VERSION Condition=" '$(MAJOR_VERSION)' == '' ">3</MAJOR_VERSION>
     <MINOR_VERSION Condition=" '$(MINOR_VERSION)' == '' ">13</MINOR_VERSION>
-    <RELEASE_VERSION Condition=" '$(RELEASE_VERSION)' == '' ">0</RELEASE_VERSION>
+    <RELEASE_VERSION Condition=" '$(RELEASE_VERSION)' == '' ">2</RELEASE_VERSION>
     <BUILD_NUMBER Condition=" '$(BUILD_NUMBER)' == '' ">0</BUILD_NUMBER>
     <ProductVersion>3.10</ProductVersion>
     <ProjectGuid>d0a88d6a-6fe4-4374-a324-b801a6f6ec26</ProjectGuid>
