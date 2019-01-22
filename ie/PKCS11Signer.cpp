@@ -56,7 +56,7 @@ vector<unsigned char> Pkcs11Signer::sign(const vector<unsigned char> &digest)
 	}
 
 	wstring label = Labels::l10n.get("sign PIN");
-	if (PCCERT_CONTEXT certificate = CertCreateCertificateContext(X509_ASN_ENCODING | PKCS_7_ASN_ENCODING, cert.data(), cert.size())) {
+	if (PCCERT_CONTEXT certificate = CertCreateCertificateContext(X509_ASN_ENCODING | PKCS_7_ASN_ENCODING, cert.data(), DWORD(cert.size()))) {
 		BYTE keyUsage = 0;
 		CertGetIntendedKeyUsage(X509_ASN_ENCODING | PKCS_7_ASN_ENCODING, certificate->pCertInfo, &keyUsage, 1);
 		if (!(keyUsage & CERT_NON_REPUDIATION_KEY_USAGE))

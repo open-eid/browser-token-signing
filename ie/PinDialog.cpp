@@ -59,7 +59,7 @@ INT_PTR CALLBACK PinDialog::DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPAR
 		{
 			size_t len = size_t(SendDlgItemMessage(hwndDlg, IDC_PIN_FIELD, EM_LINELENGTH, 0, 0));
 			std::wstring tmp(len + 1, 0);
-			GetDlgItemText(hwndDlg, IDC_PIN_FIELD, &tmp[0], tmp.size());
+			GetDlgItemText(hwndDlg, IDC_PIN_FIELD, &tmp[0], int(tmp.size()));
 			PinDialog *self = (PinDialog*)GetWindowLongPtr(hwndDlg, GWLP_USERDATA);
 			self->pin = std::string(tmp.cbegin(), tmp.cend());
 			return EndDialog(hwndDlg, IDOK);
