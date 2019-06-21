@@ -75,7 +75,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		4E1A1AF61D21B76000CEB83E /* TokenSigningApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TokenSigningApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E1A1AF61D21B76000CEB83E /* TokenSigningSafariHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TokenSigningSafariHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E1A1AFA1D21B76000CEB83E /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		4E1A1AFD1D21B76000CEB83E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4E1A1B021D21B76000CEB83E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -145,7 +145,7 @@
 		4E1A1AF71D21B76000CEB83E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4E1A1AF61D21B76000CEB83E /* TokenSigningApp.app */,
+				4E1A1AF61D21B76000CEB83E /* TokenSigningSafariHelper.app */,
 				4E1A1B111D21B77800CEB83E /* TokenSigningExtension.appex */,
 			);
 			name = Products;
@@ -207,9 +207,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		4E1A1AF51D21B76000CEB83E /* TokenSigningApp */ = {
+		4E1A1AF51D21B76000CEB83E /* TokenSigningSafariHelper */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4E1A1B0A1D21B76000CEB83E /* Build configuration list for PBXNativeTarget "TokenSigningApp" */;
+			buildConfigurationList = 4E1A1B0A1D21B76000CEB83E /* Build configuration list for PBXNativeTarget "TokenSigningSafariHelper" */;
 			buildPhases = (
 				4E1A1AF21D21B76000CEB83E /* Sources */,
 				4E1A1AF31D21B76000CEB83E /* Frameworks */,
@@ -221,9 +221,9 @@
 			dependencies = (
 				4E1A1B271D21B77800CEB83E /* PBXTargetDependency */,
 			);
-			name = TokenSigningApp;
+			name = TokenSigningSafariHelper;
 			productName = TokenSigningApp;
-			productReference = 4E1A1AF61D21B76000CEB83E /* TokenSigningApp.app */;
+			productReference = 4E1A1AF61D21B76000CEB83E /* TokenSigningSafariHelper.app */;
 			productType = "com.apple.product-type.application";
 		};
 		4E1A1B101D21B77800CEB83E /* TokenSigningExtension */ = {
@@ -249,7 +249,7 @@
 		4E1A1AEE1D21B76000CEB83E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = RIA;
 				TargetAttributes = {
 					4E03993C20C7DA1300BAF87E = {
@@ -284,7 +284,7 @@
 			};
 			buildConfigurationList = 4E1A1AF11D21B76000CEB83E /* Build configuration list for PBXProject "TokenSigningApp" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -295,7 +295,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				4E1A1AF51D21B76000CEB83E /* TokenSigningApp */,
+				4E1A1AF51D21B76000CEB83E /* TokenSigningSafariHelper */,
 				4E1A1B101D21B77800CEB83E /* TokenSigningExtension */,
 				4E03993C20C7DA1300BAF87E /* package */,
 			);
@@ -372,7 +372,7 @@
 /* Begin PBXTargetDependency section */
 		4E03994120C7DA2500BAF87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 4E1A1AF51D21B76000CEB83E /* TokenSigningApp */;
+			target = 4E1A1AF51D21B76000CEB83E /* TokenSigningSafariHelper */;
 			targetProxy = 4E03994020C7DA2500BAF87E /* PBXContainerItemProxy */;
 		};
 		4E1A1B271D21B77800CEB83E /* PBXTargetDependency */ = {
@@ -584,7 +584,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4E1A1B0A1D21B76000CEB83E /* Build configuration list for PBXNativeTarget "TokenSigningApp" */ = {
+		4E1A1B0A1D21B76000CEB83E /* Build configuration list for PBXNativeTarget "TokenSigningSafariHelper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4E1A1B0B1D21B76000CEB83E /* Debug */,
