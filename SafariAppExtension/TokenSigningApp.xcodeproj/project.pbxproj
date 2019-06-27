@@ -338,7 +338,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${CODE_SIGNING_REQUIRED}\" != \"NO\" ]; then\n   SIGN=(--sign \"${DEVELOPMENT_TEAM}\")\nfi\npkgbuild --root ${DSTROOT} --install-location / --identifier ee.ria.safari-token-signing --version ${VERSION}.${BUILD_NUMBER} \"${SIGN[@]}\" safari-token-signing_${VERSION}.${BUILD_NUMBER}.pkg\n";
+			shellScript = "if [ \"${CODE_SIGNING_REQUIRED}\" != \"NO\" ]; then\n   SIGN=(--sign \"${DEVELOPMENT_TEAM}\")\nfi\npkgbuild --analyze --root ${DSTROOT} safari-token-signing.plist\nplutil -replace BundleIsRelocatable -bool NO safari-token-signing.plist\npkgbuild --root ${DSTROOT} --install-location / --identifier ee.ria.safari-token-signing --version ${VERSION}.${BUILD_NUMBER} \"${SIGN[@]}\" --component-plist safari-token-signing.plist safari-token-signing_${VERSION}.${BUILD_NUMBER}.pkg\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
