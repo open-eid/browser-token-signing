@@ -1,3 +1,12 @@
+browser-token-signing version [3.13.3](https://github.com/open-eid/browser-token-signing/releases/tag/v3.13.3) release notes
+--------------------------------------------
+- Rename SafarAppExtension helper application (#88)
+- Use OpenSC PKCS11 driver for IDEMIA cards (#85)
+- Notarize application (#82)
+- Fill type info from OID (#80)
+
+[Full Changelog](https://github.com/open-eid/browser-token-signing/compare/v3.13.2...v3.13.3)
+
 browser-token-signing version [3.13.2](https://github.com/open-eid/browser-token-signing/releases/tag/v3.13.2) release notes
 --------------------------------------------
 - Add SafarAppExtension plugin for Safari 12
