@@ -7,7 +7,7 @@
 
 Warning: Firefox 52 removed NPAPI support and added Chrome Extensions support since version 50 which is implemented in [chrome-token-signing](https://github.com/open-eid/chrome-token-signing)
 
-Warning: Removed Windows and Linux NPAPI code. Use [v3.12.2](https://github.com/open-eid/browser-token-signing/releases/tag/v3.12.2) release for legacy browesers.
+Warning: Removed Windows and Linux NPAPI code. Use [v3.12.2](https://github.com/open-eid/browser-token-signing/releases/tag/v3.12.2) release for legacy browsers.
 
 ## Documentation
 
