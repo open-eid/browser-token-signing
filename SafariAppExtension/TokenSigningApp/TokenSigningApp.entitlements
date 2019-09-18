@@ -8,6 +8,8 @@
 	<array>
 		<string>ee.ria.TokenSigningApp.shared</string>
 	</array>
+	<key>com.apple.security.cs.disable-library-validation</key>
+	<true/>
 	<key>com.apple.security.smartcard</key>
 	<true/>
 </dict>
