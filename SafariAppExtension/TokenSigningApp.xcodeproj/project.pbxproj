@@ -265,6 +265,9 @@
 							com.apple.ApplicationGroups.Mac = {
 								enabled = 1;
 							};
+							com.apple.HardenedRuntime = {
+								enabled = 1;
+							};
 							com.apple.Sandbox = {
 								enabled = 1;
 							};
@@ -519,6 +522,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = TokenSigningApp/TokenSigningApp.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = TokenSigningApp/Info.plist;
 				INSTALL_PATH = "$(LOCAL_APPS_DIR)/Utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -536,6 +540,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = TokenSigningApp/TokenSigningApp.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = TokenSigningApp/Info.plist;
 				INSTALL_PATH = "$(LOCAL_APPS_DIR)/Utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
