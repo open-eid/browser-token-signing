@@ -40,13 +40,19 @@
         CFArrayRef loginItemsArray = LSSharedFileListCopySnapshot(list, &seedValue);
         for (id item in (__bridge NSArray *)loginItemsArray) {
             LSSharedFileListItemRef itemRef = (__bridge LSSharedFileListItemRef)item;
-            CFURLRef tmp = nil;
-            if (LSSharedFileListItemResolve(itemRef, 0, &tmp, nil) == noErr) {
-                found = [[(__bridge NSURL*)tmp path] isEqualToString:[(__bridge NSURL*)url path]];
-                CFRelease(tmp);
-                if (found) {
-                    break;
+            if (CFStringRef tmp = LSSharedFileListItemCopyDisplayName(itemRef)) {
+                if ([(__bridge NSString*)tmp containsString:@"TokenSigningApp"]) {
+                    NSLog(@"Removing TokenSigningApp LoginItem");
+                    LSSharedFileListItemRemove(list, itemRef);
+                    CFRelease(tmp);
+                    continue;
                 }
+                CFRelease(tmp);
+            }
+            if (CFURLRef tmp = LSSharedFileListItemCopyResolvedURL(itemRef, 0, nil)) {
+                if ([[(__bridge NSURL*)tmp path] isEqualToString:[(__bridge NSURL*)url path]])
+                    found = true;
+                CFRelease(tmp);
             }
         }
         CFRelease(loginItemsArray);
