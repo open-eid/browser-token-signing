@@ -3,7 +3,7 @@ include VERSION.mk
 
 SIGNER ?= Riigi Infosüsteemi Amet
 
-PROJ = xcodebuild -project browser-token-signing.xcodeproj VERSION=$(VERSION) BUILD_NUMBER=$(BUILD_NUMBER)
+PROJ = xcodebuild -project browser-token-signing.xcodeproj MARKETING_VERSION=$(VERSION) CURRENT_PROJECT_VERSION=$(BUILD_NUMBER)
 
 TMPROOT = $(PWD)/tmp
 TARGET = $(TMPROOT)/Library/Internet\ Plug-Ins/esteidfirefoxplugin.bundle
