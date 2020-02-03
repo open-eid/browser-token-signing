@@ -341,7 +341,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${CODE_SIGNING_REQUIRED}\" != \"NO\" ]; then\n   SIGN=(--sign \"${DEVELOPMENT_TEAM}\")\nfi\npkgbuild --analyze --root ${DSTROOT} safari-token-signing.plist\nplutil -replace BundleIsRelocatable -bool NO safari-token-signing.plist\npkgbuild --root ${DSTROOT} --install-location / --identifier ee.ria.safari-token-signing --version ${VERSION}.${BUILD_NUMBER} \"${SIGN[@]}\" --component-plist safari-token-signing.plist safari-token-signing_${VERSION}.${BUILD_NUMBER}.pkg\n";
+			shellScript = "if [ \"${CODE_SIGNING_REQUIRED}\" != \"NO\" ]; then\n   SIGN=(--sign \"${DEVELOPMENT_TEAM}\")\nfi\npkgbuild --analyze --root ${DSTROOT} safari-token-signing.plist\nplutil -replace BundleIsRelocatable -bool NO safari-token-signing.plist\npkgbuild --root ${DSTROOT} --install-location / --identifier ee.ria.safari-token-signing --version ${MARKETING_VERSION}.${CURRENT_PROJECT_VERSION} \"${SIGN[@]}\" --component-plist safari-token-signing.plist safari-token-signing_${MARKETING_VERSION}.${CURRENT_PROJECT_VERSION}.pkg\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -414,7 +414,6 @@
 		4E1A1B081D21B76000CEB83E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUILD_NUMBER = 0;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -441,6 +440,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 0;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = ET847QJV9F;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -460,16 +460,15 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MARKETING_VERSION = 1.0.3;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				VERSION = 1.0.2;
 			};
 			name = Debug;
 		};
 		4E1A1B091D21B76000CEB83E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUILD_NUMBER = 0;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -497,6 +496,7 @@
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = ET847QJV9F;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -510,9 +510,9 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MARKETING_VERSION = 1.0.3;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp --options=runtime";
 				SDKROOT = macosx;
-				VERSION = 1.0.2;
 			};
 			name = Release;
 		};
@@ -522,6 +522,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = TokenSigningApp/TokenSigningApp.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 0;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = TokenSigningApp/Info.plist;
 				INSTALL_PATH = "$(LOCAL_APPS_DIR)/Utilities";
@@ -540,6 +541,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = TokenSigningApp/TokenSigningApp.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 0;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = TokenSigningApp/Info.plist;
 				INSTALL_PATH = "$(LOCAL_APPS_DIR)/Utilities";
