@@ -1,3 +1,11 @@
+browser-token-signing version [3.13.4](https://github.com/open-eid/browser-token-signing/releases/tag/v3.13.4) release notes
+--------------------------------------------
+- Fix macOS Dark Mode UI and increase version (#94)
+- Allow to load third party pkcs11 modules (#92)
+- Add G2 Latvia card ATR (#95)
+
+[Full Changelog](https://github.com/open-eid/browser-token-signing/compare/v3.13.3...v3.13.4)
+
 browser-token-signing version [3.13.3](https://github.com/open-eid/browser-token-signing/releases/tag/v3.13.3) release notes
 --------------------------------------------
 - Rename SafarAppExtension helper application (#88)
