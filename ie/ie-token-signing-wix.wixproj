@@ -56,10 +56,6 @@
   <PropertyGroup>
     <PostBuildEvent>IF "$(SIGNCERT)" NEQ "" signtool.exe sign /a /v /s MY /n "$(SIGNCERT)" /fd SHA256 /du http://installer.id.ee /tr http://sha256timestamp.ws.symantec.com/sha256/timestamp /td SHA256 !(TargetPath)</PostBuildEvent>
   </PropertyGroup>
-  <PropertyGroup>
-    <PreBuildEvent>IF "$(SIGNCERT)" NEQ "" signtool.exe sign /a /v /s MY /n "$(SIGNCERT)" /fd SHA256 /du http://installer.id.ee /tr http://sha256timestamp.ws.symantec.com/sha256/timestamp /td SHA256 $(SolutionDir)\Release\esteid-plugin-ie.dll
-IF "$(SIGNCERT)" NEQ "" (IF EXIST $(SolutionDir)\x64\Release\esteid-plugin-ie.dll signtool.exe sign /a /v /s MY /n "$(SIGNCERT)" /fd SHA256 /du http://installer.id.ee /tr http://sha256timestamp.ws.symantec.com/sha256/timestamp /td SHA256 $(SolutionDir)\x64\Release\esteid-plugin-ie.dll)</PreBuildEvent>
-  </PropertyGroup>
   <!--
 	To modify your build process, add your task inside one of the targets below and uncomment it.
 	Other similar extension points exist, see Wix.targets.

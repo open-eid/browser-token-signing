@@ -133,6 +133,8 @@
     <None Include="esteid-plugin-ie.rgs" />
     <None Include="EstEIDCertificate.rgs" />
     <None Include="EstEIDIEPluginBHO.rgs" />
+    <None Include="..\LICENSE.LGPL" />
+    <None Include="..\README.md" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

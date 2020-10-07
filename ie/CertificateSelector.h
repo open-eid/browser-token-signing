@@ -31,7 +31,7 @@ public:
 		if (store)
 			CertCloseStore(store, 0);
 	}
-	virtual std::vector<unsigned char> getCert(bool forSigning) const throw(UserCancelledException, TechnicalException) = 0;
+	virtual std::vector<unsigned char> getCert(bool forSigning) const = 0;
 
 protected:
 	CertificateSelector() = default;
