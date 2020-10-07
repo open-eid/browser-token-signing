@@ -14,7 +14,7 @@ Warning: Removed Windows and Linux NPAPI code. Use [v3.12.2](https://github.com/
  - https://github.com/open-eid/browser-token-signing/wiki
 
 ## Building
-[![Build Status](https://travis-ci.org/open-eid/browser-token-signing.svg?branch=master)](https://travis-ci.org/open-eid/browser-token-signing)
+[![Build Status](https://travis-ci.com/open-eid/browser-token-signing.svg?branch=master)](https://travis-ci.com/open-eid/browser-token-signing)
 [![Build Status](https://ci.appveyor.com/api/projects/status/github/open-eid/browser-token-signing?branch=master&svg=true)](https://ci.appveyor.com/project/open-eid/browser-token-signing)
 [![Coverity Scan Build Status](https://scan.coverity.com/projects/3355/badge.svg)](https://scan.coverity.com/projects/3355)
 
@@ -53,6 +53,6 @@ Warning: Removed Windows and Linux NPAPI code. Use [v3.12.2](https://github.com/
         Open Internet Explorer
 
 ## Support
-Official builds are provided through official distribution point [installer.id.ee](https://installer.id.ee). If you want support, you need to be using official builds. Contact our support via www.id.ee for assistance.
+Official builds are provided through official distribution point [id.ee](https://www.id.ee/en/article/install-id-software/). If you want support, you need to be using official builds. Contact our support via www.id.ee for assistance.
 
 Source code is provided on "as is" terms with no warranty (see license for more information). Do not file Github issues with generic support requests.
