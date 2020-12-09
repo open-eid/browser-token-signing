@@ -42,12 +42,13 @@ private:
     void *library = nullptr;
 #endif
     CK_FUNCTION_LIST_PTR fl = nullptr;
+    bool isFinDriver = false;
 
     template <typename Func, typename... Args>
     void Call(const char *file, int line, const char *function, Func func, Args... args) const
     {
         CK_RV rv = func(args...);
-        Logger::writeLog(function, file, line, "return value %u", rv);
+        Logger::writeLog(function, file, line, "return value %lu", rv);
         switch (rv) {
             case CKR_OK:
                 break;
@@ -97,25 +98,25 @@ private:
     }
 
 public:
-    PKCS11CardManager(const std::string &module) {
+    PKCS11CardManager(const std::string &module, const std::string &function = {}) {
         CK_C_GetFunctionList C_GetFunctionList = nullptr;
         std::string error;
 #ifdef _WIN32
         library = LoadLibraryA(module.c_str());
         if (library)
             C_GetFunctionList = CK_C_GetFunctionList(GetProcAddress(library, "C_GetFunctionList"));
-		else
-		{
-			LPSTR msg = nullptr;
-			FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
-				nullptr, GetLastError(), MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), LPSTR(&msg), 0, nullptr);
-			error = msg;
-			LocalFree(msg);
-		}
+        else
+        {
+            LPSTR msg = nullptr;
+            FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+                nullptr, GetLastError(), MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), LPSTR(&msg), 0, nullptr);
+            error = msg;
+            LocalFree(msg);
+        }
 #else
         library = dlopen(module.c_str(), RTLD_LOCAL | RTLD_NOW);
         if (library)
-            C_GetFunctionList = CK_C_GetFunctionList(dlsym(library, "C_GetFunctionList"));
+            C_GetFunctionList = CK_C_GetFunctionList(dlsym(library, function.empty() ? "C_GetFunctionList" : function.c_str()));
         else
             error = dlerror();
 #endif
@@ -127,12 +128,24 @@ public:
         Call(__FILE__, __LINE__, "C_GetFunctionList", C_GetFunctionList, &fl);
         _log("initializing module %s", module.c_str());
         C(Initialize, nullptr);
+
+        CK_INFO info;
+        C(GetInfo, &info);
+        _log("%s (%u.%u)", info.manufacturerID, info.cryptokiVersion.major, info.cryptokiVersion.minor);
+        _log("%s (%u.%u)", info.libraryDescription, info.libraryVersion.major, info.libraryVersion.minor);
+        std::string desc((const char*)info.libraryDescription, sizeof(info.libraryDescription));
+        std::transform(desc.begin(), desc.end(), desc.begin(), ::toupper);
+        isFinDriver = desc.find("MPOLLUX") != std::string::npos;
     }
 
     ~PKCS11CardManager() {
         if (!library)
             return;
-        C(Finalize, nullptr);
+        try {
+            C(Finalize, nullptr);
+        } catch(...) {
+            // Do not throw in destructor
+        }
 #ifdef _WIN32
         FreeLibrary(library);
 #else
@@ -153,10 +166,10 @@ public:
         if (!fl)
             throw DriverException();
         CK_ULONG slotCount = 0;
-        C(GetSlotList, CK_TRUE, nullptr, &slotCount);
-        _log("slotCount = %i", slotCount);
+        C(GetSlotList, CK_BBOOL(CK_TRUE), nullptr, &slotCount);
+        _log("slotCount = %lu", slotCount);
         std::vector<CK_SLOT_ID> slotIDs(slotCount);
-        C(GetSlotList, CK_TRUE, slotIDs.data(), &slotCount);
+        C(GetSlotList, CK_BBOOL(CK_TRUE), slotIDs.data(), &slotCount);
 
         std::vector<Token> result;
         for (CK_SLOT_ID slotID : slotIDs)
@@ -165,16 +178,22 @@ public:
             try {
                 C(GetTokenInfo, slotID, &tokenInfo);
             } catch(const BaseException &e) {
-                _log("Failed to get slot info at SLOT ID %u '%s', skiping", slotID, e.what());
+                _log("Failed to get slot info at SLOT ID %lu '%s', skiping", slotID, e.what());
                 continue;
             }
             CK_SESSION_HANDLE session = 0;
             C(OpenSession, slotID, CKF_SERIAL_SESSION, nullptr, nullptr, &session);
 
             for (CK_OBJECT_HANDLE obj: findObject(session, CKO_CERTIFICATE)) {
+                std::vector<CK_BYTE> cert = attribute(session, obj, CKA_VALUE);
+                std::vector<CK_BYTE> id = attribute(session, obj, CKA_ID);
+                // Hack: Workaround broken FIN pkcs11 drivers showing non-repu certificates in auth slot
+                if(isFinDriver && findObject(session, CKO_PUBLIC_KEY, id).empty())
+                    continue;
+
                 result.push_back({ std::string((const char*)tokenInfo.label, sizeof(tokenInfo.label)), slotID,
-                    attribute(session, obj, CKA_VALUE),
-                    attribute(session, obj, CKA_ID),
+                    cert,
+                    id,
                     [&tokenInfo] {
                         if (tokenInfo.flags & CKF_USER_PIN_LOCKED) return 0;
                         if (tokenInfo.flags & CKF_USER_PIN_FINAL_TRY) return 1;
@@ -205,13 +224,13 @@ public:
             throw PKCS11Exception("Could not read private key. Key not found");
         if (privateKeyHandle.size() > 1)
             throw PKCS11Exception("Could not read private key. Found multiple keys");
-        _log("found %i private keys in slot, using key ID %x", privateKeyHandle.size(), token.certID.data());
+        _log("found %lu private keys in slot, using key ID %x", privateKeyHandle.size(), token.certID.data());
 
         CK_KEY_TYPE keyType = CKK_RSA;
         CK_ATTRIBUTE attribute = { CKA_KEY_TYPE, &keyType, sizeof(keyType) };
         C(GetAttributeValue, session, privateKeyHandle[0], &attribute, 1);
-        
-        CK_MECHANISM mechanism = {keyType == CKK_ECDSA ? CKM_ECDSA : CKM_RSA_PKCS, 0, 0};
+
+        CK_MECHANISM mechanism = {keyType == CKK_ECDSA ? CKM_ECDSA : CKM_RSA_PKCS, nullptr, 0};
         C(SignInit, session, &mechanism, privateKeyHandle[0]);
         std::vector<CK_BYTE> hashWithPadding;
         if (keyType == CKK_RSA) {
@@ -239,8 +258,11 @@ public:
         hashWithPadding.insert(hashWithPadding.end(), hash.cbegin(), hash.cend());
         CK_ULONG signatureLength = 0;
         C(Sign, session, hashWithPadding.data(), CK_ULONG(hashWithPadding.size()), nullptr, &signatureLength);
+        if (isFinDriver)
+            signatureLength *= 3;
         std::vector<CK_BYTE> signature(signatureLength);
         C(Sign, session, hashWithPadding.data(), CK_ULONG(hashWithPadding.size()), signature.data(), &signatureLength);
+        signature.resize(signatureLength);
         C(Logout, session);
         C(CloseSession, session);
 
