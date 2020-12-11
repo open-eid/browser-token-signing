@@ -33,7 +33,7 @@
 #include <vector>
 
 typedef struct : public NPObject {
-    NPP npp;
+    NPP npp = nullptr;
     NPNetscapeFuncs *browserFunctions = nullptr;
     std::string error;
     int32_t errorCode = 0;
@@ -45,12 +45,11 @@ NPClass *pluginClass();
 typedef struct : public NPObject {
     PluginInstance *parent = nullptr;
 } CertInstance;
-    
+
 NPClass *certClass();
 
 std::vector<unsigned char> md5(const std::vector<unsigned char> &data);
 bool setValue(NPVariant *variant, const char *string);
-NPIdentifier toIdentifier(const char *name);
 std::string toString(const NPVariant &variant);
 std::string toString(NPIdentifier identifier);
 

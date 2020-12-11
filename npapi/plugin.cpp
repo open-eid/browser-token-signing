@@ -32,12 +32,8 @@
 
 NPNetscapeFuncs* browserFunctions;
 
-NPIdentifier toIdentifier(const char* name) {
-    return browserFunctions->getstringidentifier(name);
-}
-
 bool setValue(NPVariant *variant, const char *string) {
-    char *out = (char *)browserFunctions->memalloc(uint32_t(strlen(string) + 1));
+    NPUTF8 *out = (NPUTF8 *)browserFunctions->memalloc(uint32_t(strlen(string) + 1));
     strcpy(out, string);
     STRINGZ_TO_NPVARIANT(out, *variant);
     return true;

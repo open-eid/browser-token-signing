@@ -18,6 +18,7 @@
 
 #pragma once
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -25,12 +26,12 @@ class Signer {
 public:
 	virtual ~Signer() = default;
 
-	static Signer* createSigner(const std::vector<unsigned char> &cert);
+	static std::unique_ptr<Signer> createSigner(const std::vector<unsigned char> &cert);
 	bool showInfo(const std::string &msg);
 	virtual std::vector<unsigned char> sign(const std::vector<unsigned char> &digest) = 0;
 
 protected:
-	Signer(const std::vector<unsigned char> &_cert) : cert(_cert) {}
+	Signer(std::vector<unsigned char> _cert) : cert(std::move(_cert)) {}
 
 	std::vector<unsigned char> cert;
 };

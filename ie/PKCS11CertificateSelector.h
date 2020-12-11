@@ -22,8 +22,8 @@
 
 class PKCS11CertificateSelector : public CertificateSelector {
 public:
-	PKCS11CertificateSelector(const std::string &_driverPath);
-	std::vector<unsigned char> getCert(bool forSigning) const override;
+	PKCS11CertificateSelector(std::string _driverPath);
+	std::vector<unsigned char> getCert() const override;
 
 private:
 	std::string driverPath;

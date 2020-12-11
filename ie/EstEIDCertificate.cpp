@@ -43,8 +43,10 @@ STDMETHODIMP CEstEIDCertificate::Init(VARIANT filter) {
 	std::string filterstr;
 	if (filter.vt == VT_BSTR)
 		filterstr = W2A(filter.bstrVal);
-	std::unique_ptr<CertificateSelector> selector(CertificateSelector::createCertificateSelector());
-	cert = selector->getCert(filterstr != "AUTH");
+	if (filterstr == "AUTH")
+		return -1;
+
+	cert = CertificateSelector::createCertificateSelector()->getCert();
 	_log("certificate binary length = %i", cert.size());
 	hex = BinaryUtils::bin2hex(cert);
 

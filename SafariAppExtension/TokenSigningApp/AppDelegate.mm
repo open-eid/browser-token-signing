@@ -107,9 +107,13 @@
         resp[@"result"] = @"not_allowed";
     }
     else if ([resp[@"type"] isEqualToString:@"CERT"]) {
-        NSDictionary *cert = [CertificateSelection show:![@"AUTH" isEqualToString:resp[@"filter"]]];
-        resp[@"cert"] = cert[@"cert"];
-        resp[@"result"] = cert[@"result"];
+        if ([@"AUTH" isEqualToString:resp[@"filter"]]) {
+            resp[@"result"] = @"invalid_argument";
+        } else {
+            NSDictionary *cert = [CertificateSelection show];
+            resp[@"cert"] = cert[@"cert"];
+            resp[@"result"] = cert[@"result"];
+        }
     }
     else if ([resp[@"type"] isEqualToString:@"SIGN"]) {
         NSDictionary *sign = [PINPanel show:resp cert:resp[@"cert"]];

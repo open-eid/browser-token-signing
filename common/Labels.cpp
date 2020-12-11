@@ -52,20 +52,6 @@ Labels::lstring Labels::get(const std::string &labelKey) const {
         T("LT"),
         T("LV")
     } },
-    { "auth PIN", {
-        T("Autentimiseks sisesta @PIN@:"),
-        T("For authentication enter @PIN@:"),
-        T("Для идентификации введите @PIN@-код:"),
-        T("Norėdami patvirtinti tapatybę, įveskite @PIN@:"),
-        T("Lai autentificētos, ievadi @PIN@:"),
-    } },
-    { "auth PIN pinpad", {
-        T("Autentimiseks sisesta @PIN@ kaardilugeja sõrmistikult"),
-        T("For authentication enter @PIN@ from PIN pad"),
-        T("Для идентификации введите @PIN@-код при помощи клавиатуры"),
-        T("Norėdami patvirtinti tapatybę, įveskite @PIN@, pasinaudodami klaviatūra"),
-        T("Lai autentificētos, ievadi @PIN@ no PIN ievades ierīces"),
-    } },
     { "sign PIN", {
         T("Allkirjastamiseks sisesta @PIN@:"),
         T("For signing enter @PIN@:"),

@@ -27,7 +27,7 @@
 #include "CertificateSelection.h"
 #include "PINDialog.h"
 
-static int is_from_allowed_url(NPNetscapeFuncs *browserFunctions, NPP instanceData) {
+static bool is_from_allowed_url(NPNetscapeFuncs *browserFunctions, NPP instanceData) {
     NPObject *windowObject = nullptr;
     browserFunctions->getvalue(instanceData, NPNVWindowNPObject, &windowObject);
     NPIdentifier location = browserFunctions->getstringidentifier("location");
@@ -43,12 +43,12 @@ static int is_from_allowed_url(NPNetscapeFuncs *browserFunctions, NPP instanceDa
 
     size_t pos = stringValue.find(":");
     if (pos == std::string::npos) {
-        _log("hdetected protocol: null");
+        _log("detected protocol: null");
         return false;
     }
 
     std::string protocol = stringValue.substr(0, pos);
-    int allowed = !strcasecmp("https", protocol.c_str());
+    bool allowed = !strcasecmp("https", protocol.c_str());
     _log("protocol %s is %sallowed", protocol.c_str(), allowed ? "" : "not ");
     return allowed;
 }
@@ -68,16 +68,18 @@ static void pluginInvalidate(NPObject *obj) {
 }
 
 static bool pluginHasMethod(NPObject *obj, NPIdentifier name) {
-    _log("name=%s", toString(name).c_str());
+    std::string nameIdentifier = toString(name);
+    _log("name=%s", nameIdentifier.c_str());
     return
-        name == toIdentifier("sign") ||
-        name == toIdentifier("getCertificate") ||
-        name == toIdentifier("getVersion");
+        nameIdentifier == "sign" ||
+        nameIdentifier == "getCertificate" ||
+        nameIdentifier == "getVersion";
 }
 
 static bool pluginInvoke(NPObject *npobj, NPIdentifier name, const NPVariant *args, uint32_t argCount, NPVariant *result) {
     PluginInstance *obj = (PluginInstance*)npobj;
-    _log("name=%s argCount=%u", toString(name).c_str(), argCount);
+    std::string nameIdentifier = toString(name);
+    _log("name=%s argCount=%u", nameIdentifier.c_str(), argCount);
     obj->error.clear();
     obj->errorCode = ESTEID_NO_ERROR;
 
@@ -90,13 +92,13 @@ static bool pluginInvoke(NPObject *npobj, NPIdentifier name, const NPVariant *ar
         return false; \
     }
 
-    if (name == toIdentifier("getVersion")) {
+    if (nameIdentifier == "getVersion") {
         return setValue(result, VERSION);
     }
 
     CHECK(!is_from_allowed_url(obj->browserFunctions, obj->npp), "Site is not allowed", ESTEID_SITE_NOT_ALLOWED)
 
-    if (name == toIdentifier("sign")) {
+    if (nameIdentifier == "sign") {
         CHECK(argCount < 2, "Missing arguments", ESTEID_CERT_NOT_FOUND_ERROR)
 
         std::string certId = toString(args[0]);
@@ -129,13 +131,15 @@ static bool pluginInvoke(NPObject *npobj, NPIdentifier name, const NPVariant *ar
         NSString *signature = dict[@"signature"];
         return setValue(result, signature.UTF8String);
     }
-    if (name == toIdentifier("getCertificate")) {
+    if (nameIdentifier == "getCertificate") {
         std::string filter;
         if (argCount > 0) {
             filter = toString(args[0]);
         }
+        _log("filter=%s", filter.c_str());
+        CHECK((filter == "AUTH"), "Invalid argument", ESTEID_UNKNOWN_ERROR)
 
-        NSDictionary *dict = [CertificateSelection show:filter != "AUTH"];
+        NSDictionary *dict = [CertificateSelection show];
         CHECK([@"driver_error" isEqualToString:dict[@"result"]], "Failed to load driver", ESTEID_LIBRARY_LOAD_ERROR)
         CHECK([@"technical_error" isEqualToString:dict[@"result"]], "Technical error", ESTEID_UNKNOWN_ERROR)
         CHECK([@"no_certificates" isEqualToString:dict[@"result"]], "No certificates", ESTEID_CERT_NOT_FOUND_ERROR)
@@ -158,36 +162,39 @@ static bool pluginInvokeDefault(NPObject *obj, const NPVariant *args, uint32_t a
 }
 
 static bool pluginHasProperty(NPObject *obj, NPIdentifier name) {
-    _log("name=%s", toString(name).c_str());
+    std::string nameIdentifier = toString(name);
+    _log("name=%s", nameIdentifier.c_str());
     return
-        name == toIdentifier("version") ||
-        name == toIdentifier("errorMessage") ||
-        name == toIdentifier("errorCode") ||
-        name == toIdentifier("pluginLanguage");
+        nameIdentifier == "version" ||
+        nameIdentifier == "errorMessage" ||
+        nameIdentifier == "errorCode" ||
+        nameIdentifier == "pluginLanguage";
 }
 
 static bool pluginGetProperty(NPObject *npobj, NPIdentifier name, NPVariant *variant) {
     PluginInstance *obj = (PluginInstance*)npobj;
-    _log("name=%s", toString(name).c_str());
-    if (name == toIdentifier("version")) {
+    std::string nameIdentifier = toString(name);
+    _log("name=%s", nameIdentifier.c_str());
+    if (nameIdentifier == "version") {
         return setValue(variant, VERSION);
     }
-    if (name == toIdentifier("errorMessage")) {
+    if (nameIdentifier == "errorMessage") {
         return setValue(variant, obj->error.c_str());
     }
-    if (name == toIdentifier("errorCode")) {
+    if (nameIdentifier == "errorCode") {
         INT32_TO_NPVARIANT(obj->errorCode, *variant);
         return true;
     }
-    if (name == toIdentifier("pluginLanguage")) {
+    if (nameIdentifier == "pluginLanguage") {
         return setValue(variant, Labels::l10n.get("language").c_str());
     }
     return false;
 }
 
 static bool pluginSetProperty(NPObject *obj, NPIdentifier name, const NPVariant *variant) {
-    _log("name=%s", toString(name).c_str());
-    if(name == toIdentifier("pluginLanguage")) {
+    std::string nameIdentifier = toString(name);
+    _log("name=%s", nameIdentifier.c_str());
+    if(nameIdentifier == "pluginLanguage") {
         Labels::l10n.setLanguage(toString(*variant));
         return true;
     }
@@ -212,5 +219,3 @@ NPClass *pluginClass() {
     };
     return &_class;
 }
-
-

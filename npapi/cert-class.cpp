@@ -53,22 +53,24 @@ static bool certInvokeDefault(NPObject *obj, const NPVariant *args, uint32_t arg
 }
 
 static bool certHasProperty(NPObject *npobj, NPIdentifier name) {
-    _log("name=%s", toString(name).c_str());
+    std::string nameIdentifier = toString(name);
+    _log("name=%s", nameIdentifier.c_str());
     return
-        name == toIdentifier("id") ||
-        name == toIdentifier("cert") ||
-        name == toIdentifier("certificateAsHex");
+        nameIdentifier == "id" ||
+        nameIdentifier == "cert" ||
+        nameIdentifier == "certificateAsHex";
 }
 
 static bool certGetProperty(NPObject *npobj, NPIdentifier name, NPVariant *variant) {
     CertInstance *obj = (CertInstance*)npobj;
-    _log("name=%s", toString(name).c_str());
+    std::string nameIdentifier = toString(name);
+    _log("name=%s", nameIdentifier.c_str());
     std::string result;
-    if (name == toIdentifier("id")) {
+    if (nameIdentifier == "id") {
         result = BinaryUtils::bin2hex(md5(obj->parent->certInfo));
     }
-    else if (name == toIdentifier("certificateAsHex") ||
-             name == toIdentifier("cert")) {
+    else if (nameIdentifier == "certificateAsHex" ||
+             nameIdentifier == "cert") {
         result = BinaryUtils::bin2hex(obj->parent->certInfo);
     }
     if (result.empty())
@@ -99,4 +101,3 @@ NPClass *certClass() {
     };
     return &_class;
 }
-

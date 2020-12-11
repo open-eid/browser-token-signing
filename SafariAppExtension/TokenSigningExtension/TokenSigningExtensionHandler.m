@@ -30,13 +30,7 @@ static NSMutableDictionary<NSString *, SFSafariPage *> *pages;
 
 - (void)messageReceivedWithName:(NSString *)messageName fromPage:(SFSafariPage *)page userInfo:(NSDictionary *)userInfo {
     // This method will be called when a content script provided by your extension calls safari.extension.dispatchMessage("message").
-    BOOL isRunning = NO;
-    for (NSRunningApplication *app in NSWorkspace.sharedWorkspace.runningApplications) {
-        if ([app.bundleIdentifier isEqualToString:TokenSigningApp]) {
-            isRunning = YES;
-            break;
-        }
-    }
+    BOOL isRunning = [NSRunningApplication runningApplicationsWithBundleIdentifier:TokenSigningApp].count > 0;
     NSLog(@"TokenSigning isRunning: %d", isRunning);
     if (!isRunning) {
         NSBundle *bundle = [NSBundle bundleForClass:TokenSigningExtensionHandler.class];
