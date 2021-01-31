@@ -1,3 +1,1 @@
-# Safari App Extension prototype signing plugin
-
-https://developer.apple.com/library/content/documentation/NetworkingInternetWeb/Conceptual/SafariAppExtension_PG/
+# Moved to [open-eid/chrome-token-signing](https://github.com/open-eid/chrome-token-signing/tree/master/SafariAppExtension)
